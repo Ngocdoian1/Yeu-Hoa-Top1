@@ -2,273 +2,198 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💖 Love For My Baby 💖</title>
+  <title>Love Counter</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #ffdee9, #b5fffc);
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    h1 {
-      margin: 20px 0 10px;
-      font-size: 2.2rem;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+      color: #333;
       text-align: center;
-      color: #d63384;
-      text-shadow: 0 0 15px rgba(255,0,120,0.5);
     }
-
-    /* Circle counter */
-    .circle-container {
-      margin: 20px 0 10px;
+    header {
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .avatars {
       display: flex;
       justify-content: center;
-      align-items: center;
+      gap: 40px;
+      margin: 20px 0;
     }
-    .circle {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      border: 10px solid #ff4f81;
+    .avatar {
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
-      background: rgba(255,255,255,0.4);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      align-items: center;
+    }
+    .avatar img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .counter {
+      margin: 20px 0;
     }
     .days {
       font-size: 48px;
       font-weight: bold;
-      color: #d63384;
+      color: #e91e63;
     }
-    .label {
-      font-size: 18px;
-      color: #444;
-      margin-top: 6px;
-    }
-
-    /* Detail boxes */
-    .time-detail {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .time-box {
-      background: rgba(255,255,255,0.6);
-      padding: 12px 18px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      text-align: center;
-      min-width: 80px;
-    }
-    .time-box .num {
+    .time {
       font-size: 20px;
-      font-weight: bold;
-      color: #ff2e7e;
+      margin-top: 8px;
     }
-    .time-box .txt {
-      font-size: 13px;
-      color: #333;
-      margin-top: 4px;
-    }
-
-    /* Slideshow */
-    .slideshow-container {
-      position: relative;
-      max-width: 90%;
-      max-height: 65vh;
-      margin: 30px auto 15px;
+    .slideshow {
+      margin: 30px auto;
+      width: 300px;
+      height: 200px;
       overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    .mySlides {
-      display: none;
-    }
-    .mySlides img {
+    .slideshow img {
       width: 100%;
-      height: 60vh;
+      height: 100%;
       object-fit: cover;
-      border-radius: 20px;
+      animation: fade 1s ease-in-out;
     }
-    /* Nút chuyển ảnh */
-    .prev, .next {
+    @keyframes fade {
+      from {opacity: 0.4}
+      to {opacity: 1}
+    }
+    .anniversaries {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 20px auto;
+      width: 260px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .anniversaries h3 {
+      margin: 0 0 10px;
+      color: #e91e63;
+    }
+    .btn {
+      margin: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #e91e63;
+      color: white;
       cursor: pointer;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.3);
-      color: #fff;
-      font-weight: bold;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 16px;
       transition: 0.3s;
-      user-select: none;
     }
-    .prev { left: 15px; }
-    .next { right: 15px; }
-    .prev:hover, .next:hover {
-      background: rgba(255,100,150,0.9);
-      transform: translateY(-50%) scale(1.1);
-    }
-    /* Dấu chấm */
-    .dots {
-      text-align: center;
-      padding: 15px 0;
-    }
-    .dot {
-      cursor: pointer;
-      height: 12px;
-      width: 12px;
-      margin: 0 4px;
-      background-color: #bbb;
-      border-radius: 50%;
-      display: inline-block;
-      transition: background-color 0.6s ease;
-    }
-    .active, .dot:hover {
-      background-color: #d63384;
-      box-shadow: 0 0 10px rgba(214,51,132,0.8);
-    }
-    /* Heart animation */
-    .heart {
-      position: fixed;
-      color: rgba(255,0,80,0.6);
-      animation: floatUp 6s linear forwards;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-800px) scale(0.5); opacity: 0; }
-    }
-    footer {
-      margin: 30px 0 15px;
-      font-size: 0.9rem;
-      color: #555;
+    .btn:hover {
+      background: #c2185b;
     }
   </style>
 </head>
 <body>
-  <h1>💖 My Princess 💖</h1>
+  <header>💖 Love Counter 💖</header>
 
-  <!-- Circle Counter -->
-  <div class="circle-container">
-    <div class="circle">
-      <div class="days" id="dayCounter">0</div>
-      <div class="label">Ngày yêu</div>
+  <!-- Avatars -->
+  <div class="avatars">
+    <div class="avatar">
+      <img src="https://files.catbox.moe/jfdkp7.jpeg" alt="You">
+      <p>💙 Bạn Nam</p>
+      <small>♏ Bọ Cạp</small>
+    </div>
+    <div class="avatar">
+      <img src="https://files.catbox.moe/jfdkp7.jpeg" alt="Partner">
+      <p>💖 Bạn Nữ</p>
+      <small>♍ Xử Nữ</small>
     </div>
   </div>
 
-  <!-- Detail boxes -->
-  <div class="time-detail">
-    <div class="time-box"><div class="num" id="years">0</div><div class="txt">Năm</div></div>
-    <div class="time-box"><div class="num" id="months">0</div><div class="txt">Tháng</div></div>
-    <div class="time-box"><div class="num" id="days">0</div><div class="txt">Ngày</div></div>
-    <div class="time-box"><div class="num" id="hours">0</div><div class="txt">Giờ</div></div>
-    <div class="time-box"><div class="num" id="minutes">0</div><div class="txt">Phút</div></div>
-    <div class="time-box"><div class="num" id="seconds">0</div><div class="txt">Giây</div></div>
+  <!-- Counter -->
+  <div class="counter">
+    <div class="days" id="days">0 Ngày</div>
+    <div class="time" id="time">00:00:00</div>
   </div>
 
   <!-- Slideshow -->
-  <div class="slideshow-container">
-    <div class="mySlides">
-      <img src="https://files.catbox.moe/jfdkp7.jpeg" alt="Love Pic 1">
-    </div>
-    <div class="mySlides">
-      <img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900&q=80" alt="Love Pic 2">
-    </div>
-    <div class="mySlides">
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80" alt="Love Pic 3">
-    </div>
-    <!-- Nút điều hướng -->
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
+  <div class="slideshow">
+    <img id="slide" src="https://files.catbox.moe/jfdkp7.jpeg" alt="Slideshow">
   </div>
 
-  <!-- Dấu chấm -->
-  <div class="dots">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
+  <!-- Anniversaries -->
+  <div class="anniversaries">
+    <h3>Kỷ niệm sắp tới 🎉</h3>
+    <ul id="anniversaryList" style="list-style:none; padding:0; margin:0;">
+      <li>100 ngày 💞</li>
+      <li>200 ngày 💍</li>
+      <li>1 năm 🌹</li>
+    </ul>
   </div>
 
-  <footer>Cre NgocDoiAn ✨</footer>
+  <button class="btn" onclick="changeBg()">Đổi nền 🎨</button>
 
   <script>
-    // === Circle + Detail Counter ===
-    const startDate = new Date("2024-07-14T00:00:00"); // ngày yêu
-    function updateCounter(){
+    // Ngày bắt đầu yêu
+    const startDate = new Date("2023-01-01");
+
+    // Cập nhật đếm ngày
+    function updateCounter() {
       const now = new Date();
-      let diff = now - startDate;
-      const years = Math.floor(diff / (1000*60*60*24*365));
-      diff -= years * 1000*60*60*24*365;
-      const months = Math.floor(diff / (1000*60*60*24*30));
-      diff -= months * 1000*60*60*24*30;
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days * 1000*60*60*24;
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours * 1000*60*60;
-      const minutes = Math.floor(diff / (1000*60));
-      diff -= minutes * 1000*60;
-      const seconds = Math.floor(diff / 1000);
+      const diff = now - startDate;
 
-      // Cập nhật circle
-      const totalDays = Math.floor((now - startDate) / (1000*60*60*24));
-      document.getElementById("dayCounter").textContent = totalDays;
+      // Tổng ngày
+      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+      animateNumber("days", totalDays);
 
-      // Cập nhật chi tiết
-      document.getElementById("years").textContent = years;
-      document.getElementById("months").textContent = months;
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
+      // Giờ phút giây
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      document.getElementById("time").textContent = `${hours}:${minutes}:${seconds}`;
     }
+
+    // Hiệu ứng số nhảy
+    let currentDays = 0;
+    function animateNumber(id, target) {
+      const element = document.getElementById(id);
+      if (currentDays !== target) {
+        let step = target > currentDays ? 1 : -1;
+        const interval = setInterval(() => {
+          currentDays += step;
+          element.textContent = currentDays + " Ngày";
+          if (currentDays === target) clearInterval(interval);
+        }, 30);
+      }
+    }
+
     setInterval(updateCounter, 1000);
     updateCounter();
 
-    // === Slideshow ===
-    let slideIndex = 1;
-    showSlides(slideIndex);
-    function plusSlides(n){ showSlides(slideIndex += n); }
-    function currentSlide(n){ showSlides(slideIndex = n); }
-    function showSlides(n){
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
-      for (i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
-    }
-    setInterval(()=>{ plusSlides(1); }, 6000);
+    // Slideshow
+    const slides = [
+      "https://files.catbox.moe/jfdkp7.jpeg",
+      "https://picsum.photos/300/200?random=1",
+      "https://picsum.photos/300/200?random=2",
+      "https://picsum.photos/300/200?random=3"
+    ];
+    let currentSlide = 0;
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      document.getElementById("slide").src = slides[currentSlide];
+    }, 3000);
 
-    // === Floating hearts ===
-    function createHeart(){
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random()*100 + "vw";
-      heart.style.top = "100vh";
-      heart.innerText = "❤";
-      heart.style.fontSize = (20+Math.random()*20)+"px";
-      document.body.appendChild(heart);
-      setTimeout(()=>heart.remove(),6000);
+    // Đổi nền
+    function changeBg() {
+      const colors = [
+        "linear-gradient(135deg,#ff9a9e,#fad0c4)",
+        "linear-gradient(135deg,#a18cd1,#fbc2eb)",
+        "linear-gradient(135deg,#fbc2eb,#a6c1ee)",
+        "linear-gradient(135deg,#ffecd2,#fcb69f)"
+      ];
+      document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
     }
-    setInterval(createHeart, 800);
   </script>
 </body>
 </html>
