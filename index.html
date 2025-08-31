@@ -23,27 +23,27 @@
       text-shadow: 0 0 15px rgba(255,0,120,0.5);
     }
 
-    /* --- Circle counter --- */
+    /* Circle counter */
     .circle-container {
-      margin: 20px 0;
+      margin: 20px 0 10px;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .circle {
-      width: 200px;
-      height: 200px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
-      border: 8px solid #ff4f81;
+      border: 10px solid #ff4f81;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background: rgba(255,255,255,0.3);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      background: rgba(255,255,255,0.4);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
     }
     .days {
-      font-size: 42px;
+      font-size: 48px;
       font-weight: bold;
       color: #d63384;
     }
@@ -53,12 +53,39 @@
       margin-top: 6px;
     }
 
+    /* Detail boxes */
+    .time-detail {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .time-box {
+      background: rgba(255,255,255,0.6);
+      padding: 12px 18px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      text-align: center;
+      min-width: 80px;
+    }
+    .time-box .num {
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff2e7e;
+    }
+    .time-box .txt {
+      font-size: 13px;
+      color: #333;
+      margin-top: 4px;
+    }
+
     /* Slideshow */
     .slideshow-container {
       position: relative;
       max-width: 90%;
       max-height: 65vh;
-      margin: 20px auto;
+      margin: 30px auto 15px;
       overflow: hidden;
       border-radius: 20px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
@@ -72,7 +99,7 @@
       object-fit: cover;
       border-radius: 20px;
     }
-    /* Nút chuyển ảnh gọn */
+    /* Nút chuyển ảnh */
     .prev, .next {
       cursor: pointer;
       position: absolute;
@@ -144,6 +171,16 @@
     </div>
   </div>
 
+  <!-- Detail boxes -->
+  <div class="time-detail">
+    <div class="time-box"><div class="num" id="years">0</div><div class="txt">Năm</div></div>
+    <div class="time-box"><div class="num" id="months">0</div><div class="txt">Tháng</div></div>
+    <div class="time-box"><div class="num" id="days">0</div><div class="txt">Ngày</div></div>
+    <div class="time-box"><div class="num" id="hours">0</div><div class="txt">Giờ</div></div>
+    <div class="time-box"><div class="num" id="minutes">0</div><div class="txt">Phút</div></div>
+    <div class="time-box"><div class="num" id="seconds">0</div><div class="txt">Giây</div></div>
+  </div>
+
   <!-- Slideshow -->
   <div class="slideshow-container">
     <div class="mySlides">
@@ -170,23 +207,37 @@
   <footer>Cre NgocDoiAn ✨</footer>
 
   <script>
-    // === Circle Counter Animation ===
-    const startDate = new Date("2024-07-14T00:00:00"); // chỉnh ngày yêu ở đây
-    const today = new Date();
-    const diffTime = today - startDate;
-    const loveDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    // === Circle + Detail Counter ===
+    const startDate = new Date("2024-07-14T00:00:00"); // ngày yêu
+    function updateCounter(){
+      const now = new Date();
+      let diff = now - startDate;
+      const years = Math.floor(diff / (1000*60*60*24*365));
+      diff -= years * 1000*60*60*24*365;
+      const months = Math.floor(diff / (1000*60*60*24*30));
+      diff -= months * 1000*60*60*24*30;
+      const days = Math.floor(diff / (1000*60*60*24));
+      diff -= days * 1000*60*60*24;
+      const hours = Math.floor(diff / (1000*60*60));
+      diff -= hours * 1000*60*60;
+      const minutes = Math.floor(diff / (1000*60));
+      diff -= minutes * 1000*60;
+      const seconds = Math.floor(diff / 1000);
 
-    let counter = 0;
-    const speed = 20; // tốc độ đếm
-    const counterEl = document.getElementById("dayCounter");
+      // Cập nhật circle
+      const totalDays = Math.floor((now - startDate) / (1000*60*60*24));
+      document.getElementById("dayCounter").textContent = totalDays;
 
-    const interval = setInterval(() => {
-      counter++;
-      counterEl.textContent = counter;
-      if (counter >= loveDays) {
-        clearInterval(interval);
-      }
-    }, speed);
+      // Cập nhật chi tiết
+      document.getElementById("years").textContent = years;
+      document.getElementById("months").textContent = months;
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
 
     // === Slideshow ===
     let slideIndex = 1;
