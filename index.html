@@ -1,187 +1,211 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💖 My Love Page 💖</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💖 Love For My Baby 💖</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap');
+
+    * {margin:0;padding:0;box-sizing:border-box;}
+
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(120deg, #ffdee9, #b5fffc);
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #fbc2eb, #a18cd1, #fbc2eb);
+      background-size: 600% 600%;
+      animation: gradientBG 20s ease infinite;
       overflow-x: hidden;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 30px;
+      text-align: center;
+      color: #fff;
     }
+    @keyframes gradientBG {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+
     h1 {
-      font-size: 2rem;
-      margin: 10px 0;
-      color: #d63384;
-      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2rem, 6vw, 4rem);
+      margin: 30px 0 10px;
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+      animation: pulse 3s infinite;
     }
-    #counter {
-      font-size: 1rem;
-      color: #333;
-      margin-bottom: 20px;
-      text-align: center;
-      line-height: 1.6;
+    @keyframes pulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
     }
+    h2 { font-size: 1.2rem; margin-bottom: 20px; }
+
+    /* Slideshow */
     .slideshow-container {
       position: relative;
       max-width: 90%;
-      max-height: 70vh;
       margin: auto;
+      border-radius: 20px;
       overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
-    .mySlides { display: none; }
+    .mySlides {display:none;}
     .mySlides img {
-      width: 100%;
-      height: auto;
-      border-radius: 15px;
+      width: 100%; height: auto;
+      border-radius: 20px;
+      animation: zoomIn 2s;
+    }
+    @keyframes zoomIn {
+      from {transform:scale(1.1); opacity:0;}
+      to {transform:scale(1); opacity:1;}
     }
     .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      padding: 16px;
-      margin-top: -22px;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.3s;
-      border-radius: 0 3px 3px 0;
-      user-select: none;
-      background: rgba(0,0,0,0.3);
+      cursor:pointer; position:absolute; top:50%;
+      width:auto; padding:16px;
+      color:white; font-weight:bold; font-size:20px;
+      border-radius:0 3px 3px 0;
+      user-select:none; transition:0.3s;
+      background:rgba(0,0,0,0.3);
     }
-    .next { right: 0; border-radius: 3px 0 0 3px; }
-    .prev:hover, .next:hover { background-color: rgba(0,0,0,0.6); }
-    .dots {
-      text-align: center;
-      padding: 10px;
-    }
+    .next {right:0;border-radius:3px 0 0 3px;}
+    .prev:hover, .next:hover {background:rgba(0,0,0,0.6);}
+    .dots {text-align:center; margin:10px;}
     .dot {
-      cursor: pointer;
-      height: 12px;
-      width: 12px;
-      margin: 0 4px;
-      background-color: #bbb;
-      border-radius: 50%;
-      display: inline-block;
-      transition: background-color 0.6s ease;
+      cursor:pointer;height:12px;width:12px;margin:0 4px;
+      background:#bbb;border-radius:50%;display:inline-block;
+      transition:background-color 0.6s ease;
     }
-    .active, .dot:hover { background-color: #717171; }
-    footer {
-      font-size: 12px;
-      color: #555;
-      margin-top: 20px;
-      text-align: center;
+    .active, .dot:hover {background:#fff;}
+
+    /* Counter */
+    #counter {
+      margin:30px 0; font-size:1rem;
+      line-height:1.8; font-weight:500;
+      background:rgba(255,255,255,0.2);
+      display:inline-block; padding:15px 25px;
+      border-radius:20px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.2);
     }
-    /* Heart animation */
+    #daysBig {
+      font-size:2.2rem; font-weight:700; margin-bottom:10px;
+      background:linear-gradient(45deg,#ff6b6b,#f8e9a1,#4ecdc4);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+
+    /* Floating hearts */
     .heart {
-      position: fixed;
-      color: rgba(255,0,80,0.6);
-      font-size: 20px;
-      animation: floatUp 6s linear infinite;
+      position:fixed; bottom:0; font-size:20px; color:rgba(255,0,100,0.7);
+      animation: floatUp 6s linear forwards;
+      pointer-events:none;
     }
     @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-800px) scale(0.5); opacity: 0; }
+      0% {transform:translateY(0) scale(1);opacity:1;}
+      100% {transform:translateY(-100vh) scale(0.5);opacity:0;}
     }
+
+    /* Music button */
+    #musicBtn {
+      position:fixed; bottom:20px; right:20px;
+      width:50px; height:50px;
+      border-radius:50%; background:rgba(255,255,255,0.3);
+      backdrop-filter:blur(5px);
+      border:none; color:#fff; font-size:20px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; z-index:1000;
+      transition:transform 0.3s;
+    }
+    #musicBtn:hover {transform:scale(1.1);}
   </style>
 </head>
 <body>
-  <h1>💖 VuThiHoa 💖</h1>
-  <div id="counter"></div>
-  
+  <h1>💖 My Love Forever 💖</h1>
+  <h2>Em là cả thế giới trong trái tim anh 🌎💘</h2>
+
+  <!-- Slideshow -->
   <div class="slideshow-container">
-    <div class="mySlides">
-      <img src="https://files.catbox.moe/jfdkp7.jpeg" />
-    </div>
-    <div class="mySlides">
-      <img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900" />
-    </div>
-    <div class="mySlides">
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900" />
-    </div>
+    <div class="mySlides"><img src="https://files.catbox.moe/jfdkp7.jpeg"></div>
+    <div class="mySlides"><img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?auto=format&fit=crop&w=900&q=80"></div>
+    <div class="mySlides"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"></div>
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
   </div>
-  
   <div class="dots">
     <span class="dot" onclick="currentSlide(1)"></span>
     <span class="dot" onclick="currentSlide(2)"></span>
     <span class="dot" onclick="currentSlide(3)"></span>
   </div>
-  
-  <footer>Cre NgocDoiAn</footer>
-  
+
+  <!-- Counter -->
+  <div id="counter">
+    <div id="daysBig">0 ngày</div>
+    <div id="detail"></div>
+  </div>
+
+  <footer style="margin:30px 0;font-size:0.9rem;">Made with 💖 by NgocDoiAn</footer>
+
+  <!-- Music -->
+  <button id="musicBtn">🎵</button>
+  <audio id="bgMusic" loop>
+    <source src="https://files.catbox.moe/2vx7k6.mp4" type="audio/mp4">
+  </audio>
+
   <script>
     // Counter
     const startDate = new Date("2024-07-14T00:00:00");
     function updateCounter(){
       const now = new Date();
       let diff = now - startDate;
-      const years = Math.floor(diff / (1000*60*60*24*365));
-      diff -= years * 1000*60*60*24*365;
-      const months = Math.floor(diff / (1000*60*60*24*30));
-      diff -= months * 1000*60*60*24*30;
-      const weeks = Math.floor(diff / (1000*60*60*24*7));
-      diff -= weeks * 1000*60*60*24*7;
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days * 1000*60*60*24;
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours * 1000*60*60;
-      const minutes = Math.floor(diff / (1000*60));
-      diff -= minutes * 1000*60;
-      const seconds = Math.floor(diff / 1000);
-      document.getElementById("counter").innerHTML =
-        `${years} năm, ${months} tháng, ${weeks} tuần, ${days} ngày<br>`+
-        `${hours} giờ, ${minutes} phút, ${seconds} giây`;
+      const days = Math.floor(diff/(1000*60*60*24));
+      const years = Math.floor(days/365);
+      const months = Math.floor((days%365)/30);
+      const weeks = Math.floor(((days%365)%30)/7);
+      const d = ((days%365)%30)%7;
+      const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+      const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+      const seconds = Math.floor((diff%(1000*60))/1000);
+
+      document.getElementById("daysBig").innerText = `${days} ngày`;
+      document.getElementById("detail").innerHTML =
+        `${years} năm, ${months} tháng, ${weeks} tuần, ${d} ngày<br>
+        ${hours} giờ, ${minutes} phút, ${seconds} giây`;
     }
-    setInterval(updateCounter, 1000);
+    setInterval(updateCounter,1000);
     updateCounter();
 
     // Slideshow
-    let slideIndex = 1;
-    showSlides(slideIndex);
-    function plusSlides(n){ showSlides(slideIndex += n); }
-    function currentSlide(n){ showSlides(slideIndex = n); }
+    let slideIndex=1;showSlides(slideIndex);
+    function plusSlides(n){showSlides(slideIndex+=n);}
+    function currentSlide(n){showSlides(slideIndex=n);}
     function showSlides(n){
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
+      let i; let slides=document.getElementsByClassName("mySlides");
+      let dots=document.getElementsByClassName("dot");
+      if(n>slides.length){slideIndex=1}
+      if(n<1){slideIndex=slides.length}
+      for(i=0;i<slides.length;i++){slides[i].style.display="none";}
+      for(i=0;i<dots.length;i++){dots[i].className=dots[i].className.replace(" active","");}
+      slides[slideIndex-1].style.display="block";
+      dots[slideIndex-1].className+=" active";
     }
-    // Auto slideshow
-    setInterval(()=>{ plusSlides(1); }, 5000);
+    setInterval(()=>{plusSlides(1)},5000);
 
     // Floating hearts
     function createHeart(){
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random()*100 + "vw";
-      heart.style.top = "100vh";
-      heart.innerText = "❤";
-      heart.style.fontSize = (20+Math.random()*20)+"px";
+      const heart=document.createElement("div");
+      heart.className="heart";
+      heart.style.left=Math.random()*100+"vw";
+      heart.innerText="💖";
+      heart.style.fontSize=(20+Math.random()*20)+"px";
       document.body.appendChild(heart);
       setTimeout(()=>heart.remove(),6000);
     }
-    setInterval(createHeart, 1000);
+    setInterval(createHeart,800);
+
+    // Music control
+    const music=document.getElementById("bgMusic");
+    const btn=document.getElementById("musicBtn");
+    let playing=false;
+    btn.onclick=()=>{
+      if(!playing){music.play();playing=true;btn.innerText="⏸";}
+      else{music.pause();playing=false;btn.innerText="🎵";}
+    }
   </script>
 </body>
 </html>
