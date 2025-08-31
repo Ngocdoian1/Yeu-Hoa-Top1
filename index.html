@@ -1,779 +1,9 @@
-<!DOCTYPE html><html lang="vi">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Page - <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Baby 💕</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            25% { background-position: 100% 50%; }
-            50% { background-position: 100% 100%; }
-            75% { background-position: 0% 100%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Custom cursor - only on desktop */
-        @media (hover: hover) {
-            * {
-                cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">💖</text></svg>'), auto;
-            }
-        }
-
-        /* Floating sparkles */
-        .sparkles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .sparkle {
-            position: absolute;
-            color: rgba(255,255,255,0.8);
-            font-size: 12px;
-            animation: sparkleFloat 4s infinite ease-in-out;
-        }
-
-        @keyframes sparkleFloat {
-            0%, 100% { 
-                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0); 
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-                transform: translateY(90vh) translateX(10px) rotate(45deg) scale(1);
-            }
-            90% {
-                opacity: 1;
-                transform: translateY(10vh) translateX(-10px) rotate(315deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(0) translateX(0) rotate(360deg) scale(0);
-            }
-        }
-
-        /* Header - Responsive */
-        .header {
-            text-align: center;
-            padding: 40px 20px 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .title {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d79ff, #ff6b6b);
-            background-size: 300% 300%;
-            animation: rainbowText 3s ease-in-out infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(255,255,255,0.3);
-            filter: drop-shadow(0 0 20px rgba(255,107,107,0.3));
-            line-height: 1.1;
-        }
-
-        @keyframes rainbowText {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .subtitle {
-            font-size: clamp(1rem, 4vw, 1.4rem);
-            color: white;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: slideIn 1.5s ease-out 0.5s forwards;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            padding: 0 10px;
-        }
-
-        @keyframes slideIn {
-            to { opacity: 1; transform: translateY(0); }
-            from { opacity: 0; transform: translateY(30px); }
-        }
-
-        /* Enhanced Slideshow - Mobile Optimized */
-        .slideshow-container {
-            position: relative;
-            max-width: min(900px, 95vw);
-            margin: 30px auto;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-        }
-
-        .slides-wrapper {
-            position: relative;
-            height: clamp(300px, 60vh, 550px);
-            overflow: hidden;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(100%);
-        }
-
-        .slide.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .slide.prev {
-            transform: translateX(-100%);
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(1.1) saturate(1.3) contrast(1.1);
-        }
-
-        .slide-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: clamp(20px, 5vw, 40px);
-            color: white;
-        }
-
-        .slide-title {
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
-            font-weight: 600;
-            margin-bottom: 12px;
-            opacity: 0;
-            animation: slideUp 1s ease-out 0.3s forwards;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            line-height: 1.2;
-        }
-
-        .slide-caption {
-            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
-            opacity: 0;
-            animation: slideUp 1s ease-out 0.6s forwards;
-            line-height: 1.6;
-            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Navigation Controls - Touch Friendly */
-        .nav-controls {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-        }
-
-        .prev-btn, .next-btn {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            font-size: clamp(16px, 4vw, 20px);
-            width: clamp(40px, 8vw, 50px);
-            height: clamp(40px, 8vw, 50px);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
-        }
-
-        .prev-btn {
-            left: clamp(10px, 3vw, 20px);
-        }
-
-        .next-btn {
-            right: clamp(10px, 3vw, 20px);
-        }
-
-        .prev-btn:hover, .next-btn:hover,
-        .prev-btn:active, .next-btn:active {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        /* Progress bar */
-        .progress-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-
-        /* Indicators - Touch Friendly */
-        .indicators {
-            text-align: center;
-            padding: 20px;
-            position: relative;
-        }
-
-        .dot {
-            height: clamp(10px, 3vw, 12px);
-            width: clamp(10px, 3vw, 12px);
-            margin: 0 clamp(6px, 2vw, 8px);
-            background: rgba(255,255,255,0.4);
-            border-radius: 50%;
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            touch-action: manipulation;
-        }
-
-        .dot.active {
-            background: #ff6b6b;
-            transform: scale(1.4);
-            box-shadow: 0 0 20px rgba(255,107,107,0.6);
-        }
-
-        .dot.active::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Love Counter Section - Mobile Optimized */
-        .love-counter-section {
-            margin: 60px auto;
-            max-width: min(1000px, 95vw);
-            padding: 0 15px;
-        }
-
-        .love-counter-main {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 30px;
-            padding: clamp(30px, 6vw, 50px);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-
-        /* Water sparkle effect */
-        .water-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(64, 224, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(255, 217, 61, 0.2) 0%, transparent 50%);
-            animation: waterFlow 8s ease-in-out infinite;
-        }
-
-        @keyframes waterFlow {
-            0%, 100% { 
-                transform: translateX(0) translateY(0) scale(1); 
-                opacity: 0.6;
-            }
-            33% { 
-                transform: translateX(10px) translateY(-10px) scale(1.1); 
-                opacity: 0.8;
-            }
-            66% { 
-                transform: translateX(-10px) translateY(10px) scale(0.9); 
-                opacity: 0.7;
-            }
-        }
-
-        /* Floating hearts in counter */
-        .hearts-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-        }
-
-        .floating-heart {
-            position: absolute;
-            color: rgba(255,107,107,0.7);
-            font-size: clamp(16px, 4vw, 20px);
-            animation: floatHeart 6s infinite ease-in-out;
-        }
-
-        @keyframes floatHeart {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg) scale(1);
-                opacity: 0.7;
-            }
-            50% { 
-                transform: translateY(-20px) rotate(180deg) scale(1.2);
-                opacity: 1;
-            }
-        }
-
-        .counter-title {
-            color: white;
-            font-size: clamp(1.4rem, 5vw, 2rem);
-            font-weight: 600;
-            margin-bottom: 25px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 2;
-        }
-
-        .days-counter {
-            font-size: clamp(3rem, 10vw, 4.5rem);
-            font-weight: bold;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            background-size: 300% 300%;
-            animation: rainbowCounter 4s ease-in-out infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 0 30px rgba(255,107,107,0.3);
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
-            line-height: 1;
-        }
-
-        @keyframes rainbowCounter {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .counter-label {
-            color: rgba(255,255,255,0.9);
-            font-size: clamp(1rem, 3.5vw, 1.3rem);
-            font-weight: 500;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
-        }
-
-        /* Detailed breakdown - Mobile First */
-        .time-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: clamp(10px, 3vw, 20px);
-            margin-top: 30px;
-        }
-
-        .time-unit {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            padding: clamp(15px, 4vw, 25px);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            touch-action: manipulation;
-        }
-
-        .time-unit:hover,
-        .time-unit:active {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            background: rgba(255,255,255,0.15);
-        }
-
-        .time-unit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
-            animation: slideShine 3s infinite;
-        }
-
-        @keyframes slideShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .time-value {
-            font-size: clamp(1.4rem, 5vw, 2.2rem);
-            font-weight: bold;
-            color: #4ecdc4;
-            margin-bottom: 8px;
-            text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
-        }
-
-        .time-label {
-            color: rgba(255,255,255,0.8);
-            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Interactive features enhanced - Mobile Optimized */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            max-width: min(1200px, 95vw);
-            margin: 60px auto;
-            padding: 0 15px;
-        }
-
-        .feature-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 25px;
-            padding: clamp(25px, 5vw, 35px);
-            text-align: center;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            touch-action: manipulation;
-            min-height: 180px;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            border-radius: 27px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .feature-card:hover::before,
-        .feature-card:active::before {
-            opacity: 1;
-        }
-
-        .feature-card:hover,
-        .feature-card:active {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-        }
-
-        .feature-icon {
-            font-size: clamp(2.5rem, 7vw, 3.5rem);
-            margin-bottom: 18px;
-            animation: bounce 2s infinite;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-8px) scale(1.1); }
-        }
-
-        .feature-title {
-            color: white;
-            font-size: clamp(1.1rem, 4vw, 1.4rem);
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .feature-desc {
-            color: rgba(255,255,255,0.8);
-            font-size: clamp(0.85rem, 3vw, 1rem);
-            line-height: 1.5;
-        }
-
-        /* Modal - Mobile Optimized */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
-            backdrop-filter: blur(30px);
-            margin: 5% auto;
-            padding: clamp(20px, 5vw, 30px);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            color: white;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .close {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            color: rgba(255,255,255,0.8);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            touch-action: manipulation;
-        }
-
-        .close:hover,
-        .close:active {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-
-        /* Mobile-specific adjustments */
-        @media (max-width: 768px) {
-            .time-breakdown {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                margin: 40px auto;
-            }
-            
-            .slideshow-container {
-                margin: 20px auto;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .time-breakdown {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            .love-counter-main {
-                padding: 25px 20px;
-            }
-            
-            .modal-content {
-                margin: 2% auto;
-                width: 95%;
-                max-height: 90vh;
-            }
-        }
-
-        /* Enhanced scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            border-radius: 4px;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-        }
-
-        .modal h2 {
-            font-size: clamp(1.3rem, 4vw, 1.6rem);
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .modal p {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            line-height: 1.6;
-        }
-    </style>
-</head>
-<body>
-    <!-- Sparkles background -->
-    <div class="sparkles" id="sparklesContainer"></div>
-
-    <!-- Header -->
-    <div class="header">
-        <h1 class="title">💖 My Beautiful Princess 💖</h1>
-        <p class="subtitle">Em là điều kỳ diệu nhất trong cuộc đời anh ✨</p>
-    </div>
-
-    <!-- Enhanced Slideshow -->
-    <div class="slideshow-container">
-        <div class="slides-wrapper">
-            <div class="slide active">
-                <img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Beautiful smile">
-                <div class="slide-overlay">
-                    <h2 class="slide-title">💖 Nụ cười thiên thần</h2>
-                    <p class="slide-caption">Em cười là cả thế giới anh sáng lên, baby ơi em biết không? 🥰</p>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Natural beauty">
-                <div class="slide-overlay">
-                    <h2 class="slide-title">🌟 Vẻ đẹp tự nhiên</h2>
-                    <p class="slide-caption">Em không cần makeup vì em đã perfect từ trong tâm hồn rồi princess ơi 💕</p>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Beautiful eyes">
-                <div class="slide-overlay">
-                    <h2 class="slide-title">✨ Đôi mắt như galaxy</h2>
-                    <p class="slide-caption">Trong mắt em có cả vũ trụ, anh muốn lạc vào đó mãi thôi 🌌</p>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Gentle moment">
-                <div class="slide-overlay">
-                    <h2 class="slide-title">🌸 Khoảnh khắc dịu dàng</h2>
-                    <p class="slide-caption">Em gentle và soft vậy mà sao anh addicted thế này được 😍</p>
-                </div>
-            </div>
-            
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Happy together">
-                <div class="slide-overlay">
-                    <h2 class="slide-title">💕 Hạnh phúc bên nhau</h2>
-                    <p class="slide-caption">Bên em anh feel like đang sống trong fairy tale vậy đó 🏰✨</p>
-                </div>
-            </div>
-
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Sweet memories">
-                <div class="slide-overlay">
-                    <h2 class="slide-title">🍒 Kỷ niệm ngọt ngào</h2>
-                    <p class="slide-caption">Những memory đẹp với em là treasure quý nhất của anh 🏆</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <div class="nav-controls prev-btn" onclick="changeSlide(-1)">‹</div>
-        <div class="nav-controls next-btn" onclick="changeSlide(1)">›</div>
-
-        <!-- Progress bar -->
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <!-- Indicators -->
-        <div class="indicators">
-            <span class="dot active" onclick="currentSlide(0)"></span>
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-            <span class="dot" onclick="currentSlide(4)"></span>
-            <span class="dot" onclick="currentSlide(5)"></span>
-        </div>
-    </div>
-
-    <!-- Love Counter Section -->
-    <div class="love-counter-section">
-        <div class="love-counter-main">
-            <div class="water-bg"></div>
-            <div class="hearts-container" id="heartsContainer"></div>
-            
-            <h2 class="counter-title">💕 Chúng mình đã yêu nhau được 💕</h2>
-            <div class="days-counter" id="daysCounter">0</div>
-            <div class="counter-label">ngày rồi đấy! 🥰</div>
-        </div>
-
-        <!-- Detailed time breakdown -->
-        <div class="time-breakdown">
-            <div class="time-unit">
-                <div class="time-value" id="years">0</div>
-                <div class="time-label">Năm</div>
-            </div>
-            <div class="time-unit">
-                <div class="time-value" id="months">0</div>
-                <div class="time-label">Tháng</div>
-            </div>
-            <div class="time-unit">
-                <div class="time-value" id="weeks">0</divu</title>
+  <title>💖 My Love Page 💖</title>
   <style>
     body {
       margin: 0;
@@ -784,12 +14,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-top: 30px;
     }
     h1 {
       font-size: 2rem;
       margin: 10px 0;
       color: #d63384;
+      text-align: center;
     }
     #counter {
       font-size: 1rem;
@@ -807,9 +39,11 @@
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
-    .slides {
-      display: none;
+    .mySlides { display: none; }
+    .mySlides img {
       width: 100%;
+      height: auto;
+      border-radius: 15px;
     }
     .prev, .next {
       cursor: pointer;
@@ -846,6 +80,7 @@
       font-size: 12px;
       color: #555;
       margin-top: 20px;
+      text-align: center;
     }
     /* Heart animation */
     .heart {
@@ -862,16 +97,31 @@
 </head>
 <body>
   <h1>💖 VuThiHoa 💖</h1>
-  <div id="counter"></div>  <div class="slideshow-container">
-    <div class="mySlides fade">
-      <img src="https://files.catbox.moe/jfdkp7.jpeg" class="slides" style="display:block" />
+  <div id="counter"></div>
+  
+  <div class="slideshow-container">
+    <div class="mySlides">
+      <img src="https://files.catbox.moe/jfdkp7.jpeg" />
+    </div>
+    <div class="mySlides">
+      <img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900" />
+    </div>
+    <div class="mySlides">
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900" />
     </div>
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
   </div>
+  
   <div class="dots">
-    <span class="dot active" onclick="currentSlide(1)"></span>
-  </div>  <footer>Cre NgocDoiAn</footer>  <script>
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+  
+  <footer>Cre NgocDoiAn</footer>
+  
+  <script>
     // Counter
     const startDate = new Date("2024-07-14T00:00:00");
     function updateCounter(){
@@ -890,7 +140,6 @@
       const minutes = Math.floor(diff / (1000*60));
       diff -= minutes * 1000*60;
       const seconds = Math.floor(diff / 1000);
-
       document.getElementById("counter").innerHTML =
         `${years} năm, ${months} tháng, ${weeks} tuần, ${days} ngày<br>`+
         `${hours} giờ, ${minutes} phút, ${seconds} giây`;
@@ -933,5 +182,6 @@
       setTimeout(()=>heart.remove(),6000);
     }
     setInterval(createHeart, 1000);
-  </script></body>
+  </script>
+</body>
 </html>
