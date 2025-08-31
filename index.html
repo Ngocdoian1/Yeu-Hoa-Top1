@@ -28,6 +28,10 @@
       text-align: center;
       color: #333;
       line-height: 1.6;
+      background: rgba(255,255,255,0.4);
+      padding: 10px 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     /* Slideshow */
     .slideshow-container {
@@ -48,29 +52,32 @@
       object-fit: cover;
       border-radius: 20px;
     }
-    /* Nút chuyển ảnh */
+    /* Nút chuyển ảnh gọn */
     .prev, .next {
       cursor: pointer;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255,255,255,0.3);
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      padding: 14px;
-      font-size: 22px;
-      font-weight: bold;
+      background: rgba(0,0,0,0.3);
       color: #fff;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      font-weight: bold;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: 0.3s;
       user-select: none;
     }
-    .prev { left: -50px; }
-    .next { right: -50px; }
+    .prev { left: 15px; }
+    .next { right: 15px; }
     .prev:hover, .next:hover {
       background: rgba(255,100,150,0.9);
       transform: translateY(-50%) scale(1.1);
     }
-    /* Chấm chỉ số */
+    /* Dấu chấm */
     .dots {
       text-align: center;
       padding: 15px 0;
@@ -89,17 +96,7 @@
       background-color: #d63384;
       box-shadow: 0 0 10px rgba(214,51,132,0.8);
     }
-    /* Quote */
-    #quote-box {
-      margin: 20px auto;
-      text-align: center;
-      font-size: 1.1rem;
-      color: #444;
-      max-width: 80%;
-      min-height: 50px;
-      transition: opacity 1s ease;
-    }
-    /* Floating hearts */
+    /* Heart animation */
     .heart {
       position: fixed;
       color: rgba(255,0,80,0.6);
@@ -142,9 +139,6 @@
     <span class="dot" onclick="currentSlide(2)"></span>
     <span class="dot" onclick="currentSlide(3)"></span>
   </div>
-
-  <!-- Quotes -->
-  <div id="quote-box">💌 “Em là định mệnh tuyệt vời nhất đời anh.”</div>
 
   <footer>Cre NgocDoiAn ✨</footer>
 
@@ -189,25 +183,6 @@
       dots[slideIndex-1].className += " active";
     }
     setInterval(()=>{ plusSlides(1); }, 6000);
-
-    // Quotes
-    const quotes = [
-      "💌 “Em là định mệnh tuyệt vời nhất đời anh.”",
-      "💌 “Mỗi ngày bên em là một món quà.”",
-      "💌 “Anh yêu em hơn ngàn lời nói.”",
-      "💌 “Có em, anh có cả thế giới.”"
-    ];
-    let quoteIndex = 0;
-    function changeQuote(){
-      quoteIndex = (quoteIndex+1) % quotes.length;
-      const box = document.getElementById("quote-box");
-      box.style.opacity = 0;
-      setTimeout(()=>{
-        box.innerHTML = quotes[quoteIndex];
-        box.style.opacity = 1;
-      },1000);
-    }
-    setInterval(changeQuote, 5000);
 
     // Floating hearts
     function createHeart(){
