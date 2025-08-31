@@ -22,17 +22,37 @@
       color: #d63384;
       text-shadow: 0 0 15px rgba(255,0,120,0.5);
     }
-    #counter {
-      font-size: 1rem;
-      margin-bottom: 20px;
-      text-align: center;
-      color: #333;
-      line-height: 1.6;
-      background: rgba(255,255,255,0.4);
-      padding: 10px 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+
+    /* --- Circle counter --- */
+    .circle-container {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+    .circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 8px solid #ff4f81;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: rgba(255,255,255,0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .days {
+      font-size: 42px;
+      font-weight: bold;
+      color: #d63384;
+    }
+    .label {
+      font-size: 18px;
+      color: #444;
+      margin-top: 6px;
+    }
+
     /* Slideshow */
     .slideshow-container {
       position: relative;
@@ -115,7 +135,14 @@
 </head>
 <body>
   <h1>💖 My Princess 💖</h1>
-  <div id="counter"></div>
+
+  <!-- Circle Counter -->
+  <div class="circle-container">
+    <div class="circle">
+      <div class="days" id="dayCounter">0</div>
+      <div class="label">Ngày yêu</div>
+    </div>
+  </div>
 
   <!-- Slideshow -->
   <div class="slideshow-container">
@@ -143,30 +170,25 @@
   <footer>Cre NgocDoiAn ✨</footer>
 
   <script>
-    // Counter
-    const startDate = new Date("2024-07-14T00:00:00");
-    function updateCounter(){
-      const now = new Date();
-      let diff = now - startDate;
-      const years = Math.floor(diff / (1000*60*60*24*365));
-      diff -= years * 1000*60*60*24*365;
-      const months = Math.floor(diff / (1000*60*60*24*30));
-      diff -= months * 1000*60*60*24*30;
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days * 1000*60*60*24;
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours * 1000*60*60;
-      const minutes = Math.floor(diff / (1000*60));
-      diff -= minutes * 1000*60;
-      const seconds = Math.floor(diff / 1000);
-      document.getElementById("counter").innerHTML =
-        `${years} năm, ${months} tháng, ${days} ngày<br>`+
-        `${hours} giờ, ${minutes} phút, ${seconds} giây`;
-    }
-    setInterval(updateCounter, 1000);
-    updateCounter();
+    // === Circle Counter Animation ===
+    const startDate = new Date("2024-07-14T00:00:00"); // chỉnh ngày yêu ở đây
+    const today = new Date();
+    const diffTime = today - startDate;
+    const loveDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-    // Slideshow
+    let counter = 0;
+    const speed = 20; // tốc độ đếm
+    const counterEl = document.getElementById("dayCounter");
+
+    const interval = setInterval(() => {
+      counter++;
+      counterEl.textContent = counter;
+      if (counter >= loveDays) {
+        clearInterval(interval);
+      }
+    }, speed);
+
+    // === Slideshow ===
     let slideIndex = 1;
     showSlides(slideIndex);
     function plusSlides(n){ showSlides(slideIndex += n); }
@@ -184,7 +206,7 @@
     }
     setInterval(()=>{ plusSlides(1); }, 6000);
 
-    // Floating hearts
+    // === Floating hearts ===
     function createHeart(){
       const heart = document.createElement("div");
       heart.className = "heart";
