@@ -1,372 +1,166 @@
 <!DOCTYPE html><html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Baby 💕</title>
-  <meta name="description" content="Trang tình yêu nho nhỏ – đếm ngày yêu và album ảnh xịn mượt cho PC & Mobile. Cre NgocDoiAn" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"></noscript>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Page - Ngoc Doi An</title>
   <style>
-    :root{
-      --bg1:#667eea;--bg2:#764ba2;--bg3:#f093fb;--bg4:#f5576c;--bg5:#4facfe;--bg6:#00f2fe;
-      --glass: rgba(255,255,255,.1);
-      --glass-2: rgba(255,255,255,.05);
-      --white: #fff;
-      --accent:#ff6b6b;
-      --accent-2:#4ecdc4;
-      --radius-xl: 25px;
-      --shadow-1: 0 25px 80px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.2);
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #ffdee9, #b5fffc);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background: linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),var(--bg4),var(--bg5),var(--bg6));
-      background-size: 400% 400%;
-      animation: gradientShift 12s ease infinite;
-      min-height:100vh; overflow-x:hidden;
+    h1 {
+      font-size: 2rem;
+      margin: 10px 0;
+      color: #d63384;
     }
-    @keyframes gradientShift{0%{background-position:0% 50%}25%{background-position:100% 50%}50%{background-position:100% 100%}75%{background-position:0% 100%}100%{background-position:0% 50%}}/* Custom cursor (desktop) */
-@media (hover:hover){ *{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">💖</text></svg>'), auto} }
-
-/* Sparkles background */
-.sparkles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
-.sparkle{position:absolute;color:rgba(255,255,255,.85);font-size:12px;animation:sparkleFloat 4s infinite ease-in-out}
-@keyframes sparkleFloat{0%,100%{transform:translateY(100vh) translateX(0) rotate(0) scale(0);opacity:0}10%{opacity:1;transform:translateY(90vh) translateX(10px) rotate(45deg) scale(1)}90%{opacity:1;transform:translateY(10vh) translateX(-10px) rotate(315deg) scale(1)}100%{opacity:0;transform:translateY(0) translateX(0) rotate(360deg) scale(0)}}
-
-/* Header */
-.header{text-align:center;padding:40px 20px 20px;position:relative;z-index:10}
-.title{font-size:clamp(2.5rem,8vw,4rem);background:linear-gradient(45deg,#ff6b6b,#ffd93d,#6bcf7f,#4d79ff,#ff6b6b);background-size:300% 300%;animation:rainbowText 3s ease-in-out infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:15px;text-shadow:0 0 30px rgba(255,255,255,.3);filter:drop-shadow(0 0 20px rgba(255,107,107,.3));line-height:1.1}
-@keyframes rainbowText{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.subtitle{font-size:clamp(1rem,4vw,1.4rem);color:var(--white);margin-bottom:20px;opacity:0;animation:slideIn 1.5s ease-out .5s forwards;text-shadow:0 2px 10px rgba(0,0,0,.3);padding:0 10px}
-@keyframes slideIn{to{opacity:1;transform:translateY(0)}from{opacity:0;transform:translateY(30px)}}
-
-/* Slideshow */
-.slideshow-container{position:relative;max-width:min(900px,95vw);margin:30px auto;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-1);background:var(--glass-2);backdrop-filter:blur(20px)}
-.slides-wrapper{position:relative;height:clamp(300px,60vh,550px);overflow:hidden}
-.slide{position:absolute;inset:0;opacity:0;transform:translateX(100%);transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1)}
-.slide.active{opacity:1;transform:translateX(0)}
-.slide.prev{transform:translateX(-100%)}
-.slide img{width:100%;height:100%;object-fit:cover;filter:brightness(1.08) saturate(1.18) contrast(1.06)}
-.slide-overlay{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent, rgba(0,0,0,.75));padding:clamp(20px,5vw,40px);color:var(--white)}
-.slide-title{font-size:clamp(1.4rem,5vw,2.2rem);font-weight:600;margin-bottom:8px;opacity:0;animation:slideUp 1s ease-out .2s forwards;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-.slide-caption{font-size:clamp(.9rem,3.5vw,1.2rem);opacity:0;animation:slideUp 1s ease-out .5s forwards;line-height:1.6;text-shadow:0 1px 5px rgba(0,0,0,.5)}
-@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
-
-/* Controls */
-.nav-controls{position:absolute;top:50%;transform:translateY(-50%);z-index:10}
-.prev-btn,.next-btn{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:clamp(16px,4vw,20px);width:clamp(40px,8vw,50px);height:clamp(40px,8vw,50px);border-radius:50%;display:flex;align-items:center;justify-content:center;user-select:none}
-.prev-btn{left:clamp(10px,3vw,20px)}
-.next-btn{right:clamp(10px,3vw,20px)}
-.prev-btn:active,.next-btn:active,.prev-btn:hover,.next-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-50%) scale(1.1);box-shadow:0 10px 25px rgba(0,0,0,.2)}
-
-/* Progress */
-.progress-container{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.25)}
-.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%}
-
-/* Indicators */
-.indicators{text-align:center;padding:18px;position:relative}
-.dot{height:clamp(10px,3vw,12px);width:clamp(10px,3vw,12px);margin:0 clamp(6px,2vw,8px);background:rgba(255,255,255,.45);border-radius:50%;display:inline-block;transition:all .35s;position:relative;overflow:hidden}
-.dot.active{background:var(--accent);transform:scale(1.35);box-shadow:0 0 18px rgba(255,107,107,.6)}
-.dot.active::before{content:'';position:absolute;inset:0;left:-100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:shimmer 2s infinite}
-@keyframes shimmer{0%{left:-100%}100%{left:100%}}
-
-/* Love Counter */
-.love-counter-section{margin:60px auto;max-width:min(1000px,95vw);padding:0 15px}
-.love-counter-main{background:var(--glass);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.25);border-radius:30px;padding:clamp(30px,6vw,50px);text-align:center;position:relative;overflow:hidden;margin-bottom:30px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
-.water-bg{position:absolute;inset:0;background:radial-gradient(circle at 20% 30%, rgba(64,224,255,.3) 0%, transparent 50%),radial-gradient(circle at 80% 70%, rgba(255,107,107,.3) 0%, transparent 50%),radial-gradient(circle at 50% 50%, rgba(255,217,61,.2) 0%, transparent 50%);animation:waterFlow 8s ease-in-out infinite}
-@keyframes waterFlow{0%,100%{transform:translateX(0) translateY(0) scale(1);opacity:.6}33%{transform:translateX(10px) translateY(-10px) scale(1.08);opacity:.8}66%{transform:translateX(-10px) translateY(10px) scale(.94);opacity:.7}}
-.hearts-container{position:absolute;inset:0;pointer-events:none}
-.floating-heart{position:absolute;color:rgba(255,107,107,.75);font-size:clamp(16px,4vw,20px);animation:floatHeart 6s infinite ease-in-out}
-@keyframes floatHeart{0%,100%{transform:translateY(0) rotate(0) scale(1);opacity:.7}50%{transform:translateY(-20px) rotate(180deg) scale(1.2);opacity:1}}
-.counter-title{color:#fff;font-size:clamp(1.4rem,5vw,2rem);font-weight:600;margin-bottom:22px;text-shadow:0 2px 15px rgba(0,0,0,.3);position:relative;z-index:2}
-.days-counter{font-size:clamp(3rem,10vw,4.6rem);font-weight:800;background:linear-gradient(45deg,var(--accent),var(--accent-2),#45b7d1,#96ceb4);background-size:300% 300%;animation:rainbowCounter 4s ease-in-out infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;position:relative;z-index:2;filter:drop-shadow(0 5px 15px rgba(0,0,0,.25));line-height:1}
-@keyframes rainbowCounter{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.counter-label{color:rgba(255,255,255,.92);font-size:clamp(1rem,3.5vw,1.25rem);font-weight:500;position:relative;z-index:2;text-shadow:0 1px 5px rgba(0,0,0,.3)}
-
-.time-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:clamp(10px,3vw,18px);margin-top:26px}
-.time-unit{background:var(--glass);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:clamp(14px,4vw,22px);text-align:center;position:relative;overflow:hidden;transition:all .3s}
-.time-unit:hover,.time-unit:active{transform:translateY(-4px);box-shadow:0 15px 35px rgba(0,0,0,.2);background:rgba(255,255,255,.16)}
-.time-unit::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:slideShine 3s infinite}
-@keyframes slideShine{0%{left:-100%}100%{left:100%}}
-.time-value{font-size:clamp(1.3rem,5vw,2rem);font-weight:800;color:var(--accent-2);margin-bottom:6px;text-shadow:0 0 16px rgba(78,205,196,.35)}
-.time-label{color:rgba(255,255,255,.85);font-size:.85rem;letter-spacing:.5px;text-transform:uppercase}
-
-/* Mobile tweaks */
-@media (max-width:768px){
-  .time-breakdown{grid-template-columns:repeat(3,1fr);gap:12px}
-  .slideshow-container{margin:20px auto}
-}
-@media (max-width:480px){
-  .time-breakdown{grid-template-columns:repeat(2,1fr);gap:10px}
-  .love-counter-main{padding:22px 18px}
-}
-
-/* Scrollbar */
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,.12);border-radius:4px}
-::-webkit-scrollbar-thumb{background:linear-gradient(45deg,var(--accent),var(--accent-2));border-radius:4px;box-shadow:inset 0 0 5px rgba(0,0,0,.2)}
-
-/* Credit */
-.credit{position:fixed;right:8px;bottom:6px;font-size:10px;opacity:.8;color:#fff;z-index:9999;user-select:none}
-
+    #counter {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .slideshow-container {
+      position: relative;
+      max-width: 90%;
+      max-height: 70vh;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .slides {
+      display: none;
+      width: 100%;
+    }
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.3s;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      background: rgba(0,0,0,0.3);
+    }
+    .next { right: 0; border-radius: 3px 0 0 3px; }
+    .prev:hover, .next:hover { background-color: rgba(0,0,0,0.6); }
+    .dots {
+      text-align: center;
+      padding: 10px;
+    }
+    .dot {
+      cursor: pointer;
+      height: 12px;
+      width: 12px;
+      margin: 0 4px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+    .active, .dot:hover { background-color: #717171; }
+    footer {
+      font-size: 12px;
+      color: #555;
+      margin-top: 20px;
+    }
+    /* Heart animation */
+    .heart {
+      position: fixed;
+      color: rgba(255,0,80,0.6);
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-800px) scale(0.5); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <div class="sparkles" id="sparklesContainer" aria-hidden="true"></div>  <header class="header">
-    <h1 class="title">💖 My Beautiful Princess 💖</h1>
-    <p class="subtitle">Em là điều kỳ diệu nhất trong cuộc đời anh ✨</p>
-  </header>  <!-- Slideshow -->  <section class="slideshow-container" aria-label="Bộ sưu tập ảnh">
-    <div class="slides-wrapper" id="slidesWrapper">
-      <!-- Slides will be injected by JS from the IMAGES array to make it easy to add ảnh -->
-    </div><button class="nav-controls prev-btn" id="prevBtn" aria-label="Ảnh trước" title="Ảnh trước">‹</button>
-<button class="nav-controls next-btn" id="nextBtn" aria-label="Ảnh tiếp" title="Ảnh tiếp">›</button>
-
-<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
-
-<div class="indicators" id="indicators" role="tablist" aria-label="Chỉ số slide"></div>
-
-  </section>  <!-- Love Counter -->  <section class="love-counter-section" aria-live="polite">
-    <div class="love-counter-main">
-      <div class="water-bg" aria-hidden="true"></div>
-      <div class="hearts-container" id="heartsContainer" aria-hidden="true"></div>
-      <h2 class="counter-title">💕 Chúng mình đã yêu nhau được 💕</h2>
-      <div class="days-counter" id="daysCounter">0</div>
-      <div class="counter-label">ngày rồi đấy! 🥰</div><div class="time-breakdown" id="timeBreakdown">
-    <div class="time-unit"><div class="time-value" id="years">0</div><div class="time-label">Năm</div></div>
-    <div class="time-unit"><div class="time-value" id="months">0</div><div class="time-label">Tháng</div></div>
-    <div class="time-unit"><div class="time-value" id="weeks">0</div><div class="time-label">Tuần</div></div>
-    <div class="time-unit"><div class="time-value" id="days">0</div><div class="time-label">Ngày</div></div>
-    <div class="time-unit"><div class="time-value" id="hours">0</div><div class="time-label">Giờ</div></div>
-    <div class="time-unit"><div class="time-value" id="minutes">0</div><div class="time-label">Phút</div></div>
-    <div class="time-unit"><div class="time-value" id="seconds">0</div><div class="time-label">Giây</div></div>
+  <h1>💖 Ngoc & Doi An 💖</h1>
+  <div id="counter"></div>  <div class="slideshow-container">
+    <div class="mySlides fade">
+      <img src="https://files.catbox.moe/jfdkp7.jpeg" class="slides" style="display:block" />
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
   </div>
-</div>
+  <div class="dots">
+    <span class="dot active" onclick="currentSlide(1)"></span>
+  </div>  <footer>Cre NgocDoiAn</footer>  <script>
+    // Counter
+    const startDate = new Date("2024-07-14T00:00:00");
+    function updateCounter(){
+      const now = new Date();
+      let diff = now - startDate;
+      const years = Math.floor(diff / (1000*60*60*24*365));
+      diff -= years * 1000*60*60*24*365;
+      const months = Math.floor(diff / (1000*60*60*24*30));
+      diff -= months * 1000*60*60*24*30;
+      const weeks = Math.floor(diff / (1000*60*60*24*7));
+      diff -= weeks * 1000*60*60*24*7;
+      const days = Math.floor(diff / (1000*60*60*24));
+      diff -= days * 1000*60*60*24;
+      const hours = Math.floor(diff / (1000*60*60));
+      diff -= hours * 1000*60*60;
+      const minutes = Math.floor(diff / (1000*60));
+      diff -= minutes * 1000*60;
+      const seconds = Math.floor(diff / 1000);
 
-  </section>  <div class="credit">Cre NgocDoiAn</div>  <script>
-  // ===== CONFIG =====
-  const START_DATE = new Date('2024-07-14T00:00:00'); // Local time
-  // Add/đổi ảnh tại đây. Ảnh đầu tiên là link bạn gửi (catbox).
-  const IMAGES = [
-    { src: 'https://files.catbox.moe/jfdkp7.jpeg', title: '💖 Kỷ niệm của chúng ta', caption: 'Khoảnh khắc đầu tiên – bắt đầu từ đây nè 🥰' },
-    { src: 'https://images.unsplash.com/photo-1494790108755-2616c88d7e85?auto=format&fit=crop&w=1200&q=80', title: 'Nụ cười thiên thần', caption: 'Em cười là cả thế giới anh sáng lên ✨' },
-    { src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=1200&q=80', title: 'Vẻ đẹp tự nhiên', caption: 'Không cần gì nhiều, em đã hoàn hảo rồi 💕' },
-    { src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80', title: 'Đôi mắt như galaxy', caption: 'Trong mắt em có cả vũ trụ 🌌' },
-    { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=80', title: 'Khoảnh khắc dịu dàng', caption: 'Gentle & soft – anh mê quá 😍' }
-  ];
-  const AUTOPLAY_MS = 5000; // thời gian mỗi slide
-
-  // ===== SPARKLES =====
-  (function sparkles(){
-    const c = document.getElementById('sparklesContainer');
-    const emojis = ['✨','💖','💫','🌸','⭐','🥰'];
-    function addOne(){
-      const s = document.createElement('div');
-      s.className = 'sparkle';
-      s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-      s.style.left = Math.random()*100 + 'vw';
-      s.style.animationDuration = (3 + Math.random()*3) + 's';
-      c.appendChild(s);
-      setTimeout(()=>c.removeChild(s), 4000);
+      document.getElementById("counter").innerHTML =
+        `${years} năm, ${months} tháng, ${weeks} tuần, ${days} ngày<br>`+
+        `${hours} giờ, ${minutes} phút, ${seconds} giây`;
     }
-    setInterval(addOne, 160);
-  })();
+    setInterval(updateCounter, 1000);
+    updateCounter();
 
-  // ===== HEARTS FLOAT IN COUNTER =====
-  (function hearts(){
-    const c = document.getElementById('heartsContainer');
-    function add(){
-      const h = document.createElement('div');
-      h.className = 'floating-heart';
-      h.textContent = '❤️';
-      h.style.left = Math.random()*90 + '%';
-      h.style.top = (10 + Math.random()*70) + '%';
-      h.style.animationDuration = (4 + Math.random()*4) + 's';
-      c.appendChild(h);
-      setTimeout(()=>c.removeChild(h), 6000);
-    }
-    setInterval(add, 900);
-  })();
-
-  // ===== LOVE COUNTER (realtime & chính xác Y-M-D-H-M-S) =====
-  function daysBetween(a,b){
-    const ms = b - a; return Math.floor(ms / (1000*60*60*24));
-  }
-  function diffDetailed(start, now){
-    // Tính Y, M, D bằng lịch thực (đếm tháng/ngày chuẩn), sau đó cộng H,M,S
-    let y = now.getFullYear() - start.getFullYear();
-    let m = now.getMonth() - start.getMonth();
-    let d = now.getDate() - start.getDate();
-
-    if (d < 0) {
-      // mượn ngày từ tháng trước
-      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-      d += prevMonth;
-      m -= 1;
-    }
-    if (m < 0) { m += 12; y -= 1; }
-
-    // Tạo mốc (start + y năm + m tháng + d ngày) để lấy phần thời gian còn lại
-    const base = new Date(start);
-    base.setFullYear(start.getFullYear()+y);
-    base.setMonth(start.getMonth()+m);
-    base.setDate(start.getDate()+d);
-
-    let ms = now - base;
-    if (ms < 0) ms = 0; // phòng lỗi
-    const S = 1000, MIN = 60*S, H = 60*MIN, D = 24*H;
-    const hh = Math.floor(ms / H); ms -= hh*H;
-    const mm = Math.floor(ms / MIN); ms -= mm*MIN;
-    const ss = Math.floor(ms / S);
-
-    const totalDays = daysBetween(start, now);
-    const weeks = Math.floor(totalDays/7);
-    return { years:y, months:m, days:d, hours:hh, minutes:mm, seconds:ss, totalDays, weeks };
-  }
-  function pad(n){ return n.toString().padStart(2,'0'); }
-  function updateCounter(){
-    const now = new Date();
-    const diff = diffDetailed(START_DATE, now);
-    document.getElementById('daysCounter').textContent = diff.totalDays.toLocaleString('vi-VN');
-    document.getElementById('years').textContent = diff.years;
-    document.getElementById('months').textContent = diff.months;
-    document.getElementById('weeks').textContent = diff.weeks;
-    document.getElementById('days').textContent = diff.days;
-    document.getElementById('hours').textContent = pad(diff.hours);
-    document.getElementById('minutes').textContent = pad(diff.minutes);
-    document.getElementById('seconds').textContent = pad(diff.seconds);
-  }
-  updateCounter();
-  setInterval(updateCounter, 1000);
-
-  // ===== SLIDESHOW =====
-  const slidesWrapper = document.getElementById('slidesWrapper');
-  const indicators = document.getElementById('indicators');
-  const progressBar = document.getElementById('progressBar');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-
-  let current = 0;
-  let autoTimer = null;
-  let rafId = null;
-  let startTs = 0;
-  let paused = false;
-
-  function renderSlides(){
-    // tạo slide nodes
-    slidesWrapper.innerHTML = '';
-    indicators.innerHTML = '';
-
-    IMAGES.forEach((item, idx)=>{
-      const slide = document.createElement('div');
-      slide.className = 'slide' + (idx===0? ' active' : '');
-      slide.setAttribute('role','group');
-      slide.setAttribute('aria-roledescription','slide');
-      slide.setAttribute('aria-label', `${idx+1} / ${IMAGES.length}`);
-
-      const img = document.createElement('img');
-      img.src = item.src;
-      img.alt = item.title || `Ảnh ${idx+1}`;
-      img.loading = idx===0 ? 'eager' : 'lazy';
-
-      const overlay = document.createElement('div');
-      overlay.className = 'slide-overlay';
-      overlay.innerHTML = `<h2 class="slide-title">${item.title||''}</h2><p class="slide-caption">${item.caption||''}</p>`;
-
-      slide.appendChild(img); slide.appendChild(overlay);
-      slidesWrapper.appendChild(slide);
-
-      const dot = document.createElement('span');
-      dot.className = 'dot' + (idx===0? ' active' : '');
-      dot.setAttribute('role','tab');
-      dot.setAttribute('aria-selected', idx===0);
-      dot.title = `Tới ảnh ${idx+1}`;
-      dot.addEventListener('click', ()=> goTo(idx));
-      indicators.appendChild(dot);
-    });
-  }
-
-  function setActive(index, dir=1){
-    const slides = [...document.querySelectorAll('.slide')];
-    const dots = [...document.querySelectorAll('.dot')];
-    slides.forEach(s=>s.classList.remove('active','prev'));
-    dots.forEach(d=>{ d.classList.remove('active'); d.setAttribute('aria-selected','false'); });
-
-    const prevIndex = current;
-    current = (index + IMAGES.length) % IMAGES.length;
-
-    if (slides[prevIndex]) slides[prevIndex].classList.add('prev');
-    if (slides[current]) slides[current].classList.add('active');
-    if (dots[current]){ dots[current].classList.add('active'); dots[current].setAttribute('aria-selected','true'); }
-
-    resetProgress();
-  }
-
-  function next(){ setActive(current+1, 1); }
-  function prev(){ setActive(current-1, -1); }
-  function goTo(i){ setActive(i); }
-
-  function resetProgress(){
-    progressBar.style.width = '0%';
-    startTs = performance.now();
-  }
-
-  function loop(ts){
-    if (paused){ startTs = ts - (AUTOPLAY_MS * progressBar.offsetWidth / slidesWrapper.clientWidth); }
-    const elapsed = ts - startTs;
-    const pct = Math.min(100, (elapsed / AUTOPLAY_MS) * 100);
-    progressBar.style.width = pct + '%';
-    if (elapsed >= AUTOPLAY_MS){ next(); startTs = ts; }
-    rafId = requestAnimationFrame(loop);
-  }
-
-  function startAutoplay(){
-    stopAutoplay();
-    startTs = performance.now();
-    rafId = requestAnimationFrame(loop);
-  }
-  function stopAutoplay(){ if (rafId) cancelAnimationFrame(rafId); }
-
-  // Pause khi tab ẩn để tiết kiệm tài nguyên
-  document.addEventListener('visibilitychange', ()=>{
-    paused = document.hidden;
-  });
-
-  // Controls
-  prevBtn.addEventListener('click', ()=>{ prev(); });
-  nextBtn.addEventListener('click', ()=>{ next(); });
-
-  // Keyboard (desktop)
-  window.addEventListener('keydown', (e)=>{
-    if (e.key === 'ArrowLeft') prev();
-    if (e.key === 'ArrowRight') next();
-  });
-
-  // Touch swipe (mobile)
-  (function enableSwipe(){
-    let x0=null, y0=null;
-    const el = slidesWrapper;
-    el.addEventListener('touchstart', (e)=>{ const t=e.touches[0]; x0=t.clientX; y0=t.clientY; }, {passive:true});
-    el.addEventListener('touchmove', (e)=>{
-      if (x0===null || y0===null) return;
-      const t = e.touches[0];
-      const dx = t.clientX - x0; const dy = t.clientY - y0;
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30){
-        if (dx>0) prev(); else next();
-        x0=y0=null;
+    // Slideshow
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    function plusSlides(n){ showSlides(slideIndex += n); }
+    function currentSlide(n){ showSlides(slideIndex = n); }
+    function showSlides(n){
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
       }
-    }, {passive:true});
-    el.addEventListener('touchend', ()=>{ x0=y0=null; });
-  })();
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+    }
+    // Auto slideshow
+    setInterval(()=>{ plusSlides(1); }, 5000);
 
-  // Init
-  renderSlides();
-  startAutoplay();
-
-  // ===== Helpers for adding ảnh sau này =====
-  // Bạn chỉ cần push thêm vào IMAGES rồi gọi renderSlides() và setActive(current)
-  // Ví dụ:
-  // IMAGES.push({src:'LINK_ẢNH', title:'Tiêu đề', caption:'Mô tả'}); renderSlides(); setActive(IMAGES.length-1);
-
+    // Floating hearts
+    function createHeart(){
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random()*100 + "vw";
+      heart.style.top = "100vh";
+      heart.innerText = "❤";
+      heart.style.fontSize = (20+Math.random()*20)+"px";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),6000);
+    }
+    setInterval(createHeart, 1000);
   </script></body>
 </html>
