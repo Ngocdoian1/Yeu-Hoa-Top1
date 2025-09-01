@@ -8,55 +8,68 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #ffdee9, #b5fffc);
-      min-height: 100vh;
+      color: #d63384;
+      text-align: center;
       overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: #000;
     }
+
+    /* Canvas nền trái tim 3D */
+    #bgCanvas {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:-1;
+      background: linear-gradient(120deg, #ffdee9, #b5fffc);
+    }
+
     h1 {
       margin: 20px 0 10px;
       font-size: 2rem;
-      text-align: center;
-      color: #d63384;
-      text-shadow: 0 0 15px rgba(255,0,120,0.5);
+      text-shadow: 0 0 15px rgba(255,0,120,0.6);
     }
 
-    /* Circle counter */
-    .circle-container {
-      margin: 15px 0 10px;
+    /* Counter box */
+    .time-detail {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
     }
-    .circle {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: 8px solid #ff4f81;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      background: rgba(255,255,255,0.4);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    .time-box {
+      background: rgba(255,255,255,0.7);
+      padding: 15px 18px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,0,100,0.5);
+      position: relative;
+      min-width: 80px;
       animation: pulse 2s infinite;
     }
+    .time-box::before {
+      content:"💖";
+      position: absolute;
+      top:-15px; right:-10px;
+      animation: float 3s infinite;
+    }
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 15px rgba(255,0,120,0.5); }
-      50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,0,120,0.9); }
-      100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,0,120,0.5); }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
     }
-    .days {
-      font-size: 40px;
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+    .time-box .num {
+      font-size: 20px;
       font-weight: bold;
-      color: #d63384;
+      color: #ff2e7e;
     }
-    .label {
-      font-size: 16px;
-      color: #444;
-      margin-top: 4px;
+    .time-box .txt {
+      font-size: 12px;
+      color: #333;
     }
 
     /* Slideshow */
@@ -64,10 +77,10 @@
       position: relative;
       width: 95%;
       max-width: 500px;
-      margin: 25px auto 10px;
+      margin: 20px auto;
       overflow: hidden;
       border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     }
     .mySlides { display: none; }
     .mySlides img {
@@ -85,7 +98,7 @@
       width: 35px;
       height: 35px;
       border-radius: 50%;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.4);
       color: #fff;
       font-weight: bold;
       font-size: 18px;
@@ -99,59 +112,22 @@
     .next { right: 10px; }
     .prev:hover, .next:hover {
       background: rgba(255,100,150,0.9);
-      transform: translateY(-50%) scale(1.1);
     }
-    .dots { text-align: center; padding: 12px 0; }
+    .dots {
+      text-align: center;
+      padding: 12px 0;
+    }
     .dot {
       cursor: pointer;
-      height: 10px;
-      width: 10px;
+      height: 10px; width: 10px;
       margin: 0 3px;
       background-color: #bbb;
       border-radius: 50%;
       display: inline-block;
-      transition: background-color 0.6s ease;
     }
     .active, .dot:hover {
       background-color: #d63384;
       box-shadow: 0 0 8px rgba(214,51,132,0.8);
-    }
-
-    /* Add photo form */
-    .add-photo {
-      margin: 20px;
-      display: flex;
-      gap: 10px;
-    }
-    .add-photo input {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .add-photo button {
-      padding: 8px 14px;
-      background: #ff4f81;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .add-photo button:hover {
-      background: #d63384;
-    }
-
-    /* Floating icons */
-    .icon {
-      position: fixed;
-      animation: floatUp 6s linear forwards;
-      opacity: 0.8;
-      z-index: 0;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
     }
 
     /* Music Button */
@@ -170,34 +146,69 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       color: #fff;
       font-size: 20px;
-      transition: 0.3s;
       z-index: 10;
     }
-    .music-btn:hover { transform: scale(1.1); background: #ff2e7e; }
+    .music-btn:hover { transform: scale(1.1); }
 
-    footer { margin: 20px 0 15px; font-size: 0.8rem; color: #555; }
+    footer {
+      margin: 20px 0 15px;
+      font-size: 0.8rem;
+      color: #555;
+      cursor: pointer;
+    }
+
+    /* Hidden admin form */
+    #adminForm {
+      display: none;
+      margin: 20px auto;
+      padding: 15px;
+      max-width: 400px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    #adminForm input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    #adminForm button {
+      padding: 8px 15px;
+      border: none;
+      background: #d63384;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #adminForm button:hover { background: #ff4f81; }
   </style>
 </head>
 <body>
+  <canvas id="bgCanvas"></canvas>
   <h1>💖 My Princess 💖</h1>
 
-  <!-- Circle Counter -->
-  <div class="circle-container">
-    <div class="circle">
-      <div class="days" id="dayCounter">0</div>
-      <div class="label">Ngày yêu</div>
-    </div>
+  <!-- Counter -->
+  <div class="time-detail">
+    <div class="time-box"><div class="num" id="years">0</div><div class="txt">Năm</div></div>
+    <div class="time-box"><div class="num" id="months">0</div><div class="txt">Tháng</div></div>
+    <div class="time-box"><div class="num" id="weeks">0</div><div class="txt">Tuần</div></div>
+    <div class="time-box"><div class="num" id="days">0</div><div class="txt">Ngày</div></div>
+    <div class="time-box"><div class="num" id="hours">0</div><div class="txt">Giờ</div></div>
+    <div class="time-box"><div class="num" id="minutes">0</div><div class="txt">Phút</div></div>
+    <div class="time-box"><div class="num" id="seconds">0</div><div class="txt">Giây</div></div>
   </div>
 
   <!-- Slideshow -->
-  <div class="slideshow-container" id="slideshow"></div>
-  <div class="dots" id="dots"></div>
-
-  <!-- Add Photo Form -->
-  <div class="add-photo">
-    <input type="text" id="photoUrl" placeholder="Dán link ảnh vào đây...">
-    <button onclick="addPhoto()">Thêm</button>
+  <div class="slideshow-container" id="slideshow">
+    <div class="mySlides"><img src="https://files.catbox.moe/jfdkp7.jpeg"></div>
+    <div class="mySlides"><img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900&q=80"></div>
+    <div class="mySlides"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80"></div>
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
   </div>
+  <div class="dots" id="dots"></div>
 
   <!-- Music Button -->
   <div class="music-btn" onclick="toggleMusic()">🎵</div>
@@ -205,87 +216,75 @@
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
   </audio>
 
-  <footer>Cre NgocDoiAn ✨</footer>
+  <footer id="footer">Cre NgocDoiAn ✨</footer>
+
+  <!-- Hidden Admin Form -->
+  <div id="adminForm">
+    <input type="text" id="newImg" placeholder="Dán link ảnh...">
+    <button onclick="addImage()">Thêm ảnh</button>
+  </div>
 
   <script>
-    // === Counter ===
+    // Counter
     const startDate = new Date("2024-07-14T00:00:00");
     function updateCounter(){
       const now = new Date();
-      let days = Math.floor((now - startDate)/(1000*60*60*24));
-      document.getElementById("dayCounter").textContent = days;
+      let diff = now - startDate;
+      const years = Math.floor(diff / (1000*60*60*24*365));
+      diff -= years * 1000*60*60*24*365;
+      const months = Math.floor(diff / (1000*60*60*24*30));
+      diff -= months * 1000*60*60*24*30;
+      const weeks = Math.floor(diff / (1000*60*60*24*7));
+      diff -= weeks * 1000*60*60*24*7;
+      const days = Math.floor(diff / (1000*60*60*24));
+      diff -= days * 1000*60*60*24;
+      const hours = Math.floor(diff / (1000*60*60));
+      diff -= hours * 1000*60*60;
+      const minutes = Math.floor(diff / (1000*60));
+      diff -= minutes * 1000*60;
+      const seconds = Math.floor(diff / 1000);
+
+      document.getElementById("years").textContent = years;
+      document.getElementById("months").textContent = months;
+      document.getElementById("weeks").textContent = weeks;
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
     }
     setInterval(updateCounter, 1000);
     updateCounter();
 
-    // === Slideshow with localStorage ===
-    let images = JSON.parse(localStorage.getItem("lovePhotos")) || [
-      "https://files.catbox.moe/jfdkp7.jpeg",
-      "https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900&q=80"
-    ];
-
-    const slideshow = document.getElementById("slideshow");
+    // Slideshow
+    let slideIndex = 1;
     const dotsContainer = document.getElementById("dots");
-
-    function renderSlideshow(){
-      slideshow.innerHTML = "";
+    function renderDots(){
       dotsContainer.innerHTML = "";
-      images.forEach((img, idx)=>{
-        let div = document.createElement("div");
-        div.className = "mySlides";
-        div.innerHTML = `<img src="${img}" alt="Love Pic ${idx+1}">`;
-        slideshow.appendChild(div);
-        let dot = document.createElement("span");
-        dot.className = "dot";
-        dot.onclick = ()=>currentSlide(idx+1);
+      let slides = document.getElementsByClassName("mySlides");
+      for (let i=0;i<slides.length;i++){
+        const dot=document.createElement("span");
+        dot.className="dot"+(i==0?" active":"");
+        dot.onclick=(()=>{currentSlide(i+1);});
         dotsContainer.appendChild(dot);
-      });
-      slideshow.innerHTML += `<a class="prev" onclick="plusSlides(-1)">❮</a><a class="next" onclick="plusSlides(1)">❯</a>`;
-      showSlides(slideIndex);
-    }
-
-    function addPhoto(){
-      let url = document.getElementById("photoUrl").value.trim();
-      if(url){
-        images.push(url);
-        localStorage.setItem("lovePhotos", JSON.stringify(images));
-        document.getElementById("photoUrl").value = "";
-        renderSlideshow();
       }
     }
-
-    let slideIndex = 1;
     function plusSlides(n){ showSlides(slideIndex += n); }
     function currentSlide(n){ showSlides(slideIndex = n); }
     function showSlides(n){
+      let i;
       let slides = document.getElementsByClassName("mySlides");
       let dots = document.getElementsByClassName("dot");
       if (n > slides.length) {slideIndex = 1}
       if (n < 1) {slideIndex = slides.length}
-      for (let i=0; i<slides.length; i++) slides[i].style.display = "none";
-      for (let i=0; i<dots.length; i++) dots[i].className = dots[i].className.replace(" active", "");
+      for (i = 0; i < slides.length; i++) slides[i].style.display = "none";
+      for (i = 0; i < dots.length; i++) dots[i].classList.remove("active");
       slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
+      dots[slideIndex-1].classList.add("active");
     }
-
-    renderSlideshow();
     setInterval(()=>{ plusSlides(1); }, 6000);
+    renderDots(); showSlides(slideIndex);
 
-    // === Floating icons ===
-    const icons = ["💖","💘","💝","🌸","✨","💕"];
-    function createIcon(){
-      const el = document.createElement("div");
-      el.className = "icon";
-      el.innerText = icons[Math.floor(Math.random()*icons.length)];
-      el.style.left = Math.random()*100 + "vw";
-      el.style.top = "100vh";
-      el.style.fontSize = (20+Math.random()*25)+"px";
-      document.body.appendChild(el);
-      setTimeout(()=>el.remove(),6000);
-    }
-    setInterval(createIcon, 700);
-
-    // === Music ===
+    // Music
     const music = document.getElementById("bgMusic");
     let isPlaying = false;
     function toggleMusic(){
@@ -293,6 +292,68 @@
       else { music.play(); }
       isPlaying = !isPlaying;
     }
+
+    // Hidden admin
+    let clickCount=0, clickTimer;
+    document.getElementById("footer").addEventListener("click",()=>{
+      clickCount++;
+      clearTimeout(clickTimer);
+      clickTimer=setTimeout(()=>{clickCount=0;},1000);
+      if(clickCount==5){
+        document.getElementById("adminForm").style.display="block";
+        clickCount=0;
+      }
+    });
+    function addImage(){
+      const url=document.getElementById("newImg").value.trim();
+      if(!url) return;
+      const slide=document.createElement("div");
+      slide.className="mySlides";
+      slide.innerHTML=`<img src="${url}">`;
+      document.getElementById("slideshow").appendChild(slide);
+      document.getElementById("newImg").value="";
+      renderDots();
+    }
+
+    // Canvas Hearts Background
+    const canvas=document.getElementById("bgCanvas");
+    const ctx=canvas.getContext("2d");
+    let hearts=[];
+    function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight;}
+    window.onresize=resize; resize();
+    function drawHeart(x,y,size,color){
+      ctx.save();
+      ctx.translate(x,y);
+      ctx.scale(size,size);
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.bezierCurveTo(0,-3, -5,-3, -5,0);
+      ctx.bezierCurveTo(-5,3,0,6,0,9);
+      ctx.bezierCurveTo(0,6,5,3,5,0);
+      ctx.bezierCurveTo(5,-3,0,-3,0,0);
+      ctx.fillStyle=color;
+      ctx.fill();
+      ctx.restore();
+    }
+    function loop(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      hearts.forEach(h=>{
+        h.y-=h.speed;
+        drawHeart(h.x,h.y,h.size,h.color);
+      });
+      hearts=hearts.filter(h=>h.y>-10);
+      if(Math.random()<0.05){
+        hearts.push({
+          x:Math.random()*canvas.width,
+          y:canvas.height+10,
+          size:0.4+Math.random()*0.6,
+          speed:0.5+Math.random()*1.5,
+          color:"rgba(255,"+(100+Math.random()*155)+","+(150+Math.random()*100)+",0.7)"
+        });
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
   </script>
 </body>
 </html>
