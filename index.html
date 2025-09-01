@@ -23,12 +23,48 @@
       text-shadow: 0 0 15px rgba(255,0,120,0.5);
     }
 
+    /* Circle counter */
+    .circle-container {
+      margin: 15px 0 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .circle {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 8px solid #ff4f81;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: rgba(255,255,255,0.4);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 15px rgba(255,0,120,0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,0,120,0.9); }
+      100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,0,120,0.5); }
+    }
+    .days {
+      font-size: 40px;
+      font-weight: bold;
+      color: #d63384;
+    }
+    .label {
+      font-size: 16px;
+      color: #444;
+      margin-top: 4px;
+    }
+
     /* Slideshow */
     .slideshow-container {
       position: relative;
       width: 95%;
       max-width: 500px;
-      margin: 20px auto 10px;
+      margin: 25px auto 10px;
       overflow: hidden;
       border-radius: 15px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
@@ -41,7 +77,6 @@
       object-fit: cover;
       border-radius: 15px;
     }
-    /* Nút chuyển ảnh */
     .prev, .next {
       cursor: pointer;
       position: absolute;
@@ -66,11 +101,7 @@
       background: rgba(255,100,150,0.9);
       transform: translateY(-50%) scale(1.1);
     }
-    /* Dấu chấm */
-    .dots {
-      text-align: center;
-      padding: 12px 0;
-    }
+    .dots { text-align: center; padding: 12px 0; }
     .dot {
       cursor: pointer;
       height: 10px;
@@ -86,46 +117,29 @@
       box-shadow: 0 0 8px rgba(214,51,132,0.8);
     }
 
-    /* Status Box */
-    .status-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: rgba(255,255,255,0.7);
-      border-radius: 15px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-      text-align: center;
-      max-width: 400px;
+    /* Add photo form */
+    .add-photo {
+      margin: 20px;
+      display: flex;
+      gap: 10px;
     }
-    .status-img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      margin-bottom: 10px;
+    .add-photo input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
-    .status-text {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #d63384;
-      margin-bottom: 10px;
+    .add-photo button {
+      padding: 8px 14px;
+      background: #ff4f81;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
     }
-    .love-meter {
-      width: 100%;
-      height: 15px;
-      background: #eee;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-    .love-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff4f81, #ff85a1);
-      width: 90%; /* chỉnh mức độ tình yêu tại đây */
-    }
-    .meter-label {
-      font-size: 0.9rem;
-      color: #444;
+    .add-photo button:hover {
+      background: #d63384;
     }
 
     /* Floating icons */
@@ -159,43 +173,30 @@
       transition: 0.3s;
       z-index: 10;
     }
-    .music-btn:hover {
-      transform: scale(1.1);
-      background: #ff2e7e;
-    }
+    .music-btn:hover { transform: scale(1.1); background: #ff2e7e; }
 
-    footer {
-      margin: 20px 0 15px;
-      font-size: 0.8rem;
-      color: #555;
-    }
+    footer { margin: 20px 0 15px; font-size: 0.8rem; color: #555; }
   </style>
 </head>
 <body>
   <h1>💖 My Princess 💖</h1>
 
-  <!-- Slideshow (chỉ cần thêm ảnh mới bằng cách copy <div class="mySlides"><img src="LINK"></div>) -->
-  <div class="slideshow-container">
-    <div class="mySlides"><img src="https://files.catbox.moe/jfdkp7.jpeg" alt="Love Pic 1"></div>
-    <div class="mySlides"><img src="https://files.catbox.moe/gb2ds2.jpg" alt="Love Pic 2"></div>
-    <div class="mySlides"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80" althttps:="Love Pic 3"></div>
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
+  <!-- Circle Counter -->
+  <div class="circle-container">
+    <div class="circle">
+      <div class="days" id="dayCounter">0</div>
+      <div class="label">Ngày yêu</div>
+    </div>
   </div>
 
-  <!-- Dấu chấm -->
-  <div class="dots">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-  </div>
+  <!-- Slideshow -->
+  <div class="slideshow-container" id="slideshow"></div>
+  <div class="dots" id="dots"></div>
 
-  <!-- Status Box -->
-  <div class="status-box">
-    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80" alt="Love Avatar" class="status-img">
-    <div class="status-text">❤️ Rất hạnh phúc bên em ❤️</div>
-    <div class="love-meter"><div class="love-fill"></div></div>
-    <div class="meter-label">Mức độ yêu thương: 90%</div>
+  <!-- Add Photo Form -->
+  <div class="add-photo">
+    <input type="text" id="photoUrl" placeholder="Dán link ảnh vào đây...">
+    <button onclick="addPhoto()">Thêm</button>
   </div>
 
   <!-- Music Button -->
@@ -207,22 +208,67 @@
   <footer>Cre NgocDoiAn ✨</footer>
 
   <script>
-    // === Slideshow ===
+    // === Counter ===
+    const startDate = new Date("2024-07-14T00:00:00");
+    function updateCounter(){
+      const now = new Date();
+      let days = Math.floor((now - startDate)/(1000*60*60*24));
+      document.getElementById("dayCounter").textContent = days;
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // === Slideshow with localStorage ===
+    let images = JSON.parse(localStorage.getItem("lovePhotos")) || [
+      "https://files.catbox.moe/jfdkp7.jpeg",
+      "https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900&q=80"
+    ];
+
+    const slideshow = document.getElementById("slideshow");
+    const dotsContainer = document.getElementById("dots");
+
+    function renderSlideshow(){
+      slideshow.innerHTML = "";
+      dotsContainer.innerHTML = "";
+      images.forEach((img, idx)=>{
+        let div = document.createElement("div");
+        div.className = "mySlides";
+        div.innerHTML = `<img src="${img}" alt="Love Pic ${idx+1}">`;
+        slideshow.appendChild(div);
+        let dot = document.createElement("span");
+        dot.className = "dot";
+        dot.onclick = ()=>currentSlide(idx+1);
+        dotsContainer.appendChild(dot);
+      });
+      slideshow.innerHTML += `<a class="prev" onclick="plusSlides(-1)">❮</a><a class="next" onclick="plusSlides(1)">❯</a>`;
+      showSlides(slideIndex);
+    }
+
+    function addPhoto(){
+      let url = document.getElementById("photoUrl").value.trim();
+      if(url){
+        images.push(url);
+        localStorage.setItem("lovePhotos", JSON.stringify(images));
+        document.getElementById("photoUrl").value = "";
+        renderSlideshow();
+      }
+    }
+
     let slideIndex = 1;
-    showSlides(slideIndex);
     function plusSlides(n){ showSlides(slideIndex += n); }
     function currentSlide(n){ showSlides(slideIndex = n); }
     function showSlides(n){
-      let i;
       let slides = document.getElementsByClassName("mySlides");
       let dots = document.getElementsByClassName("dot");
       if (n > slides.length) {slideIndex = 1}
       if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) slides[i].style.display = "none";
-      for (i = 0; i < dots.length; i++) dots[i].className = dots[i].className.replace(" active", "");
+      for (let i=0; i<slides.length; i++) slides[i].style.display = "none";
+      for (let i=0; i<dots.length; i++) dots[i].className = dots[i].className.replace(" active", "");
       slides[slideIndex-1].style.display = "block";
       dots[slideIndex-1].className += " active";
     }
+
+    renderSlideshow();
     setInterval(()=>{ plusSlides(1); }, 6000);
 
     // === Floating icons ===
@@ -243,11 +289,8 @@
     const music = document.getElementById("bgMusic");
     let isPlaying = false;
     function toggleMusic(){
-      if(isPlaying){
-        music.pause();
-      } else {
-        music.play();
-      }
+      if(isPlaying){ music.pause(); }
+      else { music.play(); }
       isPlaying = !isPlaying;
     }
   </script>
