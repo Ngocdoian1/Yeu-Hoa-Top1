@@ -23,144 +23,182 @@
       text-shadow: 0 0 15px rgba(255,0,120,0.5);
     }
 
-    /* Circle counter */
-    .circle-container { margin: 15px 0 10px; display: flex; justify-content: center; align-items: center;}
-    .circle {
-      width: 180px; height: 180px; border-radius: 50%; border: 8px solid #ff4f81;
-      display: flex; justify-content: center; align-items: center; flex-direction: column;
-      background: rgba(255,255,255,0.4); box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-    }
-    .days { font-size: 40px; font-weight: bold; color: #d63384;}
-    .label { font-size: 16px; color: #444; margin-top: 4px;}
-
-    /* Detail boxes */
-    .time-detail { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 15px;}
-    .time-box {
-      background: rgba(255,255,255,0.6); padding: 10px 14px; border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15); text-align: center; min-width: 70px;
-    }
-    .time-box .num { font-size: 18px; font-weight: bold; color: #ff2e7e;}
-    .time-box .txt { font-size: 12px; color: #333; margin-top: 3px;}
-
-    /* Love Meter */
-    .love-meter { margin-top:20px; width: 80%; max-width:400px; }
-    .bar { height:20px; background:#f1f1f1; border-radius:20px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.2);}
-    .bar-fill { height:100%; width:95%; background:linear-gradient(90deg,#ff2e7e,#ff9a9e); transition:width 1s; }
-    .status { text-align:center; margin-top:8px; font-weight:500; color:#d63384;}
-
     /* Slideshow */
-    .slideshow-container { position:relative; width:95%; max-width:500px; margin:25px auto 10px; overflow:hidden; border-radius:15px; box-shadow:0 10px 40px rgba(0,0,0,0.3);}
-    .mySlides { display:none; }
-    .mySlides img { width:100%; height:auto; max-height:55vh; object-fit:cover; border-radius:15px;}
-    .prev,.next {
-      cursor:pointer; position:absolute; top:50%; transform:translateY(-50%);
-      width:35px; height:35px; border-radius:50%; background:rgba(0,0,0,0.3);
-      color:#fff; font-weight:bold; font-size:18px; display:flex; align-items:center; justify-content:center;
-      transition:0.3s; user-select:none;
+    .slideshow-container {
+      position: relative;
+      width: 95%;
+      max-width: 500px;
+      margin: 20px auto 10px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     }
-    .prev{left:10px;} .next{right:10px;}
-    .prev:hover,.next:hover{background:rgba(255,100,150,0.9); transform:translateY(-50%) scale(1.1);}
-    .dots{text-align:center; padding:12px 0;}
-    .dot{cursor:pointer;height:10px;width:10px;margin:0 3px;background:#bbb;border-radius:50%;display:inline-block;transition:background 0.6s;}
-    .active,.dot:hover{background:#d63384;box-shadow:0 0 8px rgba(214,51,132,0.8);}
+    .mySlides { display: none; }
+    .mySlides img {
+      width: 100%;
+      height: auto;
+      max-height: 55vh;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+    /* Nút chuyển ảnh */
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      user-select: none;
+    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+    .prev:hover, .next:hover {
+      background: rgba(255,100,150,0.9);
+      transform: translateY(-50%) scale(1.1);
+    }
+    /* Dấu chấm */
+    .dots {
+      text-align: center;
+      padding: 12px 0;
+    }
+    .dot {
+      cursor: pointer;
+      height: 10px;
+      width: 10px;
+      margin: 0 3px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+    .active, .dot:hover {
+      background-color: #d63384;
+      box-shadow: 0 0 8px rgba(214,51,132,0.8);
+    }
 
-    /* Quotes */
-    .quotes {margin:20px auto; max-width:500px; text-align:center; font-style:italic; color:#444; font-size:1rem;}
-
-    /* Timeline */
-    .timeline {margin:20px auto; max-width:500px;}
-    .event {background:rgba(255,255,255,0.7); padding:10px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.2); margin:8px 0; text-align:center;}
-    .event strong{color:#d63384;}
-
-    /* Secret message popup */
-    .secret-btn {margin:15px; padding:10px 20px; border:none; border-radius:20px; background:#ff2e7e; color:#fff; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3);}
-    .popup {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:20;}
-    .popup-content {background:#fff; padding:20px; border-radius:15px; max-width:400px; text-align:center; box-shadow:0 8px 25px rgba(0,0,0,0.3);}
-    .close {cursor:pointer; float:right; font-size:20px; color:#d63384;}
-
-    /* Countdown special */
-    .countdown {margin:20px; font-size:1rem; color:#333; text-align:center;}
+    /* Status Box */
+    .status-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+    }
+    .status-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+    }
+    .status-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #d63384;
+      margin-bottom: 10px;
+    }
+    .love-meter {
+      width: 100%;
+      height: 15px;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .love-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff4f81, #ff85a1);
+      width: 90%; /* chỉnh mức độ tình yêu tại đây */
+    }
+    .meter-label {
+      font-size: 0.9rem;
+      color: #444;
+    }
 
     /* Floating icons */
-    .icon {position:fixed; animation:floatUp 6s linear forwards; opacity:0.8; z-index:0;}
-    @keyframes floatUp {0%{transform:translateY(0) scale(1); opacity:1;}100%{transform:translateY(-100vh) scale(0.5); opacity:0;}}
+    .icon {
+      position: fixed;
+      animation: floatUp 6s linear forwards;
+      opacity: 0.8;
+      z-index: 0;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
 
     /* Music Button */
     .music-btn {
-      position:fixed; top:15px; right:15px; width:45px; height:45px; border-radius:50%;
-      background:rgba(255,100,150,0.9); display:flex; align-items:center; justify-content:center;
-      cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); color:#fff; font-size:20px; transition:0.3s; z-index:10;
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255,100,150,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      color: #fff;
+      font-size: 20px;
+      transition: 0.3s;
+      z-index: 10;
     }
-    .music-btn:hover {transform:scale(1.1); background:#ff2e7e;}
+    .music-btn:hover {
+      transform: scale(1.1);
+      background: #ff2e7e;
+    }
 
-    footer {margin:20px 0 15px; font-size:0.8rem; color:#555;}
+    footer {
+      margin: 20px 0 15px;
+      font-size: 0.8rem;
+      color: #555;
+    }
   </style>
 </head>
 <body>
   <h1>💖 My Princess 💖</h1>
 
-  <!-- Circle Counter -->
-  <div class="circle-container">
-    <div class="circle">
-      <div class="days" id="dayCounter">0</div>
-      <div class="label">Ngày yêu</div>
-    </div>
-  </div>
-
-  <!-- Detail boxes -->
-  <div class="time-detail">
-    <div class="time-box"><div class="num" id="years">0</div><div class="txt">Năm</div></div>
-    <div class="time-box"><div class="num" id="months">0</div><div class="txt">Tháng</div></div>
-    <div class="time-box"><div class="num" id="days">0</div><div class="txt">Ngày</div></div>
-    <div class="time-box"><div class="num" id="hours">0</div><div class="txt">Giờ</div></div>
-    <div class="time-box"><div class="num" id="minutes">0</div><div class="txt">Phút</div></div>
-    <div class="time-box"><div class="num" id="seconds">0</div><div class="txt">Giây</div></div>
-  </div>
-
-  <!-- Love Meter -->
-  <div class="love-meter">
-    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
-    <div class="status" id="loveStatus">Trạng thái: 💖 Hạnh phúc</div>
-  </div>
-
-  <!-- Slideshow -->
+  <!-- Slideshow (chỉ cần thêm ảnh mới bằng cách copy <div class="mySlides"><img src="LINK"></div>) -->
   <div class="slideshow-container">
     <div class="mySlides"><img src="https://files.catbox.moe/jfdkp7.jpeg" alt="Love Pic 1"></div>
-    <div class="mySlides"><img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900&q=80" alt="Love Pic 2"></div>
-    <div class="mySlides"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80" alt="Love Pic 3"></div>
+    <div class="mySlides"><img src="https://files.catbox.moe/gb2ds2.jpg" alt="Love Pic 2"></div>
+    <div class="mySlides"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80" althttps:="Love Pic 3"></div>
     <a class="prev" onclick="plusSlides(-1)">❮</a>
     <a class="next" onclick="plusSlides(1)">❯</a>
   </div>
+
+  <!-- Dấu chấm -->
   <div class="dots">
     <span class="dot" onclick="currentSlide(1)"></span>
     <span class="dot" onclick="currentSlide(2)"></span>
     <span class="dot" onclick="currentSlide(3)"></span>
   </div>
 
-  <!-- Quotes -->
-  <div class="quotes" id="quoteBox">💕 "Mỗi ngày bên em là một ngày anh thấy mình may mắn."</div>
-
-  <!-- Timeline -->
-  <div class="timeline">
-    <div class="event"><strong>14/07/2024</strong> - Ngày mình chính thức yêu nhau 💞</div>
-    <div class="event"><strong>14/10/2024</strong> - Kỷ niệm 3 tháng 🎉</div>
-    <div class="event"><strong>14/01/2025</strong> - Kỷ niệm 6 tháng 🌸</div>
+  <!-- Status Box -->
+  <div class="status-box">
+    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80" alt="Love Avatar" class="status-img">
+    <div class="status-text">❤️ Rất hạnh phúc bên em ❤️</div>
+    <div class="love-meter"><div class="love-fill"></div></div>
+    <div class="meter-label">Mức độ yêu thương: 90%</div>
   </div>
 
-  <!-- Secret message -->
-  <button class="secret-btn" onclick="openPopup()">💌 Xem lời nhắn</button>
-  <div class="popup" id="popup">
-    <div class="popup-content">
-      <span class="close" onclick="closePopup()">&times;</span>
-      <h3>Lời nhắn cho em 💖</h3>
-      <p>Em à, cảm ơn em vì đã đến trong cuộc đời anh. Anh hứa sẽ luôn yêu, luôn trân trọng và ở bên em mãi mãi. 🌹</p>
-    </div>
-  </div>
-
-  <!-- Countdown special -->
-  <div class="countdown" id="specialCountdown">⏳ Còn 0 ngày nữa đến kỷ niệm 1 năm 💕</div>
-
-  <!-- Music -->
+  <!-- Music Button -->
   <div class="music-btn" onclick="toggleMusic()">🎵</div>
   <audio id="bgMusic" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
@@ -169,78 +207,49 @@
   <footer>Cre NgocDoiAn ✨</footer>
 
   <script>
-    // === Counter ===
-    const startDate = new Date("2024-07-14T00:00:00");
-    function updateCounter(){
-      const now = new Date(); let diff = now - startDate;
-      const years = Math.floor(diff / (1000*60*60*24*365)); diff -= years*1000*60*60*24*365;
-      const months = Math.floor(diff / (1000*60*60*24*30)); diff -= months*1000*60*60*24*30;
-      const days = Math.floor(diff / (1000*60*60*24)); diff -= days*1000*60*60*24;
-      const hours = Math.floor(diff / (1000*60*60)); diff -= hours*1000*60*60;
-      const minutes = Math.floor(diff / (1000*60)); diff -= minutes*1000*60;
-      const seconds = Math.floor(diff / 1000);
-
-      document.getElementById("dayCounter").textContent = Math.floor((now - startDate)/(1000*60*60*24));
-      document.getElementById("years").textContent = years;
-      document.getElementById("months").textContent = months;
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
-    }
-    setInterval(updateCounter, 1000); updateCounter();
-
-    // === Love Meter ===
-    const statuses = ["💖 Hạnh phúc","😤 Giận dỗi","😍 Ngọt ngào","💕 Nhớ nhung","✨ Bình yên"];
-    setInterval(()=>{
-      const randomStatus = statuses[Math.floor(Math.random()*statuses.length)];
-      document.getElementById("loveStatus").textContent = "Trạng thái: " + randomStatus;
-      document.getElementById("barFill").style.width = (90+Math.random()*10)+"%";
-    },5000);
-
     // === Slideshow ===
-    let slideIndex=1; showSlides(slideIndex);
-    function plusSlides(n){ showSlides(slideIndex+=n); }
-    function currentSlide(n){ showSlides(slideIndex=n); }
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    function plusSlides(n){ showSlides(slideIndex += n); }
+    function currentSlide(n){ showSlides(slideIndex = n); }
     function showSlides(n){
-      let i; let slides=document.getElementsByClassName("mySlides"); let dots=document.getElementsByClassName("dot");
-      if(n>slides.length){slideIndex=1} if(n<1){slideIndex=slides.length}
-      for(i=0;i<slides.length;i++){slides[i].style.display="none";}
-      for(i=0;i<dots.length;i++){dots[i].className=dots[i].className.replace(" active","");}
-      slides[slideIndex-1].style.display="block"; dots[slideIndex-1].className+=" active";
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) slides[i].style.display = "none";
+      for (i = 0; i < dots.length; i++) dots[i].className = dots[i].className.replace(" active", "");
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
     }
-    setInterval(()=>{plusSlides(1);},6000);
-
-    // === Quotes ===
-    const quotes=["💕 'Mỗi ngày bên em là một ngày anh may mắn.'","🌸 'Yêu em chính là quyết định đúng đắn nhất đời anh.'","💘 'Chỉ cần có em, mọi thứ đều trở nên tuyệt vời.'","✨ 'Em là lý do để anh mỉm cười mỗi ngày.'"];
-    setInterval(()=>{ document.getElementById("quoteBox").textContent=quotes[Math.floor(Math.random()*quotes.length)]; },5000);
-
-    // === Popup ===
-    function openPopup(){document.getElementById("popup").style.display="flex";}
-    function closePopup(){document.getElementById("popup").style.display="none";}
-
-    // === Special Countdown ===
-    const specialDate = new Date("2025-07-14T00:00:00");
-    function updateSpecialCountdown(){
-      const now=new Date(); const diff=specialDate-now;
-      const days=Math.ceil(diff/(1000*60*60*24));
-      document.getElementById("specialCountdown").textContent="⏳ Còn "+days+" ngày nữa đến kỷ niệm 1 năm 💕";
-    }
-    setInterval(updateSpecialCountdown,1000); updateSpecialCountdown();
+    setInterval(()=>{ plusSlides(1); }, 6000);
 
     // === Floating icons ===
-    const icons=["💖","💘","💝","🌸","✨","💕"];
+    const icons = ["💖","💘","💝","🌸","✨","💕"];
     function createIcon(){
-      const el=document.createElement("div");
-      el.className="icon"; el.innerText=icons[Math.floor(Math.random()*icons.length)];
-      el.style.left=Math.random()*100+"vw"; el.style.top="100vh"; el.style.fontSize=(20+Math.random()*25)+"px";
-      document.body.appendChild(el); setTimeout(()=>el.remove(),6000);
+      const el = document.createElement("div");
+      el.className = "icon";
+      el.innerText = icons[Math.floor(Math.random()*icons.length)];
+      el.style.left = Math.random()*100 + "vw";
+      el.style.top = "100vh";
+      el.style.fontSize = (20+Math.random()*25)+"px";
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),6000);
     }
-    setInterval(createIcon,700);
+    setInterval(createIcon, 700);
 
     // === Music ===
-    const music=document.getElementById("bgMusic"); let isPlaying=false;
-    function toggleMusic(){ if(isPlaying){music.pause();} else {music.play();} isPlaying=!isPlaying; }
+    const music = document.getElementById("bgMusic");
+    let isPlaying = false;
+    function toggleMusic(){
+      if(isPlaying){
+        music.pause();
+      } else {
+        music.play();
+      }
+      isPlaying = !isPlaying;
+    }
   </script>
 </body>
 </html>
