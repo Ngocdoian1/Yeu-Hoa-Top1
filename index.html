@@ -1,359 +1,679 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💖 Love For My Baby 💖</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💖 My Princess - Tình Yêu Cypherpunk 💖</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      color: #d63384;
-      text-align: center;
-      overflow-x: hidden;
-      background: #000;
+    /* ======= Base & Colors (giữ vibe hồng tím cypherpunk) ======= */
+    :root{
+      --pink-1:#ff007f;
+      --pink-2:#ff00ff;
+      --accent:#ff2e7e;
+      --bg-1:#0b0010;
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: "Poppins", Inter, system-ui, Arial, sans-serif;
+      background: radial-gradient(circle at 20% 10%, rgba(255,0,127,0.08), transparent 10%),
+                  radial-gradient(circle at 80% 80%, rgba(255,0,255,0.06), transparent 12%),
+                  linear-gradient(180deg,#07030a 0%, #000000 100%);
+      color:#fff;
+      overflow-x:hidden;
     }
 
-    /* Canvas nền trái tim 3D */
-    #bgCanvas {
-      position: fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      z-index:-1;
-      background: linear-gradient(120deg, #ffdee9, #b5fffc);
+    /* ======= Cypherpunk heart background (polygon hearts, many) ======= */
+    .heart-bg{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      overflow:hidden;
+      background: radial-gradient(circle at center, rgba(255,0,127,0.06), rgba(0,0,0,0.35));
+    }
+    .heart{
+      position:absolute;
+      width:48px; height:48px;
+      background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+      box-shadow: 0 0 14px rgba(255,0,127,0.7), 0 0 30px rgba(255,0,255,0.4);
+      clip-path: polygon(50% 0%, 85% 25%, 100% 62%, 70% 100%, 50% 83%, 30% 100%, 0% 62%, 15% 25%);
+      transform-origin:center;
+      opacity:0.85;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp{
+      0%   { transform: translateY(0) rotate(0deg) scale(0.9); opacity:0; }
+      10%  { opacity:0.9; }
+      50%  { transform: translateY(-25vh) rotate(12deg) scale(1.05); opacity:1; }
+      100% { transform: translateY(-110vh) rotate(30deg) scale(0.8); opacity:0; }
     }
 
-    h1 {
-      margin: 20px 0 10px;
-      font-size: 2rem;
-      text-shadow: 0 0 15px rgba(255,0,120,0.6);
+    /* ======= Container ======= */
+    .wrap{
+      max-width:1100px;
+      margin:18px auto;
+      padding:18px;
+    }
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    h1{
+      margin:0;
+      font-size:1.6rem;
+      letter-spacing:0.6px;
+      text-shadow:0 0 18px rgba(255,0,127,0.45);
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .subline{
+      color: #f7d9e9;
+      opacity:0.9;
+      font-size:0.9rem;
     }
 
-    /* Counter box */
-    .time-detail {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px 0;
-    }
-    .time-box {
-      background: rgba(255,255,255,0.7);
-      padding: 15px 18px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,0,100,0.5);
+    /* ======= Heart circle + Days counter ======= */
+    .heart-circle{
+      width:190px;
+      height:190px;
+      border-radius:50%;
+      margin:18px auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at 30% 30%, rgba(255,182,193,0.12), rgba(255,105,180,0.06));
+      box-shadow: inset 0 0 20px rgba(255,105,180,0.06), 0 8px 40px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,0,127,0.08);
       position: relative;
-      min-width: 80px;
-      animation: pulse 2s infinite;
+      overflow:visible;
+      transition: box-shadow 200ms ease, transform 200ms ease;
     }
-    .time-box::before {
-      content:"💖";
-      position: absolute;
-      top:-15px; right:-10px;
-      animation: float 3s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
-    }
-    .time-box .num {
-      font-size: 20px;
-      font-weight: bold;
-      color: #ff2e7e;
-    }
-    .time-box .txt {
-      font-size: 12px;
-      color: #333;
+    .heart-circle .days{
+      font-size:1.3rem;
+      font-weight:700;
+      color:#fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.08);
+      z-index:2;
     }
 
-    /* Slideshow */
-    .slideshow-container {
-      position: relative;
-      width: 95%;
-      max-width: 500px;
-      margin: 20px auto;
-      overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    /* ======= Aura hearts (small particle hearts around circle) ======= */
+    #auraContainer { position:absolute; inset:0; pointer-events:none; z-index:1; }
+    .aura-heart {
+      position:absolute;
+      width:12px; height:12px;
+      background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+      box-shadow: 0 6px 14px rgba(255,0,127,0.25);
+      clip-path: polygon(50% 0%, 85% 25%, 100% 62%, 70% 100%, 50% 83%, 30% 100%, 0% 62%, 15% 25%);
+      transform-origin:center;
+      opacity:1;
+      pointer-events:none;
+      /* animation uses CSS variables --dx, --dy set inline by JS */
+      animation-name: auraFloat;
+      animation-timing-function: cubic-bezier(.2,.9,.2,1);
+      animation-fill-mode: forwards;
     }
-    .mySlides { display: none; }
-    .mySlides img {
-      width: 100%;
-      height: auto;
-      max-height: 55vh;
-      object-fit: cover;
-      border-radius: 15px;
-    }
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.4);
-      color: #fff;
-      font-weight: bold;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-      user-select: none;
-    }
-    .prev { left: 10px; }
-    .next { right: 10px; }
-    .prev:hover, .next:hover {
-      background: rgba(255,100,150,0.9);
-    }
-    .dots {
-      text-align: center;
-      padding: 12px 0;
-    }
-    .dot {
-      cursor: pointer;
-      height: 10px; width: 10px;
-      margin: 0 3px;
-      background-color: #bbb;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .active, .dot:hover {
-      background-color: #d63384;
-      box-shadow: 0 0 8px rgba(214,51,132,0.8);
+    @keyframes auraFloat {
+      from { transform: translate(0,0) scale(1); opacity: 0.95; }
+      to   { transform: translate(var(--dx,0px), var(--dy,-120px)) scale(0.45); opacity: 0; }
     }
 
-    /* Music Button */
-    .music-btn {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background: rgba(255,100,150,0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      color: #fff;
-      font-size: 20px;
-      z-index: 10;
+    /* ======= Horizontal slider (placed under circle) ======= */
+    .horizontal-love {
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin-top:8px;
+      margin-bottom:10px;
     }
-    .music-btn:hover { transform: scale(1.1); }
+    .horizontal-love .slider-wrap {
+      width:260px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-direction:column;
+    }
+    /* range track */
+    .horizontal-love input[type=range]{
+      width:100%;
+      -webkit-appearance:none;
+      appearance:none;
+      height:12px;
+      background: linear-gradient(90deg, var(--pink-1), var(--pink-2), var(--accent));
+      border-radius:999px;
+      outline:none;
+    }
+    .horizontal-love input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      appearance:none;
+      width:30px;height:30px;border-radius:50%;
+      background: #fff;
+      border:3px solid var(--pink-1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      cursor:grab;
+    }
+    .horizontal-love .mood{
+      font-size:44px;
+      margin-top:6px;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      text-shadow: 0 6px 18px rgba(255,0,127,0.12);
+    }
 
-    footer {
-      margin: 20px 0 15px;
-      font-size: 0.8rem;
-      color: #555;
-      cursor: pointer;
+    /* ======= Love Progress (kept) ======= */
+    .love-progress{
+      width:80%;
+      max-width:600px;
+      height:14px;
+      background:var(--glass);
+      border-radius:999px;
+      margin:10px auto 22px;
+      overflow:hidden;
+      box-shadow:0 0 18px rgba(255,0,127,0.06);
+    }
+    .love-progress-fill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--pink-1), var(--pink-2), var(--accent));
+      transition:width 800ms cubic-bezier(.2,.9,.2,1);
     }
 
-    /* Hidden admin form */
-    #adminForm {
-      display: none;
-      margin: 20px auto;
-      padding: 15px;
-      max-width: 400px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    /* ======= Main content grid ======= */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:22px;
+      align-items:start;
+      margin-top:6px;
     }
-    #adminForm input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    @media (max-width:900px){
+      .grid{ grid-template-columns:1fr; }
     }
-    #adminForm button {
-      padding: 8px 15px;
-      border: none;
-      background: #d63384;
-      color: #fff;
-      border-radius: 8px;
-      cursor: pointer;
+
+    /* ======= Slideshow (left column) with corner hearts ======= */
+    .slideshow-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:12px;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,0,127,0.04);
     }
-    #adminForm button:hover { background: #ff4f81; }
+    .slideshow-frame{
+      width:100%;
+      height:420px; /* to make khung ảnh to hơn */
+      border-radius:12px;
+      overflow:hidden;
+      position:relative;
+      background:linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+    }
+    .slide{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      transform: scale(1.02);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    .slide.active{
+      opacity:1;
+      transform: scale(1);
+      z-index:2;
+    }
+    .slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+
+    /* corner decorative hearts (fixed) */
+    .corner-heart{
+      position:absolute;
+      font-size:22px;
+      color: rgba(255,102,204,0.95);
+      z-index:6;
+      text-shadow: 0 6px 14px rgba(255,0,127,0.08);
+    }
+    .corner-heart.tl{ top:12px; left:16px; transform:rotate(-10deg); }
+    .corner-heart.tr{ top:12px; right:16px; transform:rotate(10deg); }
+    .corner-heart.bl{ bottom:12px; left:16px; transform:rotate(6deg); }
+    .corner-heart.br{ bottom:12px; right:16px; transform:rotate(-6deg); }
+
+    /* compact nav buttons (small, round) */
+    .nav-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:40px;height:40px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(0,0,0,0.45);
+      color:#fff;
+      border:1px solid rgba(255,0,127,0.12);
+      cursor:pointer;
+      transition: transform 160ms, background 160ms;
+      backdrop-filter: blur(4px);
+      z-index:5;
+    }
+    .nav-btn:hover{ transform:translateY(-50%) scale(1.06); background: rgba(255,0,127,0.85); }
+    .nav-prev{ left:10px; }
+    .nav-next{ right:10px; }
+
+    /* pagination dots */
+    .dots{
+      position:absolute;
+      bottom:12px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:8px;
+      z-index:6;
+    }
+    .dot{
+      width:9px;height:9px;border-radius:999px;background:rgba(255,255,255,0.18);
+      border:1px solid rgba(255,0,127,0.08);
+      cursor:pointer;
+      transition: transform 130ms, background 130ms;
+    }
+    .dot.active{ background: linear-gradient(90deg, var(--pink-1), var(--pink-2)); transform:scale(1.25); }
+
+    /* autoplay overlay controls - kept for layout but pause button removed */
+    .slideshow-top-right{
+      position:absolute;
+      top:10px;
+      right:10px;
+      display:flex;
+      gap:8px;
+      z-index:6;
+      align-items:center;
+    }
+    .small-toggle{
+      background:rgba(0,0,0,0.45);
+      border-radius:8px;
+      padding:6px 8px;
+      font-size:0.85rem;
+      cursor:pointer;
+      border:1px solid rgba(255,0,127,0.06);
+    }
+    .small-toggle:hover{ background: rgba(255,0,127,0.85); }
+
+    /* ======= Right column: controls, info (vertical slider removed) ======= */
+    .right-panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,0,127,0.035);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      align-items:center;
+    }
+
+    .mood{
+      margin-top:10px;
+      font-size:40px;
+      transition: transform 240ms ease, filter 240ms ease;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+    }
+
+    /* music toggle */
+    .music-toggle{
+      display:flex; gap:8px; align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      background:rgba(0,0,0,0.45);
+      border:1px solid rgba(255,0,127,0.06);
+    }
+
+    /* footer small */
+    footer{ margin-top:18px; text-align:center; color:rgba(255,255,255,0.45); font-size:0.85rem; opacity:0.9; }
   </style>
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
-  <h1>💖 My Princess 💖</h1>
+  <!-- BACKGROUND HEARTS -->
+  <div class="heart-bg" id="heartBg"></div>
 
-  <!-- Counter -->
-  <div class="time-detail">
-    <div class="time-box"><div class="num" id="years">0</div><div class="txt">Năm</div></div>
-    <div class="time-box"><div class="num" id="months">0</div><div class="txt">Tháng</div></div>
-    <div class="time-box"><div class="num" id="weeks">0</div><div class="txt">Tuần</div></div>
-    <div class="time-box"><div class="num" id="days">0</div><div class="txt">Ngày</div></div>
-    <div class="time-box"><div class="num" id="hours">0</div><div class="txt">Giờ</div></div>
-    <div class="time-box"><div class="num" id="minutes">0</div><div class="txt">Phút</div></div>
-    <div class="time-box"><div class="num" id="seconds">0</div><div class="txt">Giây</div></div>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>💖 My Princess <span style="font-size:.9rem; margin-left:8px" class="subline">— Tình yêu cypherpunk</span></h1>
+        <div class="subline" style="margin-top:6px">Keep the vibe — màu hồng tím, trái tim polygon, neon glow.</div>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+        <div class="music-toggle" id="musicToggle">
+          <span id="musicIcon">🔊</span>
+          <small style="opacity:.9">Nhạc nền</small>
+        </div>
+        <div style="text-align:right">
+          <small style="display:block; color:rgba(255,255,255,0.6)">Cre NgocDoiAn ✨</small>
+        </div>
+      </div>
+    </header>
+
+    <!-- Heart circle + days -->
+    <div class="heart-circle" aria-hidden="true">
+      <div id="auraContainer" aria-hidden="true"></div>
+      <div class="days" id="loveDays">0 ngày</div>
+    </div>
+
+    <!-- HORIZONTAL SLIDER (placed right under circle, as requested) -->
+    <div class="horizontal-love" aria-hidden="false">
+      <div class="slider-wrap">
+        <input id="loveSlider" type="range" min="0" max="100" value="50" />
+        <div class="mood" id="moodIcon" aria-live="polite" role="img">😐</div>
+      </div>
+    </div>
+
+    <!-- Love progress (kept) -->
+    <div class="love-progress" aria-hidden="true">
+      <div class="love-progress-fill" id="loveProgressFill"></div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid">
+      <!-- Left: slideshow -->
+      <div class="slideshow-card">
+        <div class="slideshow-frame" id="slideshow">
+          <!-- Slides -->
+          <div class="slide active"><img src="https://files.catbox.moe/jfdkp7.jpeg" alt="pic1"></div>
+          <div class="slide"><img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=1400&q=80" alt="pic2"></div>
+          <div class="slide"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1400&q=80" alt="pic3"></div>
+
+          <!-- decorative corner hearts -->
+          <span class="corner-heart tl">💖</span>
+          <span class="corner-heart tr">💘</span>
+          <span class="corner-heart bl">💕</span>
+          <span class="corner-heart br">💓</span>
+
+          <!-- nav compact -->
+          <div class="nav-btn nav-prev" id="prevBtn" title="Previous">‹</div>
+          <div class="nav-btn nav-next" id="nextBtn" title="Next">›</div>
+
+          <!-- NOTE: pause button removed (per your request) -->
+          <div class="slideshow-top-right">
+            <!-- intentionally empty (no pause/stop button) -->
+          </div>
+
+          <!-- dots -->
+          <div class="dots" id="dotsWrap" aria-hidden="true"></div>
+        </div>
+
+        <!-- small caption / instructions -->
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap">
+          <div style="font-size:0.9rem; color:rgba(255,255,255,0.7)">Click ⟨ ⟩ or chạm để chuyển — tự động mỗi 5s</div>
+          <div style="font-size:0.85rem; color:rgba(255,255,255,0.6)">Hover để tạm dừng</div>
+        </div>
+      </div>
+
+      <!-- Right: slider & info (vertical slider removed; kept stat boxes) -->
+      <aside class="right-panel" aria-label="Controls & Love Slider">
+        <div style="font-size:0.95rem; color:rgba(255,255,255,0.9)">Thông tin & Thống kê</div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center; width:100%;">
+          <div style="background:var(--glass); padding:8px 10px; border-radius:10px; min-width:84px; text-align:center;">
+            <div id="years" style="font-weight:700">0</div><small>Năm</small>
+          </div>
+          <div style="background:var(--glass); padding:8px 10px; border-radius:10px; min-width:84px; text-align:center;">
+            <div id="months" style="font-weight:700">0</div><small>Tháng</small>
+          </div>
+          <div style="background:var(--glass); padding:8px 10px; border-radius:10px; min-width:84px; text-align:center;">
+            <div id="days" style="font-weight:700">0</div><small>Ngày</small>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>Powered by NgocDoiAn • Keep it cypherpunk ✨</footer>
   </div>
 
-  <!-- Slideshow -->
-  <div class="slideshow-container" id="slideshow">
-    <div class="mySlides"><img src="https://files.catbox.moe/jfdkp7.jpeg"></div>
-    <div class="mySlides"><img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=900&q=80"></div>
-    <div class="mySlides"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=80"></div>
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
-  </div>
-  <div class="dots" id="dots"></div>
-
-  <!-- Music Button -->
-  <div class="music-btn" onclick="toggleMusic()">🎵</div>
-  <audio id="bgMusic" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+  <!-- MUSIC element (kept accessible; autoplay may be blocked by browsers) -->
+  <audio id="bgMusic" loop preload="auto">
+    <!-- replace with your preferred mp3 if needed -->
+    <source src="https://files.catbox.moe/4h5y1q.mp3" type="audio/mpeg">
+    <!-- fallback text -->
   </audio>
 
-  <footer id="footer">Cre NgocDoiAn ✨</footer>
-
-  <!-- Hidden Admin Form -->
-  <div id="adminForm">
-    <input type="text" id="newImg" placeholder="Dán link ảnh...">
-    <button onclick="addImage()">Thêm ảnh</button>
-  </div>
-
   <script>
-    // Counter
-    const startDate = new Date("2024-07-14T00:00:00");
+    /********** Settings you can edit quickly **********/
+    const START_DATE = new Date("2024-07-14T00:00:00");
+    const SLIDE_INTERVAL_MS = 5000;
+    const TOTAL_HEARTS = 30;
+    const FULL_DAYS_FOR_PROGRESS = 1000;
+    /***************************************************/
+
+    /* ===== heart background generation (keep cypherpunk polygon hearts) ===== */
+    const heartBg = document.getElementById('heartBg');
+    for(let i=0;i<TOTAL_HEARTS;i++){
+      const el = document.createElement('div');
+      el.className = 'heart';
+      const size = 28 + Math.round(Math.random()*44);
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.left = (Math.random()*110 - 5) + 'vw';
+      el.style.top = (70 + Math.random()*30) + 'vh';
+      el.style.animationDuration = (6 + Math.random()*10) + 's';
+      el.style.animationDelay = -(Math.random()*10) + 's';
+      el.style.opacity = (0.4 + Math.random()*0.9);
+      el.style.transform = `rotate(${Math.random()*40-10}deg) scale(${0.7 + Math.random()*0.8})`;
+      heartBg.appendChild(el);
+    }
+
+    /* ===== love days counter (years, months,... and fill progress) ===== */
     function updateCounter(){
       const now = new Date();
-      let diff = now - startDate;
-      const years = Math.floor(diff / (1000*60*60*24*365));
-      diff -= years * 1000*60*60*24*365;
-      const months = Math.floor(diff / (1000*60*60*24*30));
-      diff -= months * 1000*60*60*24*30;
-      const weeks = Math.floor(diff / (1000*60*60*24*7));
-      diff -= weeks * 1000*60*60*24*7;
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days * 1000*60*60*24;
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours * 1000*60*60;
-      const minutes = Math.floor(diff / (1000*60));
-      diff -= minutes * 1000*60;
-      const seconds = Math.floor(diff / 1000);
+      const diff = now - START_DATE;
+      const totalSeconds = Math.floor(diff/1000);
+      const totalMinutes = Math.floor(totalSeconds/60);
+      const totalHours = Math.floor(totalMinutes/60);
+      const totalDays = Math.floor(totalHours/24);
+      const days = totalDays % 30;
+      const months = Math.floor(totalDays/30) % 12;
+      const years = Math.floor(totalDays/365);
 
-      document.getElementById("years").textContent = years;
-      document.getElementById("months").textContent = months;
-      document.getElementById("weeks").textContent = weeks;
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
+      document.getElementById('years').textContent = years;
+      document.getElementById('months').textContent = months;
+      document.getElementById('days').textContent = totalDays;
+      document.getElementById('loveDays').textContent = totalDays + ' ngày';
+
+      const pct = Math.min((totalDays / FULL_DAYS_FOR_PROGRESS) * 100, 100);
+      document.getElementById('loveProgressFill').style.width = pct + '%';
     }
-    setInterval(updateCounter, 1000);
     updateCounter();
+    setInterval(updateCounter,1000);
 
-    // Slideshow
-    let slideIndex = 1;
-    const dotsContainer = document.getElementById("dots");
-    function renderDots(){
-      dotsContainer.innerHTML = "";
-      let slides = document.getElementsByClassName("mySlides");
-      for (let i=0;i<slides.length;i++){
-        const dot=document.createElement("span");
-        dot.className="dot"+(i==0?" active":"");
-        dot.onclick=(()=>{currentSlide(i+1);});
-        dotsContainer.appendChild(dot);
+    /* ===== slideshow logic (smooth fade, compact nav, dots, pause on hover) ===== */
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsWrap = document.getElementById('dotsWrap');
+    let slideIndex = 0;
+    let autoplayTimer = null;
+
+    // build dots
+    slides.forEach((s, idx) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (idx===0? ' active':'');
+      dot.addEventListener('click', ()=> goTo(idx));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(document.querySelectorAll('.dot'));
+
+    function setActive(index){
+      slides.forEach((s,i)=> s.classList.toggle('active', i===index));
+      dots.forEach((d,i)=> d.classList.toggle('active', i===index));
+    }
+    function goTo(idx){
+      slideIndex = (idx + slides.length) % slides.length;
+      setActive(slideIndex);
+    }
+    function nextSlide(){
+      slideIndex = (slideIndex + 1) % slides.length;
+      setActive(slideIndex);
+    }
+    function prevSlide(){
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      setActive(slideIndex);
+    }
+
+    prevBtn.addEventListener('click', ()=> { prevSlide(); restartAutoplay(); });
+    nextBtn.addEventListener('click', ()=> { nextSlide(); restartAutoplay(); });
+
+    // hover to pause (no pause button; hover pauses autoplay)
+    const slideshowFrame = document.getElementById('slideshow');
+    slideshowFrame.addEventListener('mouseenter', ()=> { stopAutoplay(true); });
+    slideshowFrame.addEventListener('mouseleave', ()=> { startAutoplay(); });
+
+    function startAutoplay(){
+      stopAutoplay();
+      autoplayTimer = setInterval(()=> nextSlide(), SLIDE_INTERVAL_MS);
+    }
+    function stopAutoplay(temp=false){
+      if(autoplayTimer) clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+    function restartAutoplay(){
+      stopAutoplay(); startAutoplay();
+    }
+    // init autoplay
+    startAutoplay();
+
+    /* ===== music toggle (keep music but add on/off button) ===== */
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+
+    function tryPlayMusic(){
+      bgMusic.volume = 0.28;
+      const p = bgMusic.play();
+      if(p !== undefined){
+        p.then(()=> { musicIcon.textContent = '🔊'; })
+         .catch(()=> { musicIcon.textContent = '🔇'; });
       }
     }
-    function plusSlides(n){ showSlides(slideIndex += n); }
-    function currentSlide(n){ showSlides(slideIndex = n); }
-    function showSlides(n){
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) slides[i].style.display = "none";
-      for (i = 0; i < dots.length; i++) dots[i].classList.remove("active");
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].classList.add("active");
-    }
-    setInterval(()=>{ plusSlides(1); }, 6000);
-    renderDots(); showSlides(slideIndex);
+    tryPlayMusic();
 
-    // Music
-    const music = document.getElementById("bgMusic");
-    let isPlaying = false;
-    function toggleMusic(){
-      if(isPlaying){ music.pause(); }
-      else { music.play(); }
-      isPlaying = !isPlaying;
+    musicToggle.addEventListener('click', ()=> {
+      if(bgMusic.paused){ bgMusic.play().catch(()=>{}); musicIcon.textContent='🔊'; }
+      else{ bgMusic.pause(); musicIcon.textContent='🔇'; }
+    });
+
+    /* ===== LOVE SLIDER (horizontal under circle) + aura spawn + mood icon (iPhone emoji) ===== */
+    const slider = document.getElementById('loveSlider');
+    const mood = document.getElementById('moodIcon');
+    const auraContainer = document.getElementById('auraContainer');
+    const heartCircle = document.querySelector('.heart-circle');
+
+    function spawnAuraHearts(count, intensity){
+      // count: number of small hearts to spawn (max limited)
+      const max = Math.min(10, Math.max(0, Math.floor(count)));
+      for(let i=0;i<max;i++){
+        const h = document.createElement('div');
+        h.className = 'aura-heart';
+        // start from center of heart-circle
+        // place at center
+        h.style.left = '50%';
+        h.style.top = '50%';
+        // random direction, scaled by intensity
+        const angle = Math.random()*Math.PI*2;
+        const radius = 60 + Math.random()*70; // px
+        const dx = Math.round(Math.cos(angle) * radius * (0.7 + intensity*0.003));
+        const dy = Math.round(Math.sin(angle) * radius * (0.5 + intensity*0.002)) * -1; // upward skew
+        h.style.setProperty('--dx', dx + 'px');
+        h.style.setProperty('--dy', dy + 'px');
+        h.style.animationDuration = (600 + Math.random()*700) + 'ms';
+        auraContainer.appendChild(h);
+        // remove later
+        setTimeout(()=> {
+          if(h && h.parentNode) h.parentNode.removeChild(h);
+        }, 1600);
+      }
     }
 
-    // Hidden admin
-    let clickCount=0, clickTimer;
-    document.getElementById("footer").addEventListener("click",()=>{
-      clickCount++;
-      clearTimeout(clickTimer);
-      clickTimer=setTimeout(()=>{clickCount=0;},1000);
-      if(clickCount==5){
-        document.getElementById("adminForm").style.display="block";
-        clickCount=0;
+    function updateMood(val){
+      val = Number(val);
+      // emoji mapping (iPhone-style will depend on system, font-family set in CSS)
+      let emoji = '😐';
+      if(val <= 5) emoji = '💀';
+      else if(val <= 15) emoji = '💔';
+      else if(val <= 30) emoji = '😢';
+      else if(val <= 45) emoji = '😕';
+      else if(val <= 55) emoji = '😐';
+      else if(val <= 70) emoji = '🙂';
+      else if(val <= 85) emoji = '😊';
+      else emoji = '😍';
+      mood.textContent = emoji;
+
+      // scale mood slightly
+      const scale = 1 + (val / 260); // up to ~1.38
+      mood.style.transform = `scale(${scale})`;
+
+      // heart-circle glow intensity
+      const blur1 = 10 + Math.round(val/2); // px
+      const blur2 = 20 + Math.round(val/1.6);
+      heartCircle.style.boxShadow = `inset 0 0 ${10 + val/6}px rgba(255,105,180,0.06), 0 8px ${blur1}px rgba(255,0,127,0.45), 0 0 ${blur2*1.6}px rgba(255,0,255,0.12)`;
+
+      // spawn aura hearts proportional to slider (throttle spawn amount)
+      // spawn a few hearts (max 8) — more at higher values
+      const spawnCount = Math.floor(val / 15); // 0..6
+      if (spawnCount > 0) spawnAuraHearts(spawnCount, val);
+
+      // also update love-progress fill like before
+      const totalDays = Math.floor((Date.now() - START_DATE) / (1000*60*60*24));
+      const pct = Math.min((totalDays / FULL_DAYS_FOR_PROGRESS) * 100, 100);
+      const mixed = Math.min(100, Math.round((pct*0.6) + (val*0.4)));
+      document.getElementById('loveProgressFill').style.width = mixed + '%';
+    }
+
+    slider.addEventListener('input', (e)=> updateMood(e.target.value));
+    // init mood
+    updateMood(slider.value);
+
+    /* ===== accessibility: keyboard controls for slides + slider ===== */
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight') { nextSlide(); restartAutoplay(); }
+      if(e.key === 'ArrowLeft') { prevSlide(); restartAutoplay(); }
+      if(e.key === 'ArrowUp'){
+        slider.value = Math.min(100, Number(slider.value) + 5); updateMood(slider.value);
+      }
+      if(e.key === 'ArrowDown'){
+        slider.value = Math.max(0, Number(slider.value) - 5); updateMood(slider.value);
       }
     });
-    function addImage(){
-      const url=document.getElementById("newImg").value.trim();
-      if(!url) return;
-      const slide=document.createElement("div");
-      slide.className="mySlides";
-      slide.innerHTML=`<img src="${url}">`;
-      document.getElementById("slideshow").appendChild(slide);
-      document.getElementById("newImg").value="";
-      renderDots();
-    }
 
-    // Canvas Hearts Background
-    const canvas=document.getElementById("bgCanvas");
-    const ctx=canvas.getContext("2d");
-    let hearts=[];
-    function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight;}
-    window.onresize=resize; resize();
-    function drawHeart(x,y,size,color){
-      ctx.save();
-      ctx.translate(x,y);
-      ctx.scale(size,size);
-      ctx.beginPath();
-      ctx.moveTo(0,0);
-      ctx.bezierCurveTo(0,-3, -5,-3, -5,0);
-      ctx.bezierCurveTo(-5,3,0,6,0,9);
-      ctx.bezierCurveTo(0,6,5,3,5,0);
-      ctx.bezierCurveTo(5,-3,0,-3,0,0);
-      ctx.fillStyle=color;
-      ctx.fill();
-      ctx.restore();
-    }
-    function loop(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      hearts.forEach(h=>{
-        h.y-=h.speed;
-        drawHeart(h.x,h.y,h.size,h.color);
-      });
-      hearts=hearts.filter(h=>h.y>-10);
-      if(Math.random()<0.05){
-        hearts.push({
-          x:Math.random()*canvas.width,
-          y:canvas.height+10,
-          size:0.4+Math.random()*0.6,
-          speed:0.5+Math.random()*1.5,
-          color:"rgba(255,"+(100+Math.random()*155)+","+(150+Math.random()*100)+",0.7)"
-        });
+    /* ===== small: make images prevent drag on mobile/desktop ===== */
+    document.querySelectorAll('.slide img').forEach(img=>{
+      img.ondragstart = ()=> false;
+      img.addEventListener('contextmenu', e=> e.preventDefault());
+    });
+
+    /* ===== Responsive: adjust slide height on small screens ===== */
+    function adjustSlideHeight(){
+      const frame = document.querySelector('.slideshow-frame');
+      if(window.innerWidth < 600){
+        frame.style.height = '280px';
+      } else if(window.innerWidth < 900){
+        frame.style.height = '340px';
+      } else {
+        frame.style.height = '420px';
       }
-      requestAnimationFrame(loop);
     }
-    loop();
+    adjustSlideHeight();
+    window.addEventListener('resize', adjustSlideHeight);
+
+    /* ===== initial setActive for slides (in case) ===== */
+    setTimeout(()=> setActive(slideIndex), 50);
+
+    /************* End of Script *************/
   </script>
 </body>
 </html>
