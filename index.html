@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>💖 My Princess - Tình Yêu Cypherpunk 💖</title>
   <style>
-    /* ======= Base & Colors (giữ vibe hồng tím cypherpunk) ======= */
+    /* ======= Base & Colors (giữ vibe hồng tím cypherpunk, nền sáng hơn chút) ======= */
     :root{
       --pink-1:#ff007f;
       --pink-2:#ff00ff;
       --accent:#ff2e7e;
-      --bg-1:#0b0010;
+      --bg-1:#120017; /* slightly brighter than original */
       --glass: rgba(255,255,255,0.06);
     }
     *{box-sizing:border-box}
@@ -18,9 +18,11 @@
       margin:0;
       min-height:100vh;
       font-family: "Poppins", Inter, system-ui, Arial, sans-serif;
-      background: radial-gradient(circle at 20% 10%, rgba(255,0,127,0.08), transparent 10%),
-                  radial-gradient(circle at 80% 80%, rgba(255,0,255,0.06), transparent 12%),
-                  linear-gradient(180deg,#07030a 0%, #000000 100%);
+      /* brighten background: keep vibe but more luminous */
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,77,166,0.10), transparent 12%),
+        radial-gradient(circle at 82% 82%, rgba(170,0,255,0.08), transparent 14%),
+        linear-gradient(180deg,#180021 0%, #060006 100%);
       color:#fff;
       overflow-x:hidden;
     }
@@ -32,7 +34,7 @@
       z-index:-2;
       pointer-events:none;
       overflow:hidden;
-      background: radial-gradient(circle at center, rgba(255,0,127,0.06), rgba(0,0,0,0.35));
+      background: radial-gradient(circle at center, rgba(255,0,127,0.08), rgba(0,0,0,0.20));
     }
     .heart{
       position:absolute;
@@ -75,7 +77,7 @@
     }
     .subline{
       color: #f7d9e9;
-      opacity:0.9;
+      opacity:0.95;
       font-size:0.9rem;
     }
 
@@ -84,13 +86,13 @@
       width:190px;
       height:190px;
       border-radius:50%;
-      margin:18px auto;
+      margin:18px auto 10px;
       display:flex;
       align-items:center;
       justify-content:center;
-      background: radial-gradient(circle at 30% 30%, rgba(255,182,193,0.12), rgba(255,105,180,0.06));
-      box-shadow: inset 0 0 20px rgba(255,105,180,0.06), 0 8px 40px rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,0,127,0.08);
+      background: radial-gradient(circle at 30% 30%, rgba(255,182,193,0.16), rgba(255,105,180,0.08));
+      box-shadow: inset 0 0 22px rgba(255,105,180,0.12), 0 8px 48px rgba(255,0,255,0.18);
+      border: 1px solid rgba(255,0,127,0.12);
       position: relative;
       overflow:visible;
       transition: box-shadow 200ms ease, transform 200ms ease;
@@ -101,6 +103,36 @@
       color:#fff;
       text-shadow: 0 0 10px rgba(255,255,255,0.08);
       z-index:2;
+    }
+
+    /* ===== NEW: Top stats bar (đưa lên gần vòng tròn) ===== */
+    .love-stats-top{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:8px auto 6px;
+    }
+    .love-stats-top .stat{
+      background:var(--glass);
+      padding:6px 10px;
+      border-radius:10px;
+      min-width:88px;
+      text-align:center;
+      border:1px solid rgba(255,0,127,0.08);
+      box-shadow:0 8px 24px rgba(0,0,0,0.25);
+    }
+    .love-stats-top .stat span{
+      display:block;
+      font-weight:800;
+      font-size:1rem;
+    }
+    .love-stats-top .stat small{
+      display:block;
+      opacity:0.9;
+      font-size:0.8rem;
+      color:#ffd6ec;
     }
 
     /* ======= Aura hearts (small particle hearts around circle) ======= */
@@ -114,7 +146,6 @@
       transform-origin:center;
       opacity:1;
       pointer-events:none;
-      /* animation uses CSS variables --dx, --dy set inline by JS */
       animation-name: auraFloat;
       animation-timing-function: cubic-bezier(.2,.9,.2,1);
       animation-fill-mode: forwards;
@@ -139,7 +170,8 @@
       gap:12px;
       flex-direction:column;
     }
-    /* range track */
+
+    /* range track — thêm hiệu ứng “chạy” để sinh động */
     .horizontal-love input[type=range]{
       width:100%;
       -webkit-appearance:none;
@@ -148,6 +180,13 @@
       background: linear-gradient(90deg, var(--pink-1), var(--pink-2), var(--accent));
       border-radius:999px;
       outline:none;
+      background-size: 200% 100%;
+      animation: trackFlow 3.2s linear infinite;
+      box-shadow: 0 6px 18px rgba(255,0,127,0.18), inset 0 0 8px rgba(255,255,255,0.06);
+    }
+    @keyframes trackFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
     }
     .horizontal-love input[type=range]::-webkit-slider-thumb{
       -webkit-appearance:none;
@@ -155,8 +194,13 @@
       width:30px;height:30px;border-radius:50%;
       background: #fff;
       border:3px solid var(--pink-1);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6), 0 0 0 0 rgba(255,0,127,0.4);
       cursor:grab;
+      transition: box-shadow 180ms ease, transform 180ms ease;
+    }
+    .horizontal-love input[type=range]:active::-webkit-slider-thumb{
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.7), 0 0 0 8px rgba(255,0,127,0.12);
     }
     .horizontal-love .mood{
       font-size:44px;
@@ -205,11 +249,11 @@
     }
     .slideshow-frame{
       width:100%;
-      height:420px; /* to make khung ảnh to hơn */
+      height:460px;
       border-radius:12px;
       overflow:hidden;
       position:relative;
-      background:linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+      background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.36));
     }
     .slide{
       position:absolute;
@@ -229,10 +273,11 @@
     .slide img{
       width:100%;
       height:100%;
-      object-fit:cover;
+      object-fit:contain;
       display:block;
       user-select:none;
       -webkit-user-drag:none;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.12));
     }
 
     /* corner decorative hearts (fixed) */
@@ -305,7 +350,7 @@
     }
     .small-toggle:hover{ background: rgba(255,0,127,0.85); }
 
-    /* ======= Right column: controls, info (vertical slider removed) ======= */
+    /* ======= Right column ======= */
     .right-panel{
       background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
       padding:12px;
@@ -316,7 +361,6 @@
       gap:14px;
       align-items:center;
     }
-
     .mood{
       margin-top:10px;
       font-size:40px;
@@ -334,8 +378,95 @@
       border:1px solid rgba(255,0,127,0.06);
     }
 
+    /* ====== LOVE QUESTION ====== */
+    .love-q{
+      margin:14px auto 28px;
+      width:100%;
+      max-width:760px;
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      align-items:center;
+      pointer-events:auto;
+      perspective: 900px; /* 3D hover */
+    }
+    .love-q .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,0,127,0.06);
+      padding:12px 16px;
+      border-radius:12px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+      transform-style: preserve-3d;
+      transition: transform 240ms ease;
+    }
+    .love-q .card:hover{
+      transform: rotateX(6deg) rotateY(-6deg);
+    }
+    .love-q .question { 
+      font-weight:800; 
+      color: #ffd6ec; 
+      text-shadow: 0 0 10px rgba(255,0,127,0.26), 0 0 30px rgba(255,0,255,0.12); 
+      letter-spacing:.3px;
+    }
+    .love-q .actions { display:flex; gap:10px; }
+    .love-btn{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.06);
+      cursor:pointer;
+      font-weight:700;
+      background: linear-gradient(90deg,var(--pink-1),var(--pink-2));
+      color:#fff;
+      box-shadow: 0 8px 20px rgba(255,0,127,0.12);
+      transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+    }
+    .love-btn:hover{ transform: translateY(-4px) scale(1.03); box-shadow: 0 12px 30px rgba(255,0,127,0.18); filter: brightness(1.05); }
+    .love-btn.no{ background: linear-gradient(90deg,#6b6b6b,#4a4a4a); }
+    .love-btn.no.shake{ animation: shake 480ms; }
+    @keyframes shake { 0%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}100%{transform:translateX(0);} }
+
+    /* burst hearts used for "Có" action */
+    .burst {
+      position:absolute;
+      pointer-events:none;
+      font-size:18px;
+      transform-origin:center;
+      animation: burstUp 1200ms ease-out forwards;
+      text-shadow:0 6px 18px rgba(255,0,127,0.12);
+    }
+    @keyframes burstUp {
+      0% { opacity:1; transform: translateY(0) scale(1); }
+      60% { opacity:1; transform: translateY(-60px) scale(1.2); }
+      100%{ opacity:0; transform: translateY(-140px) scale(0.8); }
+    }
+
+    /* broken heart for "Không" action */
+    .broken {
+      position:absolute;
+      pointer-events:none;
+      font-size:36px;
+      color:#ff4d60;
+      transform-origin:center;
+      animation: brokenPop 900ms ease-out forwards;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+    }
+    @keyframes brokenPop {
+      0% { opacity:1; transform: scale(0.8) translateY(0) rotate(0deg); }
+      50% { transform: scale(1.2) translateY(-10px) rotate(-8deg); opacity:1; }
+      100%{ transform: scale(0.6) translateY(-80px) rotate(-28deg); opacity:0; }
+    }
+
     /* footer small */
-    footer{ margin-top:18px; text-align:center; color:rgba(255,255,255,0.45); font-size:0.85rem; opacity:0.9; }
+    footer{ margin-top:18px; text-align:center; color:rgba(255,255,255,0.55); font-size:0.85rem; opacity:0.95; }
+
+    /* small screens adjust */
+    @media (max-width:900px){
+      .slideshow-frame{ height:360px; }
+      .love-q{ flex-direction:column; gap:10px; }
+    }
   </style>
 </head>
 <body>
@@ -366,7 +497,18 @@
       <div class="days" id="loveDays">0 ngày</div>
     </div>
 
-    <!-- HORIZONTAL SLIDER (placed right under circle, as requested) -->
+    <!-- NEW: Top stats moved near circle -->
+    <div class="love-stats-top" id="loveStatsTop" aria-hidden="false">
+      <div class="stat"><span id="cYears">0</span><small>Năm</small></div>
+      <div class="stat"><span id="cMonths">0</span><small>Tháng</small></div>
+      <div class="stat"><span id="cWeeks">0</span><small>Tuần</small></div>
+      <div class="stat"><span id="cDays">0</span><small>Ngày</small></div>
+      <div class="stat"><span id="cHours">0</span><small>Giờ</small></div>
+      <div class="stat"><span id="cMinutes">0</span><small>Phút</small></div>
+      <div class="stat"><span id="cSeconds">0</span><small>Giây</small></div>
+    </div>
+
+    <!-- HORIZONTAL SLIDER (right under circle) -->
     <div class="horizontal-love" aria-hidden="false">
       <div class="slider-wrap">
         <input id="loveSlider" type="range" min="0" max="100" value="50" />
@@ -385,9 +527,18 @@
       <div class="slideshow-card">
         <div class="slideshow-frame" id="slideshow">
           <!-- Slides -->
-          <div class="slide active"><img src="https://files.catbox.moe/jfdkp7.jpeg" alt="pic1"></div>
-          <div class="slide"><img src="https://images.unsplash.com/photo-1494790108755-2616c88d7e85?w=1400&q=80" alt="pic2"></div>
-          <div class="slide"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1400&q=80" alt="pic3"></div>
+          <div class="slide active"><img src="https://files.catbox.moe/95q5xp.jpg" alt="1"></div>
+          <div class="slide"><img src="https://files.catbox.moe/thloyl.jpg" alt="2"></div>
+          <div class="slide"><img src="https://files.catbox.moe/gb2ds2.jpg" alt="3"></div>
+          <div class="slide"><img src="https://files.catbox.moe/64l6nv.jpg" alt="4"></div>
+          <div class="slide"><img src="https://files.catbox.moe/lxmk1o.jpg" alt="5"></div>
+          <div class="slide"><img src="https://files.catbox.moe/89jm6k.jpg" alt="6"></div>
+          <div class="slide"><img src="https://files.catbox.moe/gp2dnd.jpg" alt="7"></div>
+          <div class="slide"><img src="https://files.catbox.moe/fpre5p.jpg" alt="8"></div>
+          <div class="slide"><img src="https://files.catbox.moe/yrzrve.jpg" alt="9"></div>
+          <div class="slide"><img src="https://files.catbox.moe/ah2hxx.jpg" alt="10"></div>
+          <div class="slide"><img src="https://files.catbox.moe/cyk4cb.jpg" alt="11"></div>
+          <div class="slide"><img src="https://files.catbox.moe/p88yak.jpg" alt="12"></div>
 
           <!-- decorative corner hearts -->
           <span class="corner-heart tl">💖</span>
@@ -400,9 +551,7 @@
           <div class="nav-btn nav-next" id="nextBtn" title="Next">›</div>
 
           <!-- NOTE: pause button removed (per your request) -->
-          <div class="slideshow-top-right">
-            <!-- intentionally empty (no pause/stop button) -->
-          </div>
+          <div class="slideshow-top-right"></div>
 
           <!-- dots -->
           <div class="dots" id="dotsWrap" aria-hidden="true"></div>
@@ -413,9 +562,20 @@
           <div style="font-size:0.9rem; color:rgba(255,255,255,0.7)">Click ⟨ ⟩ or chạm để chuyển — tự động mỗi 5s</div>
           <div style="font-size:0.85rem; color:rgba(255,255,255,0.6)">Hover để tạm dừng</div>
         </div>
+
+        <!-- Love question -->
+        <div class="love-q" aria-hidden="false" id="loveQuestion">
+          <div class="card" id="loveCard">
+            <div class="question">Em có yêu anh không?</div>
+            <div class="actions">
+              <button class="love-btn" id="btnYes">Có 💖</button>
+              <button class="love-btn no" id="btnNo">Không 💔</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Right: slider & info (vertical slider removed; kept stat boxes) -->
+      <!-- Right: info -->
       <aside class="right-panel" aria-label="Controls & Love Slider">
         <div style="font-size:0.95rem; color:rgba(255,255,255,0.9)">Thông tin & Thống kê</div>
 
@@ -436,11 +596,9 @@
     <footer>Powered by NgocDoiAn • Keep it cypherpunk ✨</footer>
   </div>
 
-  <!-- MUSIC element (kept accessible; autoplay may be blocked by browsers) -->
+  <!-- MUSIC -->
   <audio id="bgMusic" loop preload="auto">
-    <!-- replace with your preferred mp3 if needed -->
     <source src="https://files.catbox.moe/4h5y1q.mp3" type="audio/mpeg">
-    <!-- fallback text -->
   </audio>
 
   <script>
@@ -451,7 +609,7 @@
     const FULL_DAYS_FOR_PROGRESS = 1000;
     /***************************************************/
 
-    /* ===== heart background generation (keep cypherpunk polygon hearts) ===== */
+    /* ===== heart background ===== */
     const heartBg = document.getElementById('heartBg');
     for(let i=0;i<TOTAL_HEARTS;i++){
       const el = document.createElement('div');
@@ -468,30 +626,48 @@
       heartBg.appendChild(el);
     }
 
-    /* ===== love days counter (years, months,... and fill progress) ===== */
+    /* ===== love counter (full Y/M/W/D/H/M/S) ===== */
     function updateCounter(){
       const now = new Date();
       const diff = now - START_DATE;
+
       const totalSeconds = Math.floor(diff/1000);
+      const seconds = totalSeconds % 60;
+
       const totalMinutes = Math.floor(totalSeconds/60);
+      const minutes = totalMinutes % 60;
+
       const totalHours = Math.floor(totalMinutes/60);
+      const hours = totalHours % 24;
+
       const totalDays = Math.floor(totalHours/24);
-      const days = totalDays % 30;
+      const weeks = Math.floor(totalDays/7);
       const months = Math.floor(totalDays/30) % 12;
       const years = Math.floor(totalDays/365);
 
-      document.getElementById('years').textContent = years;
+      // top stats
+      document.getElementById('cYears').textContent   = years;
+      document.getElementById('cMonths').textContent  = months;
+      document.getElementById('cWeeks').textContent   = weeks;
+      document.getElementById('cDays').textContent    = totalDays;
+      document.getElementById('cHours').textContent   = hours.toString().padStart(2,'0');
+      document.getElementById('cMinutes').textContent = minutes.toString().padStart(2,'0');
+      document.getElementById('cSeconds').textContent = seconds.toString().padStart(2,'0');
+
+      // right small boxes (giữ nguyên logic cũ của bạn)
+      document.getElementById('years').textContent  = years;
       document.getElementById('months').textContent = months;
-      document.getElementById('days').textContent = totalDays;
+      document.getElementById('days').textContent   = totalDays;
       document.getElementById('loveDays').textContent = totalDays + ' ngày';
 
+      // progress
       const pct = Math.min((totalDays / FULL_DAYS_FOR_PROGRESS) * 100, 100);
       document.getElementById('loveProgressFill').style.width = pct + '%';
     }
     updateCounter();
-    setInterval(updateCounter,1000);
+    setInterval(updateCounter, 1000);
 
-    /* ===== slideshow logic (smooth fade, compact nav, dots, pause on hover) ===== */
+    /* ===== slideshow ===== */
     const slides = Array.from(document.querySelectorAll('.slide'));
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -499,7 +675,6 @@
     let slideIndex = 0;
     let autoplayTimer = null;
 
-    // build dots
     slides.forEach((s, idx) => {
       const dot = document.createElement('div');
       dot.className = 'dot' + (idx===0? ' active':'');
@@ -524,34 +699,21 @@
       slideIndex = (slideIndex - 1 + slides.length) % slides.length;
       setActive(slideIndex);
     }
-
     prevBtn.addEventListener('click', ()=> { prevSlide(); restartAutoplay(); });
     nextBtn.addEventListener('click', ()=> { nextSlide(); restartAutoplay(); });
 
-    // hover to pause (no pause button; hover pauses autoplay)
     const slideshowFrame = document.getElementById('slideshow');
     slideshowFrame.addEventListener('mouseenter', ()=> { stopAutoplay(true); });
     slideshowFrame.addEventListener('mouseleave', ()=> { startAutoplay(); });
-
-    function startAutoplay(){
-      stopAutoplay();
-      autoplayTimer = setInterval(()=> nextSlide(), SLIDE_INTERVAL_MS);
-    }
-    function stopAutoplay(temp=false){
-      if(autoplayTimer) clearInterval(autoplayTimer);
-      autoplayTimer = null;
-    }
-    function restartAutoplay(){
-      stopAutoplay(); startAutoplay();
-    }
-    // init autoplay
+    function startAutoplay(){ stopAutoplay(); autoplayTimer = setInterval(()=> nextSlide(), SLIDE_INTERVAL_MS); }
+    function stopAutoplay(){ if(autoplayTimer) clearInterval(autoplayTimer); autoplayTimer = null; }
+    function restartAutoplay(){ stopAutoplay(); startAutoplay(); }
     startAutoplay();
 
-    /* ===== music toggle (keep music but add on/off button) ===== */
+    /* ===== music toggle ===== */
     const bgMusic = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
     const musicIcon = document.getElementById('musicIcon');
-
     function tryPlayMusic(){
       bgMusic.volume = 0.28;
       const p = bgMusic.play();
@@ -561,47 +723,55 @@
       }
     }
     tryPlayMusic();
-
     musicToggle.addEventListener('click', ()=> {
       if(bgMusic.paused){ bgMusic.play().catch(()=>{}); musicIcon.textContent='🔊'; }
       else{ bgMusic.pause(); musicIcon.textContent='🔇'; }
     });
 
-    /* ===== LOVE SLIDER (horizontal under circle) + aura spawn + mood icon (iPhone emoji) ===== */
+    /* ===== LOVE SLIDER + aura + mood + thumb hearts ===== */
     const slider = document.getElementById('loveSlider');
     const mood = document.getElementById('moodIcon');
     const auraContainer = document.getElementById('auraContainer');
     const heartCircle = document.querySelector('.heart-circle');
 
     function spawnAuraHearts(count, intensity){
-      // count: number of small hearts to spawn (max limited)
       const max = Math.min(10, Math.max(0, Math.floor(count)));
       for(let i=0;i<max;i++){
         const h = document.createElement('div');
         h.className = 'aura-heart';
-        // start from center of heart-circle
-        // place at center
         h.style.left = '50%';
         h.style.top = '50%';
-        // random direction, scaled by intensity
         const angle = Math.random()*Math.PI*2;
-        const radius = 60 + Math.random()*70; // px
+        const radius = 60 + Math.random()*70;
         const dx = Math.round(Math.cos(angle) * radius * (0.7 + intensity*0.003));
-        const dy = Math.round(Math.sin(angle) * radius * (0.5 + intensity*0.002)) * -1; // upward skew
+        const dy = Math.round(Math.sin(angle) * radius * (0.5 + intensity*0.002)) * -1;
         h.style.setProperty('--dx', dx + 'px');
         h.style.setProperty('--dy', dy + 'px');
         h.style.animationDuration = (600 + Math.random()*700) + 'ms';
         auraContainer.appendChild(h);
-        // remove later
-        setTimeout(()=> {
-          if(h && h.parentNode) h.parentNode.removeChild(h);
-        }, 1600);
+        setTimeout(()=> { h.remove(); }, 1600);
       }
+    }
+
+    // tim bay ngay tại vị trí núm kéo
+    function spawnThumbHeart(val){
+      const rect = slider.getBoundingClientRect();
+      const ratio = (val - slider.min) / (slider.max - slider.min);
+      const x = rect.left + ratio * rect.width;
+      const y = rect.top + rect.height/2;
+
+      const b = document.createElement('div');
+      b.className = 'burst';
+      b.textContent = val > 85 ? '💘' : '💖';
+      b.style.left = (x - 8) + 'px';
+      b.style.top = (y - 10) + 'px';
+      b.style.fontSize = (12 + Math.round(Math.random()*10)) + 'px';
+      document.body.appendChild(b);
+      setTimeout(()=> b.remove(), 1100);
     }
 
     function updateMood(val){
       val = Number(val);
-      // emoji mapping (iPhone-style will depend on system, font-family set in CSS)
       let emoji = '😐';
       if(val <= 5) emoji = '💀';
       else if(val <= 15) emoji = '💔';
@@ -613,67 +783,110 @@
       else emoji = '😍';
       mood.textContent = emoji;
 
-      // scale mood slightly
-      const scale = 1 + (val / 260); // up to ~1.38
+      const scale = 1 + (val / 260);
       mood.style.transform = `scale(${scale})`;
 
-      // heart-circle glow intensity
-      const blur1 = 10 + Math.round(val/2); // px
+      const blur1 = 10 + Math.round(val/2);
       const blur2 = 20 + Math.round(val/1.6);
       heartCircle.style.boxShadow = `inset 0 0 ${10 + val/6}px rgba(255,105,180,0.06), 0 8px ${blur1}px rgba(255,0,127,0.45), 0 0 ${blur2*1.6}px rgba(255,0,255,0.12)`;
 
-      // spawn aura hearts proportional to slider (throttle spawn amount)
-      // spawn a few hearts (max 8) — more at higher values
-      const spawnCount = Math.floor(val / 15); // 0..6
+      const spawnCount = Math.floor(val / 15);
       if (spawnCount > 0) spawnAuraHearts(spawnCount, val);
 
-      // also update love-progress fill like before
       const totalDays = Math.floor((Date.now() - START_DATE) / (1000*60*60*24));
       const pct = Math.min((totalDays / FULL_DAYS_FOR_PROGRESS) * 100, 100);
       const mixed = Math.min(100, Math.round((pct*0.6) + (val*0.4)));
       document.getElementById('loveProgressFill').style.width = mixed + '%';
     }
 
-    slider.addEventListener('input', (e)=> updateMood(e.target.value));
-    // init mood
+    slider.addEventListener('input', (e)=> {
+      updateMood(e.target.value);
+      spawnThumbHeart(e.target.value);
+    });
     updateMood(slider.value);
 
-    /* ===== accessibility: keyboard controls for slides + slider ===== */
+    /* ===== accessibility: keyboard ===== */
     window.addEventListener('keydown', (e)=>{
       if(e.key === 'ArrowRight') { nextSlide(); restartAutoplay(); }
       if(e.key === 'ArrowLeft') { prevSlide(); restartAutoplay(); }
       if(e.key === 'ArrowUp'){
-        slider.value = Math.min(100, Number(slider.value) + 5); updateMood(slider.value);
+        slider.value = Math.min(100, Number(slider.value) + 5); updateMood(slider.value); spawnThumbHeart(slider.value);
       }
       if(e.key === 'ArrowDown'){
-        slider.value = Math.max(0, Number(slider.value) - 5); updateMood(slider.value);
+        slider.value = Math.max(0, Number(slider.value) - 5); updateMood(slider.value); spawnThumbHeart(slider.value);
       }
     });
 
-    /* ===== small: make images prevent drag on mobile/desktop ===== */
+    /* ===== prevent drag/context menu on images ===== */
     document.querySelectorAll('.slide img').forEach(img=>{
       img.ondragstart = ()=> false;
       img.addEventListener('contextmenu', e=> e.preventDefault());
     });
 
-    /* ===== Responsive: adjust slide height on small screens ===== */
+    /* ===== responsive slide height ===== */
     function adjustSlideHeight(){
       const frame = document.querySelector('.slideshow-frame');
       if(window.innerWidth < 600){
-        frame.style.height = '280px';
+        frame.style.height = '320px';
       } else if(window.innerWidth < 900){
-        frame.style.height = '340px';
+        frame.style.height = '380px';
       } else {
-        frame.style.height = '420px';
+        frame.style.height = '460px';
       }
     }
     adjustSlideHeight();
     window.addEventListener('resize', adjustSlideHeight);
 
-    /* ===== initial setActive for slides (in case) ===== */
+    /* ===== initial setActive ===== */
     setTimeout(()=> setActive(slideIndex), 50);
 
-    /************* End of Script *************/
+    /* ===== LOVE QUESTION behavior ===== */
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const loveCard = document.getElementById('loveCard');
+    const slideshowRect = () => document.getElementById('slideshow').getBoundingClientRect();
+
+    function spawnBurstAt(x, y, count=14, emoji='💖'){
+      for(let i=0;i<count;i++){
+        const b = document.createElement('div');
+        b.className = 'burst';
+        b.textContent = emoji;
+        const rx = (Math.random()-0.5)*160;
+        const ry = (Math.random()-0.2)*80;
+        b.style.left = (x + rx) + 'px';
+        b.style.top = (y + ry) + 'px';
+        b.style.fontSize = (12 + Math.round(Math.random()*18)) + 'px';
+        document.body.appendChild(b);
+        setTimeout(()=> b.remove(), 1400 + Math.random()*400);
+      }
+    }
+
+    btnYes.addEventListener('click', ()=>{
+      const r = slideshowRect();
+      const cx = r.left + r.width/2;
+      const cy = r.top + r.height/2;
+      spawnBurstAt(cx, cy, 24, '💖');
+      spawnAuraHearts(6, 80);
+      // nhẹ nhàng nghiêng thẻ
+      loveCard.style.transform = 'rotateX(6deg) rotateY(-6deg) scale(1.03)';
+      setTimeout(()=> loveCard.style.transform = '', 500);
+    });
+
+    btnNo.addEventListener('click', ()=>{
+      btnNo.classList.add('shake');
+      setTimeout(()=> btnNo.classList.remove('shake'), 480);
+
+      const r = slideshowRect();
+      const cx = r.left + r.width/2;
+      const cy = r.top + r.height/2;
+      const br = document.createElement('div');
+      br.className = 'broken';
+      br.textContent = '💔';
+      br.style.left = (cx - 24) + 'px';
+      br.style.top = (cy - 24) + 'px';
+      document.body.appendChild(br);
+      setTimeout(()=> br.remove(), 1000);
+    });
   </script>
 </body>
 </html>
