@@ -351,22 +351,6 @@
     /* Ken Burns effect on active image */
     .slide.active img{ transform: scale(1.03); }
 
-    /* caption (we will hide captions as requested) */
-    .slide .caption{
-      display:none; /* captions removed per request */
-      position:absolute;
-      bottom:12px;
-      left:12px;
-      background:linear-gradient(90deg, rgba(0,0,0,0.28), rgba(255,0,127,0.06));
-      padding:8px 12px;
-      border-radius:8px;
-      font-size:0.9rem;
-      color:#fff;
-      backdrop-filter: blur(4px);
-      box-shadow: var(--neon);
-      z-index:4;
-    }
-
     /* corner decorative hearts (fixed) */
     .corner-heart{
       position:absolute;
@@ -513,13 +497,14 @@
       transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
       position:relative;
       z-index:3;
+      user-select:none;
     }
     .love-btn:hover{ transform: translateY(-4px) scale(1.03); box-shadow: 0 12px 30px rgba(255,0,127,0.18); filter: brightness(1.05); }
     .love-btn.no{ background: linear-gradient(90deg,#6b6b6b,#4a4a4a); }
     .love-btn.no.shake{ animation: shake 480ms; }
     @keyframes shake { 0%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}100%{transform:translateX(0);} }
 
-    /* burst hearts used for "Có" action (small burst) */
+    /* burst hearts used for "Có" action */
     .burst {
       position:absolute;
       pointer-events:none;
@@ -567,27 +552,7 @@
       100% { transform: translateY(110vh) rotate(720deg); opacity:0; }
     }
 
-    /* heart-rain item (used by "Có") */
-    .heart-rain{
-      position:fixed;
-      left:0;
-      top:-10vh;
-      pointer-events:none;
-      z-index:10005;
-      transform-origin:center;
-      animation-name: heartFall;
-      animation-timing-function: cubic-bezier(.2,.9,.2,1);
-      animation-fill-mode: forwards;
-      will-change: transform, opacity;
-      text-shadow: 0 6px 14px rgba(0,0,0,0.25);
-    }
-    @keyframes heartFall {
-      0% { transform: translateY(-10vh) rotate(0deg) scale(1); opacity:1; }
-      50% { opacity:1; }
-      100% { transform: translateY(110vh) rotate(720deg) scale(0.9); opacity:0; }
-    }
-
-    /* screen shake for "Không" (body) */
+    /* screen shake for "Không" */
     .screen-shake { animation: shakeScreen .52s ease-in-out; }
     @keyframes shakeScreen {
       0%{ transform:translateX(0); }
@@ -597,16 +562,28 @@
       100%{ transform:translateX(0); }
     }
 
+    /* heart rain specific: big full-screen hearts */
+    .heart-rain-item {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      will-change: transform, opacity;
+      transform-origin: center;
+      text-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      user-select:none;
+    }
+
     /* footer small */
     footer{ margin-top:18px; text-align:center; color:rgba(255,255,255,0.55); font-size:0.85rem; opacity:0.95; }
 
-    /* typewriter message */
+    /* typewriter message moved near the circle (we'll position with JS) */
     .typewriter {
-      margin-top:14px;
+      margin-top:6px;
       text-align:center;
       font-size:0.95rem;
       color:rgba(255,210,235,0.95);
       min-height:22px;
+      pointer-events:none;
     }
     .typewriter .cursor { display:inline-block; width:8px; background: linear-gradient(90deg,#fff,#ffb0e0); margin-left:6px; animation: blink 800ms steps(2) infinite; height:18px; vertical-align:middle; border-radius:2px;}
     @keyframes blink { 0%{opacity:1}50%{opacity:0}100%{opacity:1} }
@@ -646,15 +623,15 @@
     </header>
 
     <!-- Heart circle + days -->
-    <div class="heart-circle" aria-hidden="true" id="heartCircle">
-      <div class="glow-ring" aria-hidden="true"></div>
-      <div id="auraContainer" aria-hidden="true"></div>
-      <div class="days" id="loveDays">0 ngày</div>
-    </div>
+    <div style="display:flex; gap:8px; align-items:center; justify-content:center; flex-direction:column;">
+      <div class="heart-circle" aria-hidden="true" id="heartCircle">
+        <div class="glow-ring" aria-hidden="true"></div>
+        <div id="auraContainer" aria-hidden="true"></div>
+        <div class="days" id="loveDays">0 ngày</div>
+      </div>
 
-    <!-- TYPEWRITER moved near the circle as requested -->
-    <div style="display:flex; justify-content:center;">
-      <div class="typewriter" id="typeWriter"></div>
+      <!-- typewriter moved visually under the circle -->
+      <div class="typewriter" id="typeWriter" aria-hidden="false"></div>
     </div>
 
     <!-- NEW: Top stats moved near circle -->
@@ -686,7 +663,7 @@
       <!-- Left: slideshow -->
       <div class="slideshow-card">
         <div class="slideshow-frame" id="slideshow">
-          <!-- Slides (kept your images) - captions hidden/removed -->
+          <!-- Slides (images) - captions removed as requested -->
           <div class="slide active">
             <img src="https://files.catbox.moe/95q5xp.jpg" alt="1">
           </div>
@@ -712,15 +689,13 @@
           <div class="nav-btn nav-prev" id="prevBtn" title="Previous">‹</div>
           <div class="nav-btn nav-next" id="nextBtn" title="Next">›</div>
 
-          <!-- NOTE: pause button removed (per your request) -->
           <div class="slideshow-top-right"></div>
 
           <!-- dots -->
           <div class="dots" id="dotsWrap" aria-hidden="true"></div>
         </div>
 
-        <!-- small caption / instructions (REMOVED per request) -->
-        <!-- intentionally left blank -->
+        <!-- small caption / instructions removed as requested -->
 
         <!-- Love question -->
         <div class="love-q" aria-hidden="false" id="loveQuestion">
@@ -750,7 +725,6 @@
           </div>
         </div>
 
-        <!-- (typeWriter removed from right panel; moved near circle) -->
       </aside>
     </div>
 
@@ -758,6 +732,9 @@
 
   <!-- overlays -->
   <div class="big-overlay" id="bigOverlay"></div>
+
+  <!-- heart rain container (separate) -->
+  <div id="heartRainLayer" aria-hidden="true" style="position:fixed; inset:0; z-index:9999; pointer-events:none; overflow:hidden;"></div>
 
   <!-- security overlay when detect devtools attempts -->
   <div id="devWarn" style="position:fixed; inset:0; display:none; z-index:10001; background:linear-gradient(180deg, rgba(20,2,20,0.95), rgba(8,0,8,0.95)); color:#fff; align-items:center; justify-content:center; text-align:center; padding:20px;">
@@ -844,7 +821,7 @@
       setStatWithFlash('cMinutes', minutes.toString().padStart(2,'0'));
       setStatWithFlash('cSeconds', seconds.toString().padStart(2,'0'));
 
-      // right small boxes (giữ nguyên logic cũ của bạn)
+      // right small boxes
       document.getElementById('years').textContent  = years;
       document.getElementById('months').textContent = months;
       document.getElementById('days').textContent   = totalDays;
@@ -1086,7 +1063,7 @@
     const btnNo = document.getElementById('btnNo');
     const loveCard = document.getElementById('loveCard');
     const bigOverlay = document.getElementById('bigOverlay');
-    const slideshowRect = () => document.getElementById('slideshow').getBoundingClientRect();
+    const heartRainLayer = document.getElementById('heartRainLayer');
 
     function spawnBurstAt(x, y, count=14, emoji='💖'){
       for(let i=0;i<count;i++){
@@ -1103,54 +1080,119 @@
       }
     }
 
-    // full-screen heart rain / confetti (nice gentle rain, many different hearts)
-    function showHeartRain(durationMs = 2000){
-      const types = ['💖','💘','💕','💞','💝','💗','💓','💟','💘','💛','💚','💙'];
-      const start = Date.now();
+    // full-screen heart rain / confetti for "Có"
+    function showHeartRain(durationMs = 4000, density = 70) {
+      // duration: how long to keep spawning / showing hearts
+      // density: approx number of hearts to spawn in total
+      const start = performance.now();
+      const types = ['💖','💘','💕','💞','💝','💗','💓','💜','💟'];
       const created = [];
-      // spawn bursts over the duration quickly
-      const spawnBatch = () => {
-        const elapsed = Date.now() - start;
-        if(elapsed > durationMs) return;
-        // spawn a random number of hearts each tick
-        const perTick = 8 + Math.floor(Math.random()*12);
-        for(let i=0;i<perTick;i++){
-          const h = document.createElement('div');
-          h.className = 'heart-rain';
-          const icon = types[Math.floor(Math.random()*types.length)];
-          h.textContent = icon;
-          const left = Math.random()*100;
-          const size = 12 + Math.floor(Math.random()*36);
-          h.style.left = left + 'vw';
-          h.style.fontSize = size + 'px';
-          // random rotation and duration
-          const dur = 1400 + Math.floor(Math.random()*1200);
-          h.style.animationDuration = dur + 'ms';
-          const rotateStart = Math.floor(Math.random()*360);
-          h.style.transform = `rotate(${rotateStart}deg)`;
-          document.body.appendChild(h);
-          created.push(h);
-          // cleanup after animation end
-          setTimeout(()=> { if(h && h.parentNode) h.parentNode.removeChild(h); }, dur + 80);
+      let running = true;
+
+      // spawn many hearts over the first ~ durationMs (so effect looks continuous)
+      const spawnInterval = 30; // ms between mini-spawns
+      const endTime = start + durationMs;
+
+      function spawnBatch() {
+        if(!running) return;
+        const now = performance.now();
+        const remaining = Math.max(0, endTime - now);
+        // adjust spawn rate as time passes
+        const remainingRatio = remaining / durationMs;
+        // spawn count per batch:
+        const perBatch = Math.max(1, Math.round((density/ (durationMs / spawnInterval)) * (1 + (1-remainingRatio)*1.6)));
+        for(let i=0;i<perBatch;i++){
+          const el = document.createElement('div');
+          el.className = 'heart-rain-item';
+          el.textContent = types[Math.floor(Math.random()*types.length)];
+          const size = 12 + Math.floor(Math.random()*48); // px
+          el.style.fontSize = size + 'px';
+          // random x across viewport, start slightly above
+          const vw = Math.max(window.innerWidth, 320);
+          const left = Math.random() * vw;
+          el.style.left = (left) + 'px';
+          el.style.top = (-20 - Math.random()*40) + 'px';
+          // random horizontal drift
+          const drift = (Math.random()-0.5) * 200; // px over animation
+          // random duration for fall: shorter near end, vary
+          const fallDuration = 1800 + Math.random()*1800; // ms
+          // create an animation using requestAnimationFrame to be smooth and cross-browser safe
+          const startTime = performance.now();
+          const startTop = -40 - Math.random()*60;
+          const endTop = window.innerHeight + 60 + Math.random()*120;
+          el._anim = {
+            startTime, fallDuration, startTop, endTop, left, drift
+          };
+          // random rotation
+          el.style.transform = `translate3d(0,0,0) rotate(${Math.random()*360}deg)`;
+          heartRainLayer.appendChild(el);
+          created.push(el);
         }
-        // schedule next batch fast for smoothness
-        setTimeout(spawnBatch, 80 + Math.random()*120);
-      };
+
+        if (performance.now() < endTime) {
+          setTimeout(spawnBatch, spawnInterval);
+        } else {
+          // stop spawning, but let existing fall out and then remove
+          setTimeout(()=> {
+            // schedule cleanup
+            created.forEach(el => { if(el && el.parentNode) el.parentNode.removeChild(el); });
+          }, 2200);
+        }
+      }
+
+      // animation loop for created elements: move them down using RAF for smoother motion
+      let rafId = null;
+      function animate() {
+        const now = performance.now();
+        for(let i=0;i<heartRainLayer.children.length;i++){
+          const el = heartRainLayer.children[i];
+          const a = el._anim;
+          if(!a) continue;
+          const t = Math.min(1, (now - a.startTime) / a.fallDuration);
+          const easeT = t<0.5? (2*t*t) : (-1 + (4-2*t)*t); // rough ease
+          const y = a.startTop + (a.endTop - a.startTop) * easeT;
+          const x = a.left + a.drift * easeT;
+          const rot = (t*720) * ( (a.left%2===0) ? 1 : -1 );
+          el.style.transform = `translate3d(${x - a.left}px, ${y}px, 0) rotate(${rot}deg)`;
+          el.style.opacity = String(1 - Math.min(1, t*1.1));
+          // remove if off-screen
+          if(t >= 1) {
+            if(el.parentNode) el.parentNode.removeChild(el);
+            // adjust index after removal
+            i--;
+          }
+        }
+        rafId = requestAnimationFrame(animate);
+      }
+
       spawnBatch();
-      // ensure full cleanup after duration + buffer
+      rafId = requestAnimationFrame(animate);
+      // final stop after duration + cleanup
       setTimeout(()=> {
-        created.forEach(h => { if(h && h.parentNode) h.parentNode.removeChild(h); });
-      }, durationMs + 1600);
+        running = false;
+        if(rafId) cancelAnimationFrame(rafId);
+        // remove any remaining
+        [...heartRainLayer.children].forEach(c => { if(c && c.parentNode) c.parentNode.removeChild(c); });
+      }, durationMs + 2400);
     }
 
-    btnYes.addEventListener('click', ()=>{
+    // helper to compute center coordinates of slideshow for bursts
+    const slideshowRect = () => document.getElementById('slideshow').getBoundingClientRect();
+
+    btnYes.addEventListener('pointerdown', (ev) => {
+      // prevent double-firing across pointer + click
+      ev.preventDefault();
+    });
+
+    btnYes.addEventListener('click', (ev) => {
+      // spawn some bursts around slideshow center
       const r = slideshowRect();
       const cx = r.left + r.width/2;
       const cy = r.top + r.height/2;
-      spawnBurstAt(cx, cy, 16, '💖');
-      spawnAuraHearts(12, 120);
-      // big heart rain for ~2s
-      showHeartRain(2000);
+      spawnBurstAt(cx, cy, 14, '💖');
+      spawnAuraHearts(8, 120);
+      // show heart rain: 4s, dense
+      showHeartRain(4000, 110);
       // nudge the card
       loveCard.style.transform = 'rotateX(8deg) rotateY(-6deg) scale(1.04)';
       setTimeout(()=> loveCard.style.transform = '', 640);
@@ -1158,70 +1200,41 @@
       try { bgMusic.volume = Math.min(1, bgMusic.volume + 0.12); } catch(e){}
     });
 
-    // Helper: make the "No" button run to a new random spot within the card
-    function moveNoButtonRandomly(){
+    // make "No" button run away when hovered, and show big broken heart on click
+    function moveNoButtonRandomly() {
+      // place the button at a random position within the .actions container bounds
       const actionsWrap = btnNo.parentElement;
       const wrapRect = actionsWrap.getBoundingClientRect();
-      const cardRect = loveCard.getBoundingClientRect();
       const btnRect = btnNo.getBoundingClientRect();
-      // compute available space inside card for button (padding safe)
-      const padding = 8;
-      const minX = cardRect.left + padding;
-      const maxX = cardRect.right - btnRect.width - padding;
-      const minY = cardRect.top + padding;
-      const maxY = cardRect.bottom - btnRect.height - padding;
-      // choose a new position near random but ensure it's within card; use transform translate relative to original
-      const newLeft = Math.max(minX, Math.min(maxX, minX + Math.random() * (maxX - minX)));
-      const newTop  = Math.max(minY, Math.min(maxY, minY + Math.random() * (maxY - minY)));
-      // convert to local offsets relative to current position
-      const offsetX = newLeft - btnRect.left;
-      const offsetY = newTop - btnRect.top;
-      btnNo.style.transition = 'transform 420ms cubic-bezier(.2,.9,.2,1)';
-      btnNo.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-      // after move, clear transform (but keep in place by setting left/top absolute if desired)
+      // compute available space inside card, smaller range to avoid overflow
+      const maxX = Math.max(6, wrapRect.width - btnRect.width - 12);
+      const maxY = Math.max(0, wrapRect.height - btnRect.height - 6);
+      const newX = Math.random() * maxX;
+      const newY = Math.random() * maxY;
+      // transform relative to original
+      btnNo.style.transition = 'transform 360ms cubic-bezier(.2,.8,.2,1)';
+      btnNo.style.transform = `translate(${newX - (btnRect.left - wrapRect.left)}px, ${newY - (btnRect.top - wrapRect.top)}px)`;
+      // clear transform after some time to keep behavior varied
       setTimeout(()=> {
-        // freeze the new position by computing current computed position and applying transform reset
-        const computed = btnNo.getBoundingClientRect();
-        // set position absolute relative to card
-        const relX = computed.left - cardRect.left;
-        const relY = computed.top - cardRect.top;
-        btnNo.style.transition = '';
-        btnNo.style.transform = '';
-        btnNo.style.position = 'absolute';
-        btnNo.style.left = relX + 'px';
-        btnNo.style.top = relY + 'px';
-      }, 460);
+        // only clear if not currently being clicked
+        try { btnNo.style.transform = ''; } catch(e){}
+      }, 1200);
     }
 
-    // On hover we already attempt to move. Enhance click to vibrate + shake + move away each time.
-    btnNo.addEventListener('mouseenter', () => {
-      // if already positioned absolute we keep it relative to card
-      const cardRect = loveCard.getBoundingClientRect();
-      const btnRect = btnNo.getBoundingClientRect();
-      // attempt small dodge movement
-      const maxX = Math.max(6, cardRect.width - btnRect.width - 12);
-      const newX = (Math.random() * maxX) - (btnRect.left - cardRect.left);
-      btnNo.style.transform = `translateX(${newX}px)`;
-      setTimeout(()=> { btnNo.style.transform = ''; }, 700);
+    // Run-away on hover for pointer devices
+    btnNo.addEventListener('pointerenter', (e) => {
+      moveNoButtonRandomly();
     });
 
-    btnNo.addEventListener('click', ()=>{
-      // shake visually
+    // Also move a bit on focus for keyboard users
+    btnNo.addEventListener('focus', () => { moveNoButtonRandomly(); });
+
+    btnNo.addEventListener('click', (e) => {
+      e.preventDefault();
       btnNo.classList.add('shake');
       setTimeout(()=> btnNo.classList.remove('shake'), 480);
 
-      // vibrate device if possible
-      try {
-        if(navigator.vibrate) {
-          // pattern: short pulses
-          navigator.vibrate([120,60,120]);
-        }
-      } catch(e){}
-
-      // also make the button run away to a new place
-      moveNoButtonRandomly();
-
-      // spawn a broken heart floating up at the slideshow center
+      // show broken heart in center (slideshow center)
       const r = slideshowRect();
       const cx = r.left + r.width/2;
       const cy = r.top + r.height/2;
@@ -1230,18 +1243,26 @@
       br.textContent = '💔';
       br.style.left = (cx - 36) + 'px';
       br.style.top = (cy - 36) + 'px';
-      br.style.fontSize = '48px';
+      br.style.fontSize = '64px';
+      br.style.zIndex = 10002;
       document.body.appendChild(br);
       setTimeout(()=> { if(br && br.parentNode) br.parentNode.removeChild(br); }, 1200);
+
+      // vibrate device if available
+      try { if(navigator.vibrate) navigator.vibrate([50,30,50]); } catch(err){}
 
       // screen shake
       document.body.classList.add('screen-shake');
       setTimeout(()=> document.body.classList.remove('screen-shake'), 520);
+
+      // move button away (so clicking again feels like it runs)
+      moveNoButtonRandomly();
+
       // slight music dip
       try { bgMusic.volume = Math.max(0.06, bgMusic.volume - 0.14); } catch(e){}
     });
 
-    /* ===== Typewriter footer quotes (moved near circle) ===== */
+    /* ===== Typewriter footer quotes (cycle) ===== */
     const quotes = [
       "Mỗi giây trôi qua, anh lại yêu em nhiều hơn 💖",
       "Yêu là cùng nhau ngó trăng và không cần nói nhiều.",
@@ -1268,12 +1289,17 @@
             // erase
             const del = setInterval(()=>{
               tspan.textContent = tspan.textContent.slice(0, -1);
-              if(tspan.textContent.length === 0) { clearInterval(del); qIndex = (qIndex+1) % quotes.length; setTimeout(typeQuote, 600); }
+              if(tspan.textContent.length === 0) {
+                clearInterval(del);
+                qIndex = (qIndex+1) % quotes.length;
+                setTimeout(typeQuote, 600);
+              }
             }, 36);
           }, 2400);
         }
       }, 48);
     }
+    // start typewriter
     typeQuote();
 
     /* ===== Simple deterrents: block F12 / Ctrl+Shift+I / Ctrl+U / Ctrl+S, show overlay ===== */
@@ -1337,7 +1363,7 @@
 
     /* ===== Extra small: gentle performance guard (remove many particles if many present) ===== */
     setInterval(()=> {
-      const many = document.querySelectorAll('.burst, .falling, .aura-heart, .heart-rain');
+      const many = document.querySelectorAll('.burst, .falling, .aura-heart, .heart-rain-item');
       if(many.length > 300){
         many.forEach((el, idx) => { if(idx % 2 === 0 && el.parentNode) el.parentNode.removeChild(el); });
       }
