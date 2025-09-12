@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>💖 My Princess - Tình Yêu Cypherpunk 💖</title>
+  <link rel="shortcut icon" href="https://files.catbox.moe/ows0sx.jpg" type="image/x-icon">
+  <title>💖 Hoa Yêu - Tình Yêu Của Anh 💖</title>
   <style>
     /* ======= Base & Colors (giữ vibe hồng tím cypherpunk, nền sáng hơn chút) ======= */
     :root{
@@ -12,6 +13,7 @@
       --accent:#ff2e7e;
       --bg-1:#120017; /* slightly brighter than original */
       --glass: rgba(255,255,255,0.06);
+      --neon: 0 8px 40px rgba(255,0,127,0.18);
     }
     *{box-sizing:border-box}
     body{
@@ -25,6 +27,24 @@
         linear-gradient(180deg,#180021 0%, #060006 100%);
       color:#fff;
       overflow-x:hidden;
+      position:relative;
+    }
+
+    /* ======= Twinkling stars (depth layer) ======= */
+    .star-layer{
+      position:fixed; inset:0; z-index:-3; pointer-events:none; overflow:hidden;
+    }
+    .star{
+      position:absolute; width:2px; height:2px; border-radius:50%;
+      background:rgba(255,255,255,0.85);
+      box-shadow: 0 0 6px rgba(255,255,255,0.6);
+      opacity:0.0;
+      animation: twinkle 4s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0% { opacity:0; transform: scale(0.6); }
+      50% { opacity:0.95; transform: scale(1.2); }
+      100% { opacity:0; transform: scale(0.7); }
     }
 
     /* ======= Cypherpunk heart background (polygon hearts, many) ======= */
@@ -105,6 +125,21 @@
       z-index:2;
     }
 
+    /* animated ring around circle */
+    .glow-ring{
+      position:absolute;
+      inset: -6px;
+      border-radius:50%;
+      pointer-events:none;
+      background: conic-gradient(from 0deg, rgba(255,0,127,0.12), rgba(255,0,255,0.18), rgba(255,46,126,0.12));
+      filter: blur(10px);
+      opacity:0.85;
+      animation: ringRotate 6s linear infinite;
+      mix-blend-mode: screen;
+      z-index:0;
+    }
+    @keyframes ringRotate { to { transform: rotate(360deg); } }
+
     /* ===== NEW: Top stats bar (đưa lên gần vòng tròn) ===== */
     .love-stats-top{
       width:100%;
@@ -115,24 +150,34 @@
       margin:8px auto 6px;
     }
     .love-stats-top .stat{
-      background:var(--glass);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       padding:6px 10px;
       border-radius:10px;
       min-width:88px;
       text-align:center;
       border:1px solid rgba(255,0,127,0.08);
       box-shadow:0 8px 24px rgba(0,0,0,0.25);
+      position:relative;
+      overflow:hidden;
     }
     .love-stats-top .stat span{
       display:block;
       font-weight:800;
       font-size:1rem;
+      text-shadow: 0 2px 6px rgba(255,0,127,0.08);
+      transition: transform .28s cubic-bezier(.2,.9,.2,1);
     }
     .love-stats-top .stat small{
       display:block;
       opacity:0.9;
       font-size:0.8rem;
       color:#ffd6ec;
+    }
+
+    /* flip animation when number changes (simple scale flash) */
+    .flash {
+      transform: scale(1.18);
+      color: #ffffff;
     }
 
     /* ======= Aura hearts (small particle hearts around circle) ======= */
@@ -164,7 +209,7 @@
       margin-bottom:10px;
     }
     .horizontal-love .slider-wrap {
-      width:260px;
+      width:320px; /* a bit wider so particles have room */
       display:flex;
       align-items:center;
       gap:12px;
@@ -183,6 +228,7 @@
       background-size: 200% 100%;
       animation: trackFlow 3.2s linear infinite;
       box-shadow: 0 6px 18px rgba(255,0,127,0.18), inset 0 0 8px rgba(255,255,255,0.06);
+      position:relative;
     }
     @keyframes trackFlow {
       0% { background-position: 0% 50%; }
@@ -191,7 +237,7 @@
     .horizontal-love input[type=range]::-webkit-slider-thumb{
       -webkit-appearance:none;
       appearance:none;
-      width:30px;height:30px;border-radius:50%;
+      width:34px;height:34px;border-radius:50%;
       background: #fff;
       border:3px solid var(--pink-1);
       box-shadow: 0 8px 20px rgba(0,0,0,0.6), 0 0 0 0 rgba(255,0,127,0.4);
@@ -199,14 +245,32 @@
       transition: box-shadow 180ms ease, transform 180ms ease;
     }
     .horizontal-love input[type=range]:active::-webkit-slider-thumb{
-      transform: scale(1.05);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.7), 0 0 0 8px rgba(255,0,127,0.12);
+      transform: scale(1.08);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.7), 0 0 0 10px rgba(255,0,127,0.12);
     }
     .horizontal-love .mood{
       font-size:44px;
       margin-top:6px;
       font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
       text-shadow: 0 6px 18px rgba(255,0,127,0.12);
+      transition: transform 210ms ease, filter 210ms ease;
+    }
+
+    /* thumb pulse effect container */
+    .thumb-pulse {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.9), rgba(255,0,127,0.7));
+      filter: blur(6px);
+      pointer-events:none;
+      transform-origin:center;
+      z-index: 9999;
+      animation: pulse 600ms ease-out forwards;
+    }
+    @keyframes pulse {
+      from { transform: scale(.6); opacity: .9; }
+      to { transform: scale(3.8); opacity: 0; }
     }
 
     /* ======= Love Progress (kept) ======= */
@@ -246,6 +310,7 @@
       border-radius:14px;
       box-shadow:0 10px 30px rgba(0,0,0,0.6);
       border:1px solid rgba(255,0,127,0.04);
+      position:relative;
     }
     .slideshow-frame{
       width:100%;
@@ -254,6 +319,9 @@
       overflow:hidden;
       position:relative;
       background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.36));
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
     .slide{
       position:absolute;
@@ -273,11 +341,30 @@
     .slide img{
       width:100%;
       height:100%;
-      object-fit:contain;
+      object-fit:cover;
       display:block;
       user-select:none;
       -webkit-user-drag:none;
       background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.12));
+      transition: transform 10s ease;
+    }
+    /* Ken Burns effect on active image */
+    .slide.active img{ transform: scale(1.03); }
+
+    /* caption (we will hide captions as requested) */
+    .slide .caption{
+      display:none; /* captions removed per request */
+      position:absolute;
+      bottom:12px;
+      left:12px;
+      background:linear-gradient(90deg, rgba(0,0,0,0.28), rgba(255,0,127,0.06));
+      padding:8px 12px;
+      border-radius:8px;
+      font-size:0.9rem;
+      color:#fff;
+      backdrop-filter: blur(4px);
+      box-shadow: var(--neon);
+      z-index:4;
     }
 
     /* corner decorative hearts (fixed) */
@@ -401,17 +488,19 @@
       box-shadow: 0 8px 28px rgba(0,0,0,0.35);
       transform-style: preserve-3d;
       transition: transform 240ms ease;
+      position:relative;
+      overflow:visible;
     }
     .love-q .card:hover{
       transform: rotateX(6deg) rotateY(-6deg);
     }
-    .love-q .question { 
-      font-weight:800; 
-      color: #ffd6ec; 
-      text-shadow: 0 0 10px rgba(255,0,127,0.26), 0 0 30px rgba(255,0,255,0.12); 
+    .love-q .question {
+      font-weight:800;
+      color: #ffd6ec;
+      text-shadow: 0 0 10px rgba(255,0,127,0.26), 0 0 30px rgba(255,0,255,0.12);
       letter-spacing:.3px;
     }
-    .love-q .actions { display:flex; gap:10px; }
+    .love-q .actions { display:flex; gap:10px; position:relative; }
     .love-btn{
       padding:10px 14px;
       border-radius:999px;
@@ -422,13 +511,15 @@
       color:#fff;
       box-shadow: 0 8px 20px rgba(255,0,127,0.12);
       transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+      position:relative;
+      z-index:3;
     }
     .love-btn:hover{ transform: translateY(-4px) scale(1.03); box-shadow: 0 12px 30px rgba(255,0,127,0.18); filter: brightness(1.05); }
     .love-btn.no{ background: linear-gradient(90deg,#6b6b6b,#4a4a4a); }
     .love-btn.no.shake{ animation: shake 480ms; }
     @keyframes shake { 0%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}100%{transform:translateX(0);} }
 
-    /* burst hearts used for "Có" action */
+    /* burst hearts used for "Có" action (small burst) */
     .burst {
       position:absolute;
       pointer-events:none;
@@ -436,6 +527,8 @@
       transform-origin:center;
       animation: burstUp 1200ms ease-out forwards;
       text-shadow:0 6px 18px rgba(255,0,127,0.12);
+      z-index:10000;
+      user-select:none;
     }
     @keyframes burstUp {
       0% { opacity:1; transform: translateY(0) scale(1); }
@@ -452,6 +545,7 @@
       transform-origin:center;
       animation: brokenPop 900ms ease-out forwards;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+      z-index:10000;
     }
     @keyframes brokenPop {
       0% { opacity:1; transform: scale(0.8) translateY(0) rotate(0deg); }
@@ -459,25 +553,85 @@
       100%{ transform: scale(0.6) translateY(-80px) rotate(-28deg); opacity:0; }
     }
 
+    /* full-screen confetti/hearts overlay */
+    .big-overlay{
+      position:fixed; inset:0; z-index:9998; pointer-events:none; overflow:hidden;
+    }
+    .falling {
+      position:absolute; font-size:18px; pointer-events:none; animation: fall 2600ms linear forwards;
+      transform-origin:center;
+      text-shadow:0 6px 12px rgba(0,0,0,0.35);
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity:1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity:0; }
+    }
+
+    /* heart-rain item (used by "Có") */
+    .heart-rain{
+      position:fixed;
+      left:0;
+      top:-10vh;
+      pointer-events:none;
+      z-index:10005;
+      transform-origin:center;
+      animation-name: heartFall;
+      animation-timing-function: cubic-bezier(.2,.9,.2,1);
+      animation-fill-mode: forwards;
+      will-change: transform, opacity;
+      text-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+    @keyframes heartFall {
+      0% { transform: translateY(-10vh) rotate(0deg) scale(1); opacity:1; }
+      50% { opacity:1; }
+      100% { transform: translateY(110vh) rotate(720deg) scale(0.9); opacity:0; }
+    }
+
+    /* screen shake for "Không" (body) */
+    .screen-shake { animation: shakeScreen .52s ease-in-out; }
+    @keyframes shakeScreen {
+      0%{ transform:translateX(0); }
+      25%{ transform:translateX(-8px); }
+      50%{ transform:translateX(8px); }
+      75%{ transform:translateX(-6px); }
+      100%{ transform:translateX(0); }
+    }
+
     /* footer small */
     footer{ margin-top:18px; text-align:center; color:rgba(255,255,255,0.55); font-size:0.85rem; opacity:0.95; }
+
+    /* typewriter message */
+    .typewriter {
+      margin-top:14px;
+      text-align:center;
+      font-size:0.95rem;
+      color:rgba(255,210,235,0.95);
+      min-height:22px;
+    }
+    .typewriter .cursor { display:inline-block; width:8px; background: linear-gradient(90deg,#fff,#ffb0e0); margin-left:6px; animation: blink 800ms steps(2) infinite; height:18px; vertical-align:middle; border-radius:2px;}
+    @keyframes blink { 0%{opacity:1}50%{opacity:0}100%{opacity:1} }
 
     /* small screens adjust */
     @media (max-width:900px){
       .slideshow-frame{ height:360px; }
       .love-q{ flex-direction:column; gap:10px; }
+      .horizontal-love .slider-wrap { width:260px; }
     }
+
   </style>
 </head>
 <body>
+  <!-- STARS LAYER -->
+  <div class="star-layer" id="starLayer"></div>
+
   <!-- BACKGROUND HEARTS -->
   <div class="heart-bg" id="heartBg"></div>
 
-  <div class="wrap">
+  <div class="wrap" id="pageWrap">
     <header>
       <div>
-        <h1>💖 My Princess <span style="font-size:.9rem; margin-left:8px" class="subline">— Tình yêu cypherpunk</span></h1>
-        <div class="subline" style="margin-top:6px">Keep the vibe — màu hồng tím, trái tim polygon, neon glow.</div>
+        <h1>💖 Hoa Yêu <span style="font-size:.9rem; margin-left:8px" class="subline">— Tình yêu của anh </span></h1>
+        <div class="subline" style="margin-top:6px">Anh làm cái này để kỉ niệm và thể hiện tình yêu của mình thôi -- anh tâm huyết lắm đó nha mong em thích nó.</div>
       </div>
 
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
@@ -492,9 +646,15 @@
     </header>
 
     <!-- Heart circle + days -->
-    <div class="heart-circle" aria-hidden="true">
+    <div class="heart-circle" aria-hidden="true" id="heartCircle">
+      <div class="glow-ring" aria-hidden="true"></div>
       <div id="auraContainer" aria-hidden="true"></div>
       <div class="days" id="loveDays">0 ngày</div>
+    </div>
+
+    <!-- TYPEWRITER moved near the circle as requested -->
+    <div style="display:flex; justify-content:center;">
+      <div class="typewriter" id="typeWriter"></div>
     </div>
 
     <!-- NEW: Top stats moved near circle -->
@@ -526,8 +686,10 @@
       <!-- Left: slideshow -->
       <div class="slideshow-card">
         <div class="slideshow-frame" id="slideshow">
-          <!-- Slides -->
-          <div class="slide active"><img src="https://files.catbox.moe/95q5xp.jpg" alt="1"></div>
+          <!-- Slides (kept your images) - captions hidden/removed -->
+          <div class="slide active">
+            <img src="https://files.catbox.moe/95q5xp.jpg" alt="1">
+          </div>
           <div class="slide"><img src="https://files.catbox.moe/thloyl.jpg" alt="2"></div>
           <div class="slide"><img src="https://files.catbox.moe/gb2ds2.jpg" alt="3"></div>
           <div class="slide"><img src="https://files.catbox.moe/64l6nv.jpg" alt="4"></div>
@@ -557,11 +719,8 @@
           <div class="dots" id="dotsWrap" aria-hidden="true"></div>
         </div>
 
-        <!-- small caption / instructions -->
-        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap">
-          <div style="font-size:0.9rem; color:rgba(255,255,255,0.7)">Click ⟨ ⟩ or chạm để chuyển — tự động mỗi 5s</div>
-          <div style="font-size:0.85rem; color:rgba(255,255,255,0.6)">Hover để tạm dừng</div>
-        </div>
+        <!-- small caption / instructions (REMOVED per request) -->
+        <!-- intentionally left blank -->
 
         <!-- Love question -->
         <div class="love-q" aria-hidden="false" id="loveQuestion">
@@ -590,10 +749,23 @@
             <div id="days" style="font-weight:700">0</div><small>Ngày</small>
           </div>
         </div>
+
+        <!-- (typeWriter removed from right panel; moved near circle) -->
       </aside>
     </div>
 
-    <footer>Powered by NgocDoiAn • Keep it cypherpunk ✨</footer>
+    <footer>Dev by Ngocdoian • Yêu Hoa Quá Rồi 💕 </footer>
+
+  <!-- overlays -->
+  <div class="big-overlay" id="bigOverlay"></div>
+
+  <!-- security overlay when detect devtools attempts -->
+  <div id="devWarn" style="position:fixed; inset:0; display:none; z-index:10001; background:linear-gradient(180deg, rgba(20,2,20,0.95), rgba(8,0,8,0.95)); color:#fff; align-items:center; justify-content:center; text-align:center; padding:20px;">
+    <div style="max-width:720px; margin:auto;">
+      <h2 style="margin:0 0 8px 0; font-size:1.6rem">⚠️ Cảnh báo bảo mật</h2>
+      <p style="opacity:.95; margin:0 0 12px 0">Nhóc Ác F12 lm cc j đéo có trình đừng F12 hahaha. Mã nguồn trang là tài sản client — cách an toàn nhất để bảo mật logic là đặt phần nhạy cảm ở server.</p>
+      <button id="devClose" style="padding:8px 14px; border-radius:8px; background:linear-gradient(90deg,var(--pink-1),var(--pink-2)); border:none; color:#fff; cursor:pointer">Đóng cảnh báo</button>
+    </div>
   </div>
 
   <!-- MUSIC -->
@@ -609,20 +781,38 @@
     const FULL_DAYS_FOR_PROGRESS = 1000;
     /***************************************************/
 
+    /* ===== stars generation (depth) ===== */
+    (function makeStars(){
+      const layer = document.getElementById('starLayer');
+      const count = 60;
+      for(let i=0;i<count;i++){
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.left = Math.random()*100 + 'vw';
+        s.style.top = Math.random()*100 + 'vh';
+        s.style.animationDelay = (Math.random()*4) + 's';
+        const size = 1 + Math.floor(Math.random()*3);
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.opacity = 0;
+        layer.appendChild(s);
+      }
+    })();
+
     /* ===== heart background ===== */
     const heartBg = document.getElementById('heartBg');
     for(let i=0;i<TOTAL_HEARTS;i++){
       const el = document.createElement('div');
       el.className = 'heart';
-      const size = 28 + Math.round(Math.random()*44);
+      const size = 18 + Math.round(Math.random()*68);
       el.style.width = size + 'px';
       el.style.height = size + 'px';
       el.style.left = (Math.random()*110 - 5) + 'vw';
       el.style.top = (70 + Math.random()*30) + 'vh';
-      el.style.animationDuration = (6 + Math.random()*10) + 's';
+      el.style.animationDuration = (6 + Math.random()*12) + 's';
       el.style.animationDelay = -(Math.random()*10) + 's';
-      el.style.opacity = (0.4 + Math.random()*0.9);
-      el.style.transform = `rotate(${Math.random()*40-10}deg) scale(${0.7 + Math.random()*0.8})`;
+      el.style.opacity = (0.3 + Math.random()*0.9);
+      el.style.transform = `rotate(${Math.random()*40-20}deg) scale(${0.6 + Math.random()*1.2})`;
       heartBg.appendChild(el);
     }
 
@@ -646,13 +836,13 @@
       const years = Math.floor(totalDays/365);
 
       // top stats
-      document.getElementById('cYears').textContent   = years;
-      document.getElementById('cMonths').textContent  = months;
-      document.getElementById('cWeeks').textContent   = weeks;
-      document.getElementById('cDays').textContent    = totalDays;
-      document.getElementById('cHours').textContent   = hours.toString().padStart(2,'0');
-      document.getElementById('cMinutes').textContent = minutes.toString().padStart(2,'0');
-      document.getElementById('cSeconds').textContent = seconds.toString().padStart(2,'0');
+      setStatWithFlash('cYears', years);
+      setStatWithFlash('cMonths', months);
+      setStatWithFlash('cWeeks', weeks);
+      setStatWithFlash('cDays', totalDays);
+      setStatWithFlash('cHours', hours.toString().padStart(2,'0'));
+      setStatWithFlash('cMinutes', minutes.toString().padStart(2,'0'));
+      setStatWithFlash('cSeconds', seconds.toString().padStart(2,'0'));
 
       // right small boxes (giữ nguyên logic cũ của bạn)
       document.getElementById('years').textContent  = years;
@@ -664,10 +854,22 @@
       const pct = Math.min((totalDays / FULL_DAYS_FOR_PROGRESS) * 100, 100);
       document.getElementById('loveProgressFill').style.width = pct + '%';
     }
+    // small helper to flash stat when changed
+    const lastStat = {};
+    function setStatWithFlash(id, value){
+      const el = document.getElementById(id);
+      if(!el) return;
+      if(String(lastStat[id]) !== String(value)){
+        el.classList.add('flash');
+        setTimeout(()=> el.classList.remove('flash'), 340);
+      }
+      lastStat[id] = value;
+      el.textContent = value;
+    }
     updateCounter();
     setInterval(updateCounter, 1000);
 
-    /* ===== slideshow ===== */
+    /* ===== slideshow (with ken-burns transitions) ===== */
     const slides = Array.from(document.querySelectorAll('.slide'));
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -675,6 +877,7 @@
     let slideIndex = 0;
     let autoplayTimer = null;
 
+    // build dots
     slides.forEach((s, idx) => {
       const dot = document.createElement('div');
       dot.className = 'dot' + (idx===0? ' active':'');
@@ -684,7 +887,17 @@
     const dots = Array.from(document.querySelectorAll('.dot'));
 
     function setActive(index){
-      slides.forEach((s,i)=> s.classList.toggle('active', i===index));
+      slides.forEach((s,i)=> {
+        s.classList.toggle('active', i===index);
+        // add slight transform variations:
+        if(i===index){
+          const img = s.querySelector('img');
+          if(img) { img.style.transform = 'scale(1.03)'; }
+        } else {
+          const img = s.querySelector('img');
+          if(img) { img.style.transform = 'scale(1)'; }
+        }
+      });
       dots.forEach((d,i)=> d.classList.toggle('active', i===index));
     }
     function goTo(idx){
@@ -715,7 +928,7 @@
     const musicToggle = document.getElementById('musicToggle');
     const musicIcon = document.getElementById('musicIcon');
     function tryPlayMusic(){
-      bgMusic.volume = 0.28;
+      bgMusic.volume = 0.22;
       const p = bgMusic.play();
       if(p !== undefined){
         p.then(()=> { musicIcon.textContent = '🔊'; })
@@ -728,35 +941,38 @@
       else{ bgMusic.pause(); musicIcon.textContent='🔇'; }
     });
 
-    /* ===== LOVE SLIDER + aura + mood + thumb hearts ===== */
+    /* ===== LOVE SLIDER + aura + mood + thumb hearts (enhanced) ===== */
     const slider = document.getElementById('loveSlider');
     const mood = document.getElementById('moodIcon');
     const auraContainer = document.getElementById('auraContainer');
     const heartCircle = document.querySelector('.heart-circle');
 
     function spawnAuraHearts(count, intensity){
-      const max = Math.min(10, Math.max(0, Math.floor(count)));
+      const max = Math.min(12, Math.max(0, Math.floor(count)));
       for(let i=0;i<max;i++){
         const h = document.createElement('div');
         h.className = 'aura-heart';
-        h.style.left = '50%';
-        h.style.top = '50%';
+        h.style.left = (45 + Math.random()*10) + '%';
+        h.style.top = (45 + Math.random()*10) + '%';
         const angle = Math.random()*Math.PI*2;
-        const radius = 60 + Math.random()*70;
-        const dx = Math.round(Math.cos(angle) * radius * (0.7 + intensity*0.003));
+        const radius = 60 + Math.random()*80;
+        const dx = Math.round(Math.cos(angle) * radius * (0.7 + intensity*0.002));
         const dy = Math.round(Math.sin(angle) * radius * (0.5 + intensity*0.002)) * -1;
         h.style.setProperty('--dx', dx + 'px');
         h.style.setProperty('--dy', dy + 'px');
-        h.style.animationDuration = (600 + Math.random()*700) + 'ms';
+        h.style.animationDuration = (600 + Math.random()*900) + 'ms';
         auraContainer.appendChild(h);
-        setTimeout(()=> { h.remove(); }, 1600);
+        setTimeout(()=> { if(h && h.parentNode) h.parentNode.removeChild(h); }, 1700);
       }
     }
 
-    // tim bay ngay tại vị trí núm kéo
+    // thumb heart + continuous trail while dragging
+    let dragSpawnInterval = null;
     function spawnThumbHeart(val){
       const rect = slider.getBoundingClientRect();
-      const ratio = (val - slider.min) / (slider.max - slider.min);
+      const min = Number(slider.min);
+      const max = Number(slider.max);
+      const ratio = (val - min) / (max - min);
       const x = rect.left + ratio * rect.width;
       const y = rect.top + rect.height/2;
 
@@ -767,7 +983,15 @@
       b.style.top = (y - 10) + 'px';
       b.style.fontSize = (12 + Math.round(Math.random()*10)) + 'px';
       document.body.appendChild(b);
-      setTimeout(()=> b.remove(), 1100);
+      setTimeout(()=> { if(b && b.parentNode) b.parentNode.removeChild(b); }, 1100);
+
+      // thumb pulse
+      const pulse = document.createElement('div');
+      pulse.className = 'thumb-pulse';
+      pulse.style.left = (x - 6) + 'px';
+      pulse.style.top = (y - 6) + 'px';
+      document.body.appendChild(pulse);
+      setTimeout(()=> { if(pulse && pulse.parentNode) pulse.parentNode.removeChild(pulse); }, 700);
     }
 
     function updateMood(val){
@@ -783,14 +1007,15 @@
       else emoji = '😍';
       mood.textContent = emoji;
 
-      const scale = 1 + (val / 260);
-      mood.style.transform = `scale(${scale})`;
+      // animated beat depending on value
+      const beat = 1 + (val / 220);
+      mood.style.transform = `scale(${beat})`;
 
       const blur1 = 10 + Math.round(val/2);
       const blur2 = 20 + Math.round(val/1.6);
       heartCircle.style.boxShadow = `inset 0 0 ${10 + val/6}px rgba(255,105,180,0.06), 0 8px ${blur1}px rgba(255,0,127,0.45), 0 0 ${blur2*1.6}px rgba(255,0,255,0.12)`;
 
-      const spawnCount = Math.floor(val / 15);
+      const spawnCount = Math.floor(val / 16);
       if (spawnCount > 0) spawnAuraHearts(spawnCount, val);
 
       const totalDays = Math.floor((Date.now() - START_DATE) / (1000*60*60*24));
@@ -803,6 +1028,16 @@
       updateMood(e.target.value);
       spawnThumbHeart(e.target.value);
     });
+
+    // spawn continuous hearts when dragging
+    slider.addEventListener('pointerdown', () => {
+      if(dragSpawnInterval) clearInterval(dragSpawnInterval);
+      dragSpawnInterval = setInterval(() => spawnThumbHeart(slider.value), 220);
+    });
+    window.addEventListener('pointerup', () => {
+      if(dragSpawnInterval){ clearInterval(dragSpawnInterval); dragSpawnInterval = null; }
+    });
+
     updateMood(slider.value);
 
     /* ===== accessibility: keyboard ===== */
@@ -817,10 +1052,16 @@
       }
     });
 
-    /* ===== prevent drag/context menu on images ===== */
+    /* ===== prevent drag/context menu on images & general contextmenu ===== */
     document.querySelectorAll('.slide img').forEach(img=>{
       img.ondragstart = ()=> false;
       img.addEventListener('contextmenu', e=> e.preventDefault());
+    });
+    // prevent right-click on whole page (soft)
+    window.addEventListener('contextmenu', (e) => {
+      // allow if ctrl is pressed (developer intentionally)
+      if(e.ctrlKey) return;
+      e.preventDefault();
     });
 
     /* ===== responsive slide height ===== */
@@ -840,10 +1081,11 @@
     /* ===== initial setActive ===== */
     setTimeout(()=> setActive(slideIndex), 50);
 
-    /* ===== LOVE QUESTION behavior ===== */
+    /* ===== LOVE QUESTION behavior (run away "Không", big confetti/hearts on "Có") ===== */
     const btnYes = document.getElementById('btnYes');
     const btnNo = document.getElementById('btnNo');
     const loveCard = document.getElementById('loveCard');
+    const bigOverlay = document.getElementById('bigOverlay');
     const slideshowRect = () => document.getElementById('slideshow').getBoundingClientRect();
 
     function spawnBurstAt(x, y, count=14, emoji='💖'){
@@ -851,42 +1093,258 @@
         const b = document.createElement('div');
         b.className = 'burst';
         b.textContent = emoji;
-        const rx = (Math.random()-0.5)*160;
-        const ry = (Math.random()-0.2)*80;
+        const rx = (Math.random()-0.5)*220;
+        const ry = (Math.random()-0.2)*120;
         b.style.left = (x + rx) + 'px';
         b.style.top = (y + ry) + 'px';
-        b.style.fontSize = (12 + Math.round(Math.random()*18)) + 'px';
+        b.style.fontSize = (12 + Math.round(Math.random()*22)) + 'px';
         document.body.appendChild(b);
-        setTimeout(()=> b.remove(), 1400 + Math.random()*400);
+        setTimeout(()=> { if(b && b.parentNode) b.parentNode.removeChild(b); }, 1600 + Math.random()*500);
       }
+    }
+
+    // full-screen heart rain / confetti (nice gentle rain, many different hearts)
+    function showHeartRain(durationMs = 2000){
+      const types = ['💖','💘','💕','💞','💝','💗','💓','💟','💘','💛','💚','💙'];
+      const start = Date.now();
+      const created = [];
+      // spawn bursts over the duration quickly
+      const spawnBatch = () => {
+        const elapsed = Date.now() - start;
+        if(elapsed > durationMs) return;
+        // spawn a random number of hearts each tick
+        const perTick = 8 + Math.floor(Math.random()*12);
+        for(let i=0;i<perTick;i++){
+          const h = document.createElement('div');
+          h.className = 'heart-rain';
+          const icon = types[Math.floor(Math.random()*types.length)];
+          h.textContent = icon;
+          const left = Math.random()*100;
+          const size = 12 + Math.floor(Math.random()*36);
+          h.style.left = left + 'vw';
+          h.style.fontSize = size + 'px';
+          // random rotation and duration
+          const dur = 1400 + Math.floor(Math.random()*1200);
+          h.style.animationDuration = dur + 'ms';
+          const rotateStart = Math.floor(Math.random()*360);
+          h.style.transform = `rotate(${rotateStart}deg)`;
+          document.body.appendChild(h);
+          created.push(h);
+          // cleanup after animation end
+          setTimeout(()=> { if(h && h.parentNode) h.parentNode.removeChild(h); }, dur + 80);
+        }
+        // schedule next batch fast for smoothness
+        setTimeout(spawnBatch, 80 + Math.random()*120);
+      };
+      spawnBatch();
+      // ensure full cleanup after duration + buffer
+      setTimeout(()=> {
+        created.forEach(h => { if(h && h.parentNode) h.parentNode.removeChild(h); });
+      }, durationMs + 1600);
     }
 
     btnYes.addEventListener('click', ()=>{
       const r = slideshowRect();
       const cx = r.left + r.width/2;
       const cy = r.top + r.height/2;
-      spawnBurstAt(cx, cy, 24, '💖');
-      spawnAuraHearts(6, 80);
-      // nhẹ nhàng nghiêng thẻ
-      loveCard.style.transform = 'rotateX(6deg) rotateY(-6deg) scale(1.03)';
-      setTimeout(()=> loveCard.style.transform = '', 500);
+      spawnBurstAt(cx, cy, 16, '💖');
+      spawnAuraHearts(12, 120);
+      // big heart rain for ~2s
+      showHeartRain(2000);
+      // nudge the card
+      loveCard.style.transform = 'rotateX(8deg) rotateY(-6deg) scale(1.04)';
+      setTimeout(()=> loveCard.style.transform = '', 640);
+      // gentle music swell
+      try { bgMusic.volume = Math.min(1, bgMusic.volume + 0.12); } catch(e){}
+    });
+
+    // Helper: make the "No" button run to a new random spot within the card
+    function moveNoButtonRandomly(){
+      const actionsWrap = btnNo.parentElement;
+      const wrapRect = actionsWrap.getBoundingClientRect();
+      const cardRect = loveCard.getBoundingClientRect();
+      const btnRect = btnNo.getBoundingClientRect();
+      // compute available space inside card for button (padding safe)
+      const padding = 8;
+      const minX = cardRect.left + padding;
+      const maxX = cardRect.right - btnRect.width - padding;
+      const minY = cardRect.top + padding;
+      const maxY = cardRect.bottom - btnRect.height - padding;
+      // choose a new position near random but ensure it's within card; use transform translate relative to original
+      const newLeft = Math.max(minX, Math.min(maxX, minX + Math.random() * (maxX - minX)));
+      const newTop  = Math.max(minY, Math.min(maxY, minY + Math.random() * (maxY - minY)));
+      // convert to local offsets relative to current position
+      const offsetX = newLeft - btnRect.left;
+      const offsetY = newTop - btnRect.top;
+      btnNo.style.transition = 'transform 420ms cubic-bezier(.2,.9,.2,1)';
+      btnNo.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      // after move, clear transform (but keep in place by setting left/top absolute if desired)
+      setTimeout(()=> {
+        // freeze the new position by computing current computed position and applying transform reset
+        const computed = btnNo.getBoundingClientRect();
+        // set position absolute relative to card
+        const relX = computed.left - cardRect.left;
+        const relY = computed.top - cardRect.top;
+        btnNo.style.transition = '';
+        btnNo.style.transform = '';
+        btnNo.style.position = 'absolute';
+        btnNo.style.left = relX + 'px';
+        btnNo.style.top = relY + 'px';
+      }, 460);
+    }
+
+    // On hover we already attempt to move. Enhance click to vibrate + shake + move away each time.
+    btnNo.addEventListener('mouseenter', () => {
+      // if already positioned absolute we keep it relative to card
+      const cardRect = loveCard.getBoundingClientRect();
+      const btnRect = btnNo.getBoundingClientRect();
+      // attempt small dodge movement
+      const maxX = Math.max(6, cardRect.width - btnRect.width - 12);
+      const newX = (Math.random() * maxX) - (btnRect.left - cardRect.left);
+      btnNo.style.transform = `translateX(${newX}px)`;
+      setTimeout(()=> { btnNo.style.transform = ''; }, 700);
     });
 
     btnNo.addEventListener('click', ()=>{
+      // shake visually
       btnNo.classList.add('shake');
       setTimeout(()=> btnNo.classList.remove('shake'), 480);
 
+      // vibrate device if possible
+      try {
+        if(navigator.vibrate) {
+          // pattern: short pulses
+          navigator.vibrate([120,60,120]);
+        }
+      } catch(e){}
+
+      // also make the button run away to a new place
+      moveNoButtonRandomly();
+
+      // spawn a broken heart floating up at the slideshow center
       const r = slideshowRect();
       const cx = r.left + r.width/2;
       const cy = r.top + r.height/2;
       const br = document.createElement('div');
       br.className = 'broken';
       br.textContent = '💔';
-      br.style.left = (cx - 24) + 'px';
-      br.style.top = (cy - 24) + 'px';
+      br.style.left = (cx - 36) + 'px';
+      br.style.top = (cy - 36) + 'px';
+      br.style.fontSize = '48px';
       document.body.appendChild(br);
-      setTimeout(()=> br.remove(), 1000);
+      setTimeout(()=> { if(br && br.parentNode) br.parentNode.removeChild(br); }, 1200);
+
+      // screen shake
+      document.body.classList.add('screen-shake');
+      setTimeout(()=> document.body.classList.remove('screen-shake'), 520);
+      // slight music dip
+      try { bgMusic.volume = Math.max(0.06, bgMusic.volume - 0.14); } catch(e){}
     });
+
+    /* ===== Typewriter footer quotes (moved near circle) ===== */
+    const quotes = [
+      "Mỗi giây trôi qua, anh lại yêu em nhiều hơn 💖",
+      "Yêu là cùng nhau ngó trăng và không cần nói nhiều.",
+      "Kỷ niệm nhỏ — tình lớn.",
+      "Cảm ơn em vì đã là em của anh.",
+      "Tim này thuộc về em, không đổi."
+    ];
+    const typeEl = document.getElementById('typeWriter');
+    let qIndex = 0;
+    function typeQuote(){
+      const txt = quotes[qIndex];
+      typeEl.innerHTML = '';
+      let i = 0;
+      const tspan = document.createElement('span');
+      typeEl.appendChild(tspan);
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      typeEl.appendChild(cursor);
+      const interval = setInterval(()=>{
+        tspan.textContent += txt[i++] || '';
+        if(i > txt.length){
+          clearInterval(interval);
+          setTimeout(()=> {
+            // erase
+            const del = setInterval(()=>{
+              tspan.textContent = tspan.textContent.slice(0, -1);
+              if(tspan.textContent.length === 0) { clearInterval(del); qIndex = (qIndex+1) % quotes.length; setTimeout(typeQuote, 600); }
+            }, 36);
+          }, 2400);
+        }
+      }, 48);
+    }
+    typeQuote();
+
+    /* ===== Simple deterrents: block F12 / Ctrl+Shift+I / Ctrl+U / Ctrl+S, show overlay ===== */
+    const devWarn = document.getElementById('devWarn');
+    const devClose = document.getElementById('devClose');
+    let devWarnShown = false;
+    function showDevWarn(){
+      if(devWarnShown) return;
+      devWarnShown = true;
+      devWarn.style.display = 'flex';
+    }
+    devClose.addEventListener('click', ()=>{
+      devWarnShown = false;
+      devWarn.style.display = 'none';
+    });
+
+    window.addEventListener('keydown', (e)=> {
+      // common devtool shortcuts
+      if (e.key === 'F12') { e.preventDefault(); showDevWarn(); return; }
+      if (e.ctrlKey && e.shiftKey && (e.key.toLowerCase() === 'i' || e.key.toLowerCase() === 'j')) { e.preventDefault(); showDevWarn(); return; }
+      if (e.ctrlKey && e.key.toLowerCase() === 'u') { e.preventDefault(); showDevWarn(); return; }
+      if (e.ctrlKey && e.key.toLowerCase() === 's') { /* prevent save page */ e.preventDefault(); showDevWarn(); return; }
+    }, {capture:true});
+
+    // detect devtools open via resize heuristics (not perfect) and debugger trap
+    (function detectDevtools(){
+      let threshold = 160;
+      let lastHeight = window.outerHeight - window.innerHeight;
+      setInterval(()=>{
+        const diff = Math.abs((window.outerHeight - window.innerHeight) - lastHeight);
+        if(diff > threshold){
+          showDevWarn();
+        }
+        lastHeight = window.outerHeight - window.innerHeight;
+      }, 1200);
+
+      // also try a detection trick
+      let open = false;
+      const element = new Image();
+      Object.defineProperty(element, 'id', {
+        get: function () {
+          open = true;
+          showDevWarn();
+        }
+      });
+      setInterval(function() {
+        open = false;
+        console.log(element);
+        console.clear();
+      }, 1500);
+    })();
+
+    /* ===== Accessibility: show message if user right-clicks strongly (we already prevented default) ===== */
+    window.addEventListener('contextmenu', (e) => {
+      // earlier prevention already ran; show small overlay if user persists
+      // but only show if ctrl not pressed
+      if(!e.ctrlKey) {
+        showDevWarn();
+      }
+    });
+
+    /* ===== Extra small: gentle performance guard (remove many particles if many present) ===== */
+    setInterval(()=> {
+      const many = document.querySelectorAll('.burst, .falling, .aura-heart, .heart-rain');
+      if(many.length > 300){
+        many.forEach((el, idx) => { if(idx % 2 === 0 && el.parentNode) el.parentNode.removeChild(el); });
+      }
+    }, 2500);
+
+    /* ===== initial note: everything else preserved (no removal of features) ===== */
+
   </script>
 </body>
 </html>
